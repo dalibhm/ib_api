@@ -1,12 +1,12 @@
 BASE_DIR=/apps
 DATA_API_DIR=${BASE_DIR}/ib_api/data_api
 
-# create base directory
-mkdir ${BASE_DIR}
-cd ${BASE_DIR}
-
-# clone app repository
-git clone https://github.com/dali1981/ib_api.git
+## create base directory
+#mkdir ${BASE_DIR}
+#cd ${BASE_DIR}
+#
+## clone app repository
+#git clone https://github.com/dali1981/ib_api.git
 
 #create environment for data api
 cd ${DATA_API_DIR}
