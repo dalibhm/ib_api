@@ -57,7 +57,7 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'postgresql://api:mi0bftbfmwcifnxp@db-postgresql-lon1-97673-do-user-6634479-0.db.ondigitalocean.com:25060/ib'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://api:api@35.197.213.163:5432/ib'
                               # 'postgresql://{}:{}@{}:{}/{}'.format('api',
                               #                                      'api',
                               #                                      '35.197.213.163',
