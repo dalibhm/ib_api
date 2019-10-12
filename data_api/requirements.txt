@@ -1,0 +1,6 @@
+flask==1.1.1
+flask-script
+flask-sqlalchemy
+flask-migrate
+psycopg2
+pypi_org

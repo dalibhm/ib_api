@@ -1,0 +1,65 @@
+
+syntax = "proto3";
+
+
+option objc_class_prefix = "RD";
+
+package sendrequest;
+
+service RequestData {
+  rpc RequestContractDetails(ContractDetailsRequest) returns (Status) {}
+  rpc RequestHistoricalData (HistoricalDataRequest) returns (Status) {}
+  rpc RequestFundamentalData (FundamentalDataRequest) returns (Status) {}
+}
+
+message Contract {
+    int32 conId = 1;
+    string symbol = 2;
+    string secType = 3;
+    string exchange = 4;
+    string primaryExchange =5;
+//    pick an actual (ie non-aggregate) exchange that the contract trades on.
+//    DO NOT SET TO SMART.
+    string currency = 6;
+    string lastTradeDateOrContractMonth = 7;
+    float strike = 8;
+    string right = 9;
+    string multiplier = 10;
+    string localSymbol = 11;
+    string tradingClass = 12;
+    bool includeExpired = 13;
+    string secIdType = 14;	  // CUSIP;SEDOL;ISIN;RIC
+    string secId = 15;
+
+    //combos
+    string comboLegsDescrip = 16;
+//    type: str; received in open order 14 and up for all combos
+//    self.comboLegs = None     # type: list<ComboLeg>
+//    self.deltaNeutralContract = None
+}
+
+message ContractDetailsRequest{
+    int32 requestId = 1;
+    Contract contract = 2;
+}
+
+message HistoricalDataRequest {
+    Contract contract = 1; // The IBApi.Contract you are interested in.
+    string endDateTime = 2; // The request's end date and time (the empty string indicates current present moment).
+    string durationString = 3; // The amount of time (or Valid Duration String units) to go back from the request's given end date and time.
+    string barSizeSetting = 4; // The data's granularity or Valid Bar Sizes
+    string whatToShow = 5; // The type of data to retrieve. See Historical Data Types
+    int32 useRTH = 6; // Whether (1) or not (0) to retrieve data generated only within Regular Trading Hours (RTH)
+    int32 formatDate = 7; // The format in which the incoming bars' date should be presented. Note that for day bars, only yyyyMMdd format is available.
+    bool keepUpToDate = 8;
+}
+
+message FundamentalDataRequest {
+    Contract contract = 1;
+    string reportType = 2;
+}
+
+// The response message containing the greetings
+message Status {
+    bool message = 1;
+}

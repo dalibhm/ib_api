@@ -1,0 +1,10 @@
+conda create -n data_api python=3.6 anaconda
+source activate data_api
+conda install --file requirements.txt
+
+python app.py db init
+python app.py db migrate -m "initial migration"
+python app.py db upgrade
+
+
+python app.py runserver

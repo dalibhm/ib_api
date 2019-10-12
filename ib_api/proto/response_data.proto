@@ -1,0 +1,127 @@
+
+syntax = "proto3";
+
+
+option objc_class_prefix = "ResD";
+
+package sendrequest;
+
+// The greeting service definition.
+service ResponseData {
+  // Sends a greeting
+  rpc SendContractDetails(ContractDetailsResponse) returns (Status) {}
+  rpc SendHistoricalData (HistoricalDataResponse) returns (Status) {}
+  rpc SendFundamentalData (FundamentalDataResponse) returns (Status) {}
+  // Sends another greeting
+//  rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
+}
+
+message Contract {
+    int32 conId = 1;
+    string symbol = 2;
+    string secType = 3;
+    string exchange = 4;
+    string primaryExchange =5;
+//    pick an actual (ie non-aggregate) exchange that the contract trades on.
+//    DO NOT SET TO SMART.
+    string currency = 6;
+    string lastTradeDateOrContractMonth = 7;
+    float strike = 8;
+    string right = 9;
+    string multiplier = 10;
+    string localSymbol = 11;
+    string tradingClass = 12;
+    bool includeExpired = 13;
+    string secIdType = 14;	  // CUSIP;SEDOL;ISIN;RIC
+    string secId = 15;
+
+    //combos
+    string comboLegsDescrip = 16;
+//    type: str; received in open order 14 and up for all combos
+//    self.comboLegs = None     # type: list<ComboLeg>
+//    self.deltaNeutralContract = None
+}
+
+message ContractDetailsResponse {
+    int32 requestId = 1;
+    ContractDetails contractDetails = 2;
+}
+
+message HistoricalDataResponse {
+    int32 requestId = 1; // A unique identifier which will serve to identify the incoming data.
+    Contract contract = 2; // The IBApi.Contract you are interested in.
+//        returns the requested historical data bars
+//
+//        reqId - the request's identifier
+//        date  - the bar's date and time (either as a yyyymmss hh:mm:ssformatted
+//             string or as system time according to the request)
+//        open  - the bar's open point
+//        high  - the bar's high point
+//        low   - the bar's low point
+//        close - the bar's closing point
+//        volume - the bar's traded volume if available
+//        count - the number of trades during the bar's timespan (only available
+//            for TRADES).
+//        WAP -   the bar's Weighted Average Price
+//        hasGaps  -indicates if the data has gaps or not.
+}
+
+message FundamentalDataResponse {
+    int32 requestId = 1;
+    Contract contract = 2;
+    string xml = 3;
+}
+
+// The response message containing the greetings
+message Status {
+    bool message = 1;
+}
+
+message ContractDetails {
+        Contract contract = 1;
+        string marketName = 2;
+        float minTick = 3;
+        string orderTypes = 4;
+        string validExchanges = 5;
+        int32 priceMagnifier = 6;
+        int32 underConId = 7;
+        string longName = 8;
+        string contractMonth = 9;
+        string industry = 10;
+        string category = 13;
+        string subcategory = 14;
+        string timeZoneId = 15;
+        string tradingHours = 16;
+        string liquidHours = 17;
+        string evRule = 18;
+        int32 evMultiplier = 19;
+        int32 mdSizeMultiplier = 20;
+        int32 aggGroup = 21;
+        string underSymbol = 22;
+        string underSecType = 23;
+        string marketRuleIds = 24;
+//
+//        TO COMPLETE LATER ONCE I KNOW WHAT IT IS
+//
+//        secIdList = None
+
+        string realExpirationDate = 25;
+        string lastTradeTime = 26;
+
+//        # BOND values
+        string cusip = 27;
+        string ratings = 28;
+        string descAppend = 29;
+        string bondType = 30;
+        string couponType = 31;
+        bool callable = 32;
+        bool putable = 33;
+        int32 coupon = 34;
+        bool convertible = 35;
+        string maturity = 36;
+        string issueDate = 37;
+        string nextOptionDate = 38;
+        string nextOptionType = 39;
+        string nextOptionPartial = 40;
+        string notes = 41;
+}
