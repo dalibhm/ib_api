@@ -3,8 +3,8 @@ Description=uWSGI data api server instance
 After=syslog.target
 
 [Service]
-ExecStart=/apps/venv/bin/uwsgi -H /apps/venv --master --processes 4 --threads 2 --http :5000 --manage-script-name --python-path /apps/ib_api/ib_python/data_api --mount /=wsgi:app
-RuntimeDirectory=/apps/ib_api/ib_python/data_api/
+ExecStart=/apps/ib_api/data_api/venv/bin/uwsgi -H /apps/ib_api/data_api//venv --master --processes 4 --threads 2 --http :5000 --manage-script-name --python-path /apps/ib_api/data_api --mount /=wsgi:app
+RuntimeDirectory=/apps/ib_api/data_api/
 Restart=always
 KillSignal=SIGQUIT
 Type=notify

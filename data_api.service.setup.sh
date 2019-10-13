@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cp data_api/server/data_api.service /etc/systemd/system/data_api.service
+cp /apps/ib_api/data_api/server/data_api.service /etc/systemd/system/data_api.service
 
 systemctl start data_api
 systemctl status data_api
