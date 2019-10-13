@@ -12,7 +12,7 @@ DATA_API_DIR=${BASE_DIR}/ib_api/data_api
 cd ${DATA_API_DIR}
 python3 -m venv venv
 ${DATA_API_DIR}/venv/bin/pip install --upgrade pip setuptools
-${DATA_API_DIR}/data_api/venv/bin/pip install --upgrade wheel uwsgi
+${DATA_API_DIR}/venv/bin/pip install --upgrade wheel uwsgi
 
 # install dependencies
 ${DATA_API_DIR}/venv/bin/pip install -r ${DATA_API_DIR}/requirements.txt
