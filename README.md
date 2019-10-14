@@ -9,7 +9,7 @@
 
 ### Contract details
 * GET api/contracts/details
-* GET api/contracts/<string:con_id>/details/
+* GET api/contracts/<string:con_id>/details
 * POST api/contracts/details
 
 ### Exchanges
