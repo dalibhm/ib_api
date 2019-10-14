@@ -4,33 +4,33 @@
 
 ### Contracts
 * GET api/contracts
-* GET api/contracts/ &lt string:con_id &gt
+* GET api/contracts/{string:con_id}
 * POST api/contracts
 
 ### Contract details
 * GET api/contracts/details
-* GET api/contracts/&ltstring:con_id>/details
+* GET api/contracts/{tstring:con_id}/details
 * POST api/contracts/details
 
 ### Exchanges
 * GET api/exchanges
-* GET api/exchanges/&ltstring:code>
+* GET api/exchanges/{string:code}
 * POST api/exchanges
 
 ### Stocks
 * GET api/stocks
-* GET api/stocks/&ltstring:con_id>
+* GET api/stocks/{string:con_id}
 * POST api/stocks
 
 ### Historical data
-* GET api/historical_data/&ltstock>
-* GET api/historical_data/&ltstock>/<whatToShow>/<date>
+* GET api/historical_data/{stock}
+* GET api/historical_data/{stock}/{whatToShow}/{date}
 * POST api/historical_data/
 
 ### Fundamental data
 
 * GET api/fundamental_data/calendar_reports
-* GET api/fundamental_data/calendar_reports/&ltstock>
-* GET api/fundamental_data/calendar_reports/&ltsymbol>/&ltreport_date>
+* GET api/fundamental_data/calendar_reports/{stock}
+* GET api/fundamental_data/calendar_reports/{symbol>/{treport_date}
 
 * POST api/fundamental_data/calendar_reports
