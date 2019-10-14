@@ -4,7 +4,7 @@
 
 ### Contracts
 * GET api/contracts
-* GET api/contracts/&ltstring:con_id&gt
+* GET api/contracts/ &lt string:con_id &gt
 * POST api/contracts
 
 ### Contract details
