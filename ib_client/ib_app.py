@@ -2,6 +2,7 @@
 import collections
 import datetime
 import logging
+from configparser import ConfigParser
 
 from ibapi.common import TickerId, OrderId, BarData, ListOfHistoricalTickBidAsk, ListOfHistoricalTickLast, ListOfHistoricalTick
 from ibapi.contract import Contract, ContractDetails
@@ -10,7 +11,7 @@ from ibapi.order import Order
 from ibapi.order_state import OrderState
 from ibapi.utils import iswrapper
 
-from data_api_client.api_client import DataApiClient
+from ib_response_processor.response_processor_factory import ResponseProcessorFactory
 from requestmanager.requestmanager import RequestManager
 
 from ib_client import TestClient
@@ -58,7 +59,7 @@ logger = logging.getLogger()
 class TestApp(TestWrapper, TestClient):
     request_manager: RequestManager
 
-    def __init__(self):
+    def __init__(self, response_config: ConfigParser):
         TestWrapper.__init__(self)
         TestClient.__init__(self, wrapper=self)
         # ! [socket_init]
@@ -70,7 +71,7 @@ class TestApp(TestWrapper, TestClient):
         self.globalCancelOnly = False
         self.simplePlaceOid = None
         self.request_manager = RequestManager()
-        self.data_api_client = DataApiClient()
+        self.response_processor = ResponseProcessorFactory(response_config).create()
 
     def dumpTestCoverageSituation(self):
         for clntMeth in sorted(self.clntMeth2callCount.keys()):
@@ -275,7 +276,7 @@ class TestApp(TestWrapper, TestClient):
 
     def contractDetails(self, reqId: int, contractDetails: ContractDetails):
         super().contractDetails(reqId, contractDetails)
-        self.data_api_client.post_contract_details(contractDetails)
+        self.response_processor.process_contract_details(contractDetails)
 
 
     # ! [contractdetails]
@@ -292,7 +293,7 @@ class TestApp(TestWrapper, TestClient):
     def historicalData(self, reqId: int, bar: BarData):
         print("HistoricalData. ReqId:", reqId, "BarData.", bar)
         request = self.request_manager.get_request_by_id(reqId)
-        self.data_api_client.post_historical_data(request, bar)
+        self.response_processor.process_historical_data(request, bar)
 
     # ! [historicaldata]
 
@@ -334,8 +335,9 @@ class TestApp(TestWrapper, TestClient):
 
     # ! [fundamentaldata]
     def fundamentalData(self, reqId: TickerId, data: str):
+        print('from fundamental data')
         super().fundamentalData(reqId, data)
         request = self.request_manager.get_request_by_id(reqId)
-        self.data_api_client.post_financial_data(request, data)
+        self.response_processor.process_financial_data(request, data)
 
     # ! [fundamentaldata]

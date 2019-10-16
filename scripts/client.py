@@ -44,7 +44,7 @@ def run():
     channel = grpc_files.insecure_channel('localhost:50051')
     stub = request_data_pb2_grpc.RequestDataStub(channel)
     contract = request_data_pb2.Contract(conId=0,
-                                         symbol="PAYC",
+                                         symbol="SHOP",
                                          secType="STK",
                                          exchange="SMART",
                                          primaryExchange="",

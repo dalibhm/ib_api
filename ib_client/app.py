@@ -1,6 +1,6 @@
 import argparse
 import os
-import sys
+# import sys
 from threading import Thread
 
 from grpc_files.grpc_service import serve
@@ -15,7 +15,7 @@ def main():
     config = init_config(args.mode)
     init_logging(config)
 
-    application = init_application(args)
+    application = init_application(config)
 
     app_thread = Thread(target=application.run)
     app_thread.start()

@@ -1,0 +1,11 @@
+gcloud compute ssh \
+ib-gateway \
+--project YOUR PROJECT NAME HERE \
+--zone YOUR TIMEZONE HERE \
+--ssh-flag "-L 5901:localhost:5901"
+
+gcloud compute ssh --project ib-project-249411 --zone europe-west2-c 7062988723068005364 \
+--ssh-flag "-L 5901:localhost:5901"
+
+gcloud compute ssh --project ib-project-249411 --zone europe-west2-c 7062988723068005364 \
+--ssh-flag "-L 5901:127.0.0.1:5901"

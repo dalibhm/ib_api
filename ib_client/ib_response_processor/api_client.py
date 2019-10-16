@@ -3,9 +3,9 @@ import json
 import requests
 from ibapi.common import BarData
 
+from ib_response_processor.response_processor import ResponseProcessor
 from proto import request_data_pb2
 
-DATA_API_URL = 'http://localhost:5000'
 
 report_type_mapping = {
     'ReportsFinStatements': 'financial_reports',
@@ -15,16 +15,26 @@ report_type_mapping = {
 }
 
 
-class DataApiClient:
-    def __init__(self):
-        pass
+class DataApiClient(ResponseProcessor):
+
+    def __init__(self, data_api_url):
+        self.data_api_url = data_api_url
+
+    def process_contract_details(self, request, contract_details):
+        self.post_contract_details(request, contract_details)
+
+    def process_historical_data(self, request, bar_data):
+        self.post_historical_data(request, bar_data)
+
+    def process_financial_data(self, request, xml_data):
+        self.post_financial_data(request, xml_data)
 
     def post_financial_data(self, request: request_data_pb2.FundamentalDataRequest, xml_data):
         symbol = request.contract.symbol
         report_type = request.reportType
         report = {'symbol': symbol, 'xml': xml_data}
 
-        r = requests.post('{}/{}/stocks'.format(DATA_API_URL, report_type_mapping[report_type]), data=json.dump(report))
+        r = requests.post('{}/{}/stocks'.format(self.data_api_url, report_type_mapping[report_type]), data=json.dump(report))
         self.logger.info('{} {}: post request status = {}'.format(symbol, report_type, r.status_code))
 
     def post_historical_data(self, request: request_data_pb2.HistoricalDataRequest, bar: BarData):
@@ -47,9 +57,9 @@ class DataApiClient:
             'barCount': bar.barCount,
             'average': bar.average
         }
-        r = requests.post('{}/{}/stocks'.format(DATA_API_URL, symbol), data=json.dump(data))
+        r = requests.post('{}/{}/stocks'.format(self.data_api_url, symbol), data=json.dump(data))
         self.logger.info('{} {}: post request status = {}'.format(symbol, bar.date, r.status_code))
 
     def post_contract_details(self, contract_details):
-        r = requests.post('{}/contracts/details'.format(DATA_API_URL), data=json.dump(contract_details))
+        r = requests.post('{}/contracts/details'.format(self.data_api_url), data=json.dump(contract_details))
         self.logger.info('{} : post request status = {}'.format(contract_details['marketName'], r.status_code))

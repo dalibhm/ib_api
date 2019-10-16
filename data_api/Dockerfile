@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 COPY app app
 COPY migrations migrations
-COPY app.py config.py ./
+COPY flask_app.py config.py ./
 
 EXPOSE 5000
-CMD ["python", "./app.py", "runserver"]
+CMD ["python", "./flask_app.py", "runserver"]

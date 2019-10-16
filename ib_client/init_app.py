@@ -2,6 +2,7 @@ import datetime
 import logging
 import os
 import time
+from configparser import ConfigParser
 
 from ibapi import utils
 from ibapi.tag_value import TagValue
@@ -9,21 +10,19 @@ from ibapi.tag_value import TagValue
 from ib_app import TestApp
 
 
-def init_application(args):
+def init_application(config: ConfigParser):
     SetupLogger()
     logger = logging.getLogger()
     logger.debug("now is %s", datetime.datetime.now())
     logger.setLevel(logging.ERROR)
 
-    print("Using args", args)
-    logger.debug("Using args %s", args)
-    # print(args)
+    app = TestApp(config['data api'])
+    app.globalCancelOnly = config['ib client'].getboolean('global-cancel')
 
-    app = TestApp()
-    if args.global_cancel:
-        app.globalCancelOnly = True
     # ! [connect]
-    app.connect(args.host, args.port, clientId=0)
+    host = config['ib client']['host']
+    port = config['ib client'].getint('port')
+    app.connect(host, port, clientId=0)
     return app
 
 
