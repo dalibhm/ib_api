@@ -3,9 +3,8 @@ import json
 import requests
 from ibapi.common import BarData
 
-from ib_response_processor.response_processor import ResponseProcessor
+from ib_response_manager.response_manager import ResponseManager
 from proto import request_data_pb2
-
 
 report_type_mapping = {
     'ReportsFinStatements': 'financial_reports',
@@ -15,7 +14,7 @@ report_type_mapping = {
 }
 
 
-class DataApiClient(ResponseProcessor):
+class DataApiClient(ResponseManager):
 
     def __init__(self, data_api_url):
         self.data_api_url = data_api_url
@@ -30,12 +29,14 @@ class DataApiClient(ResponseProcessor):
         self.post_financial_data(request, xml_data)
 
     def post_financial_data(self, request: request_data_pb2.FundamentalDataRequest, xml_data):
-        symbol = request.contract.symbol
-        report_type = request.reportType
-        report = {'symbol': symbol, 'xml': xml_data}
+        report = {
+            'symbol': request.contract.symbol,
+            'xml': xml_data,
+            'report_type': request.reportType
+        }
 
-        r = requests.post('{}/{}/stocks'.format(self.data_api_url, report_type_mapping[report_type]), data=json.dump(report))
-        self.logger.info('{} {}: post request status = {}'.format(symbol, report_type, r.status_code))
+        r = requests.post('http://{}/api/fundamental_data/xml'.format(self.data_api_url),json=report)
+        # self.logger.info('{} {}: post request status = {}'.format(symbol, report_type, r.status_code))
 
     def post_historical_data(self, request: request_data_pb2.HistoricalDataRequest, bar: BarData):
         symbol = request.contract.symbol
@@ -45,21 +46,22 @@ class DataApiClient(ResponseProcessor):
             'exchange': request.contract.exchange,
             'currency': request.contract.currency,
             'endDateTime': request.endDateTime,
-            'duration': request.duration,
-            'barSize': request.barSize,
+            'duration': request.durationString,
+            'barSize': request.barSizeSetting,
             'whatToShow': request.whatToShow,
             'useRTH': request.useRTH,
             'date': bar.date,
             'open': bar.open,
             'high': bar.high,
+            'low': bar.low,
             'close': bar.close,
             'volume': bar.volume,
             'barCount': bar.barCount,
             'average': bar.average
         }
-        r = requests.post('{}/{}/stocks'.format(self.data_api_url, symbol), data=json.dump(data))
-        self.logger.info('{} {}: post request status = {}'.format(symbol, bar.date, r.status_code))
+        r = requests.post('http://{}/api/historical_data/'.format(self.data_api_url), json=data)
+        # self.logger.info('{} {}: post request status = {}'.format(symbol, bar.date, r.status_code))
 
     def post_contract_details(self, contract_details):
-        r = requests.post('{}/contracts/details'.format(self.data_api_url), data=json.dump(contract_details))
-        self.logger.info('{} : post request status = {}'.format(contract_details['marketName'], r.status_code))
+        r = requests.post('http://{}/api/contracts/details'.format(self.data_api_url), json=contract_details)
+        # self.logger.info('{} : post request status = {}'.format(contract_details['marketName'], r.status_code))

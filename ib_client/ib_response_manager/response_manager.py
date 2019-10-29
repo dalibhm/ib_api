@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class ResponseProcessor(ABC):
+class ResponseManager(ABC):
 
     def __init__(self, value):
         self.value = value

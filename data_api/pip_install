@@ -1,0 +1,1 @@
+pip install -i https://testpypi.python.org/pypi psycopg2==2.7.7

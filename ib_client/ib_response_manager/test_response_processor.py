@@ -1,7 +1,7 @@
-from ib_response_processor.response_processor import ResponseProcessor
+from ib_response_manager.response_manager import ResponseManager
 
 
-class TestResponseProcessor(ResponseProcessor):
+class TestResponseManager(ResponseManager):
     def __init__(self):
         pass
 

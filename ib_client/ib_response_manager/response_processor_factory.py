@@ -1,5 +1,5 @@
-from ib_response_processor.api_client import DataApiClient
-from ib_response_processor.test_response_processor import TestResponseProcessor
+from ib_response_manager.api_client import DataApiClient
+from ib_response_manager.test_response_processor import TestResponseManager
 
 
 class ResponseProcessorFactory:
@@ -9,6 +9,6 @@ class ResponseProcessorFactory:
     def create(self):
         url = self.config['url']
         if url == '':
-            return TestResponseProcessor()
+            return TestResponseManager()
         else:
             return DataApiClient(url)
