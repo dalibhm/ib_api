@@ -4,26 +4,24 @@ import os
 import time
 from configparser import ConfigParser
 
-from ibapi import utils
-from ibapi.tag_value import TagValue
 
-from ib_app import TestApp
+from ib_client import IbClient
 
 
-def init_application(config: ConfigParser):
+def init_ib_client(config: ConfigParser, request_manager):
     SetupLogger()
     logger = logging.getLogger()
     logger.debug("now is %s", datetime.datetime.now())
     logger.setLevel(logging.ERROR)
 
-    app = TestApp(config['data api'])
-    app.globalCancelOnly = config['ib client'].getboolean('global-cancel')
+    ib_client = IbClient(config, request_manager)
+    ib_client.globalCancelOnly = config.getboolean('ib client', 'global-cancel')
 
     # ! [connect]
     host = config['ib client']['host']
     port = config['ib client'].getint('port')
-    app.connect(host, port, clientId=0)
-    return app
+    ib_client.connect(host, port, clientId=0)
+    return ib_client
 
 
 def SetupLogger():

@@ -1,2 +1,7 @@
 configparser
 requests
+dateutil
+grpcio
+grpcio-tools
+aiohttp
+bs4

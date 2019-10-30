@@ -3,11 +3,11 @@ from ib_response_manager.test_response_processor import TestResponseManager
 
 
 class ResponseProcessorFactory:
-    def __init__(self, response_config):
-        self.config = response_config
+    def __init__(self, config):
+        self.config = config
 
     def create(self):
-        url = self.config['url']
+        url = self.config.get('data api', 'data_api_server')
         if url == '':
             return TestResponseManager()
         else:

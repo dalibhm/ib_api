@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+
+option objc_class_prefix = "FD";
+
+package fundamental_data;
+
+service FundamentalData {
+  rpc ProcessReport(ReportRequest) returns(Empty) {}
+  rpc GetLatestFinancialReportDate(LatestFinancialReportRequest) returns(ReportMetaData) {}
+}
+
+message Empty {}
+
+message ReportRequest {
+    string stock = 1;
+    string reportType = 2;
+    string content = 3;
+}
+
+message LatestFinancialReportRequest{
+    string stock = 1;
+}
+message ReportMetaData {
+    string reportDate = 1;
+    string insertDate = 2;
+}

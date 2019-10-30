@@ -4,10 +4,11 @@ import os
 from threading import Thread
 
 from grpc_files.grpc_service import serve
-from init_app import init_application
+from init_app import init_ib_client
 
 from configparser import ConfigParser
 from Services.LogService import LogService
+from requestmanager.requestmanager import RequestManager
 
 
 def main():
@@ -15,12 +16,14 @@ def main():
     config = init_config(args.mode)
     init_logging(config)
 
-    application = init_application(config)
+    request_manager = RequestManager()
 
-    app_thread = Thread(target=application.run)
+    ib_client = init_ib_client(config, request_manager)
+
+    app_thread = Thread(target=ib_client.run)
     app_thread.start()
 
-    grpc_thread = Thread(target=serve, args=(application, 10))
+    grpc_thread = Thread(target=serve, args=(ib_client, config, request_manager, 10))
     grpc_thread.start()
 
 

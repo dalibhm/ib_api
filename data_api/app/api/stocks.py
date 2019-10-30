@@ -35,10 +35,16 @@ def post_stock():
     db.session.add(stock)
     db.session.commit()
     return jsonify(stock.to_json()), 201, \
-           {'Location': url_for('api.get_stock', con_id=stock.con_id)}
+           {'Location': url_for('api.get_stock_by_con_id', con_id=stock.con_id)}
 
 
-@api.route('/stocks/<string:con_id>', methods=['GET'])
-def get_stock(con_id):
+@api.route('/stocks/id/<string:con_id>', methods=['GET'])
+def get_stock_by_con_id(con_id):
     contract = Stock.query.get_or_404(con_id)
+    return jsonify(contract.to_json())
+
+
+@api.route('/stocks/symbol/<string:symbol>', methods=['GET'])
+def get_stock_by_symbol(symbol):
+    contract = Stock.query.filter_by(symbol=symbol).first()
     return jsonify(contract.to_json())

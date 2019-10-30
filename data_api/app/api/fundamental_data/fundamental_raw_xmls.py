@@ -1,3 +1,6 @@
+import os
+from datetime import datetime
+
 from flask import request, jsonify, url_for
 
 from app import db
@@ -8,7 +11,7 @@ from . import fundamental_data_blueprint
 
 @fundamental_data_blueprint.route('xml', methods=['GET'])
 # do something here
-def get_financial_reports_stock_list():
+def get_fundamental_reports_stock_list():
     # return 'from comments'
     page = request.args.get('page', 1, type=int)
     pagination = FinancialStatement.query.paginate(
@@ -17,10 +20,10 @@ def get_financial_reports_stock_list():
     statements = pagination.items
     prev = None
     if pagination.has_prev:
-        prev = url_for('fundamental_data.get_financial_reports_stock_list', page=page - 1)
+        prev = url_for('fundamental_data.get_fundamental_reports_stock_list', page=page - 1)
     next = None
     if pagination.has_next:
-        next = url_for('fundamental_data.get_financial_reports_stock_list', page=page + 1)
+        next = url_for('fundamental_data.get_fundamental_reports_stock_list', page=page + 1)
     return jsonify({
         'statements': [statement.symbol for statement in statements],
         'prev': prev,
@@ -39,10 +42,10 @@ def get_xml_report_for_stock(stock, report):
     statements = pagination.items
     prev = None
     if pagination.has_prev:
-        prev = url_for('fundamental_data.get_statements_per_stock', page=page - 1)
+        prev = url_for('fundamental_data.get_xml_report_for_stock', page=page - 1)
     next = None
     if pagination.has_next:
-        next = url_for('fundamental_data.get_statements_per_stock', page=page + 1)
+        next = url_for('fundamental_data.get_xml_report_for_stock', page=page + 1)
     return jsonify({
         'statements': [statement.to_json() for statement in statements],
         'prev': prev,
@@ -51,20 +54,15 @@ def get_xml_report_for_stock(stock, report):
     })
 
 
-@fundamental_data_blueprint.route('/', methods=['POST'])
+@fundamental_data_blueprint.route('/xml', methods=['POST'])
 def post_xml():
-    statement = FinancialStatement.from_json(request.json)
-    if FinancialStatement.query. \
-            filter_by(symbol=statement.symbol, report_type=statement). \
-            first():
-        return jsonify({'error': 'statement already in database',
-                        'data': statement.to_json(),
-                        }), 400
-    db.session.add(statement)
-    db.session.commit()
-    return jsonify(statement.to_json()), 201, \
-           {'Location': url_for('fundamental_data.get_financial_report',
-                                symbol=statement.symbol, report_date=statement.report_date)}
+    data = request.json
+    base_directory = 'data'
+    filename = '{}_{}_{}.xml'.format(data['symbol'], data['report_type'], datetime.now())
+    full_path = os.path.join('.', base_directory, filename)
+    with open(full_path, "w") as file_writer:
+        file_writer.write(data['xml'])
+    return jsonify(data)
 
 
 @fundamental_data_blueprint.route('financial_reports/<symbol>/<report_date>', methods=['GET'])

@@ -1,19 +1,26 @@
 import datetime
 import logging
 
-from ibapi.common import BarData, ListOfHistoricalTick, ListOfHistoricalTickBidAsk, TickerId
-from ibapi.contract import ContractDetails
+from ibapi.common import BarData, ListOfHistoricalTick, ListOfHistoricalTickBidAsk, TickerId, ListOfHistoricalTickLast, \
+    OrderId
+from ibapi.contract import ContractDetails, Contract
+from ibapi.order import Order
+from ibapi.order_state import OrderState
 from ibapi.wrapper import EWrapper
+
+from ib_response_manager.grpc_reponse_manager import GrpcResponseManager
+from ib_response_manager.response_processor_factory import ResponseProcessorFactory
 
 logger = logging.getLogger()
 
 
 class EWrapperImpl(EWrapper):
-    def __init__(self, request_manager, rest_api_response_manager, grpc_reponse_manager):
+    def __init__(self, config, request_manager):
         super().__init__()
+        self.asynchronous = False
         self.request_manager = request_manager
-        self.response_processor = rest_api_response_manager
-        self.response_manager = grpc_reponse_manager
+        self.response_processor = ResponseProcessorFactory(config).create()
+        self.response_manager = GrpcResponseManager(config.get('data api', 'fundamental_data_server'))
 
     # ! [connectack]
     def connectAck(self):

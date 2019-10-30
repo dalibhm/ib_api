@@ -1,24 +1,23 @@
 {
-  "stocks": [
-    "SHOP", "IBKR"
-  ],
-  "requests": [
-    {
-      "type": "historical",
-      "params":
-      {
-        "start_date": "10-09-2019",
-        "end_date": "27-09-2019",
-        "bar_size":  "1D",
-        "price_type": "TRADES",
-
-      }
-    },
-    {
-      "type": "fundamental",
-      "params": {
-        "type": "financial_reports"
+  "stocks_financial_data_download": {
+    "type": "data download",
+    "config": {
+      "exchanges": [
+        "nyse"
+      ],
+      "data": {
+        "type": "fundamental",
+        "params": {
+          "report_types": [
+            "ReportsFinSummary",
+            "ReportsOwnership",
+            "ReportSnapshot",
+            "ReportsFinStatements",
+            "RESC",
+            "CalendarReport"
+          ]
+        }
       }
     }
-  ]
+  }
 }

@@ -1,8 +1,6 @@
-import sys
-
 import grpc
 
-from proto import request_data_pb2, request_data_pb2_grpc
+from proto.ib_client import request_data_pb2, request_data_pb2_grpc
 
 
 class IbClient:
@@ -32,9 +30,9 @@ class IbClient:
         )
         try:
             _ = self.stub.RequestFundamentalData(request)
-            self.log_success('fundamental', contract.symbol, report_type)
+            self.log_success('fundamental', contract['symbol'], report_type)
         except Exception as exception:
-            self.log_failure('fundamental', contract.symbol, report_type)
+            self.log_failure('fundamental', contract['symbol'], report_type)
 
     def request_historical_data(self, contract, params):
         contract_grpc = request_data_pb2.Contract(**contract)

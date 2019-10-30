@@ -8,8 +8,9 @@ import grpc
 from concurrent import futures
 import time
 
-from ib_app import TestApp
+from ib_client import IbClient
 from Services.request_id_generator import RequestIdGenerator
+from requestmanager.requestmanager import RequestManager
 
 _ONE_DAY_IN_SECONDS = 200000
 
@@ -28,10 +29,11 @@ def get_contract(request):
 
 class RequestData(request_data_pb2_grpc.RequestDataServicer):
 
-    def __init__(self, ib_client: TestApp):
+    def __init__(self, ib_client: IbClient, request_manager: RequestManager):
         # super.__init__()
         self.ib_client = ib_client
         self.request_id_gen = RequestIdGenerator()
+        self.request_manager = request_manager
 
         self.logger = LogService.get_startup_log()
 
@@ -56,7 +58,7 @@ class RequestData(request_data_pb2_grpc.RequestDataServicer):
         request_id = self.request_id_gen.get_id()
         self.logger.notice("sending request {} for historical data : {}".format(request_id, contract))
         try:
-            self.ib_client.request_manager.register_request(request_id, request)
+            self.request_manager.register_request(request_id, request)
             self.ib_client.reqHistoricalData(request_id,
                                              contract,
                                              request.endDateTime,
@@ -81,7 +83,7 @@ class RequestData(request_data_pb2_grpc.RequestDataServicer):
                                                                                    request.reportType,
                                                                                    request.contract.symbol))
         try:
-            self.ib_client.request_manager.register_request(request_id, request)
+            self.request_manager.register_request(request_id, request)
             self.ib_client.reqFundamentalData(request_id,
                                               contract,
                                               request.reportType,
@@ -95,13 +97,12 @@ class RequestData(request_data_pb2_grpc.RequestDataServicer):
         return request_data_pb2.Status(message=True)
 
 
-def serve(ib_client: TestApp, max_workers):
+def serve(ib_client: IbClient, config, request_manager: RequestManager, max_workers):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
-    request_data_pb2_grpc.add_RequestDataServicer_to_server(RequestData(ib_client),
+    request_data_pb2_grpc.add_RequestDataServicer_to_server(RequestData(ib_client, request_manager),
                                                             server
                                                             )
-    # server.add_insecure_port('[::]:50051')
-    server.add_insecure_port('localhost:50051')
+    server.add_insecure_port(config.get('grpc server', 'url'))
     server.start()
     print("server started")
     try:

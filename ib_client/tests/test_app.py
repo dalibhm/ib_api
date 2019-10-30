@@ -12,7 +12,7 @@ sys.path.append(os.path.join(module_dir, '../ib_client/'))
 
 from init_app import SetupLogger
 
-import ib_app
+import ib_client
 
 
 @pytest.fixture(scope="module")
@@ -26,7 +26,7 @@ def app():
     config = configparser.ConfigParser()
     config.read_dict({'data api': {'url': ''}})
 
-    app = ib_app.TestApp(config['data api'])
+    app = ib_client.TestApp(config['data api'])
 
     # ! [connect]
     app.connect("127.0.0.1", 4001, clientId=0)

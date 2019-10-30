@@ -2,7 +2,7 @@ from ibapi import Contract, ContractDetails
 
 import sql_data.ContractDetails as ContractDetails_db
 
-from proto import request_data_pb2
+from proto.ib_client import request_data_pb2
 
 
 def contract2grpc(contract: Contract):

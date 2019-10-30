@@ -42,3 +42,4 @@ def post_exchange():
 def get_exchange(code):
     contract = Exchange.query.get_or_404(code)
     return jsonify(contract.to_json())
+

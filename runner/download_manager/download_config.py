@@ -26,7 +26,12 @@ class PopulateStockExchangeConfig(DownloadConfig):
 class DownloadStockDataConfig(DownloadConfig):
     def __init__(self, download_config):
         super().__init__(download_config['type'])
-        self.stocks = download_config['config']['stocks']
+        self.stocks = None
+        self.exchanges = None
+        if 'stocks' in download_config['config']:
+            self.stocks = download_config['config']['stocks']
+        if 'exchanges' in download_config['config']:
+            self.exchanges = download_config['config']['exchanges']
         self.data_config = download_config['config']['data']
 
 

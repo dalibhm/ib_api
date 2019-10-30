@@ -5,15 +5,15 @@ from request_templates.params_factory import RequestTemplateFactory
 
 
 class DownloadRunner:
-    def __init__(self, download_config, data_api_client, ib_client):
+    def __init__(self, download_config, ib_client, listing_service):
         self.download_config = download_config
-        self.data_api_client = data_api_client
+        self.listing_service = listing_service
         self.ib_client = ib_client
 
     def go(self):
         for download_config in self.download_config.values():
             download_config_template = DownloadConfigFactory.create(download_config)
-            download_manager = DownloadManagerFactory.create(download_config_template, self.data_api_client, self.ib_client)
+            download_manager = DownloadManagerFactory.create(download_config_template, self.ib_client, self.listing_service)
             download_manager.run()
 
 

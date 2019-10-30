@@ -9,6 +9,7 @@ class FinancialStatement(db.Model):
     __tablename__ = "fundamental_statements"
 
     symbol = sqlalchemy.Column(sqlalchemy.String, primary_key=True)
+    report_type = sqlalchemy.Column(sqlalchemy.String, primary_key=True)
     xml = sqlalchemy.Column(sqlalchemy.String)
     insert_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.now, primary_key=True)
     report_date = sqlalchemy.Column(sqlalchemy.DateTime)
@@ -24,6 +25,7 @@ class FinancialStatement(db.Model):
     def to_json(self):
         json_statement = {
             'symbol': self.symbol,
+            'report_type': self.report_type,
             'xml': self.xml,
             'insert_date': self.insert_date,
             'report_date': self.report_date

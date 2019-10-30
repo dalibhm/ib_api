@@ -63,13 +63,13 @@ def post_financial_report():
     db.session.commit()
     return jsonify(statement.to_json()), 201, \
            {'Location': url_for('fundamental_data.get_financial_report',
-                                symbol=statement.symbol, report_date=statement.report_date)}
+                                symbol=statement.symbol)}
 
 
-@fundamental_data_blueprint.route('financial_reports/<symbol>/<report_date>', methods=['GET'])
-def get_financial_report(symbol, report_date):
+@fundamental_data_blueprint.route('financial_reports/<symbol>/<report_type>/<report_date>', methods=['GET'])
+def get_financial_xml(symbol, report_type, report_date):
     statement = FinancialStatement.query \
-        .filter_by(symbol=symbol, report_date=report_date) \
+        .filter_by(symbol=symbol, report_type=report_type, report_date=report_date) \
         .first_or_404()
 
     return jsonify(statement.to_json())
