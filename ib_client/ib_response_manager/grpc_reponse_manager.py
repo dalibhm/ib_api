@@ -15,7 +15,12 @@ class GrpcResponseManager(ResponseManager):
         report = fundamental_data_pb2.ReportRequest(stock=request.contract.symbol,
                                                     reportType=request.reportType,
                                                     content=xml_data)
-        self.stub.ProcessReport(report)
+        try:
+            self.stub.ProcessReport(report)
+        except grpc.RpcError as e:
+            print('error on {} {}'.format(request.contract.symbol, request.reportType))
+            print(e)
+
 
     def process_historical_data(self, request, bar_data):
         pass

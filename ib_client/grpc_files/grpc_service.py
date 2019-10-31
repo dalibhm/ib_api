@@ -93,7 +93,7 @@ class RequestData(request_data_pb2_grpc.RequestDataServicer):
             self.logger.exception('Unable to request {}  {} for {:15s} : {}'.format(request_id,
                                                                                     request.reportType,
                                                                                     request.contract.symbol))
-            raise
+
         return request_data_pb2.Status(message=True)
 
 
