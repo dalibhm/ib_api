@@ -1,4 +1,0 @@
-
-viertualenv .env
-pip3 install --upgrade setuptools pip
-pip3 install -r requirements.txt
