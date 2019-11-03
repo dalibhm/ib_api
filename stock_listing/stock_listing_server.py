@@ -1,5 +1,7 @@
 import logging
+import os
 from concurrent import futures
+from configparser import ConfigParser
 
 import grpc
 
@@ -23,16 +25,21 @@ class Listing(listing_pb2_grpc.ListingServicer):
             yield stock.get_stock_listing()
 
 
-def serve(max_workers):
+def serve(end_point, max_workers):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
     listing_pb2_grpc.add_ListingServicer_to_server(Listing(), server)
-    server.add_insecure_port('[::]:50053')
+    server.add_insecure_port(end_point)
     server.start()
     print('Listing server started...')
     server.wait_for_termination()
 
 
 if __name__ == '__main__':
+    config = ConfigParser()
+    config.read(os.path.join('..', 'settings', 'development.ini'))
+    end_point = config.get('services', 'stock_listing')
+
+    # initialize database
     DbSessionFactory.global_init()
     logging.basicConfig()
-    serve(10)
+    serve(end_point, 10)
