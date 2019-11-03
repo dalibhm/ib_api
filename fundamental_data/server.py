@@ -1,6 +1,7 @@
 import logging
 import os
 from concurrent import futures
+from configparser import ConfigParser
 
 import grpc
 
@@ -26,15 +27,18 @@ class FundamentalData(fundamental_data_pb2_grpc.FundamentalDataServicer):
         return response
 
 
-def serve():
+def serve(end_point):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     fundamental_data_pb2_grpc.add_FundamentalDataServicer_to_server(FundamentalData(), server)
-    server.add_insecure_port('[::]:50052')
+    server.add_insecure_port(end_point)
     server.start()
     print('Fundamental data server started...')
     server.wait_for_termination()
 
 
 if __name__ == '__main__':
+    config = ConfigParser()
+    config.read(os.path.join('..', 'settings', 'development.ini'))
     logging.basicConfig()
-    serve()
+    end_point = config('services', 'fundamental_data')
+    serve(end_point)
