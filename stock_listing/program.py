@@ -44,9 +44,9 @@ def init_logger():
     logger.addHandler(console)
 
 
-def get_exchanges(api_url):
+def get_exchanges():
     for url in url_exchange_listings.values():
-        exchange_parser = ExchangeParser(url, api_url)
+        exchange_parser = ExchangeParser(url)
         exchange_parser.parse_and_post()
 
 
@@ -64,7 +64,7 @@ def main():
     # config.read('./setup/development.ini')
     init_db()
     init_logger()
-    # get_exchanges(logger, api_url)
+    get_exchanges()
     get_stocks()
 
 
