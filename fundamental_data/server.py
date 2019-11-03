@@ -40,5 +40,5 @@ if __name__ == '__main__':
     config = ConfigParser()
     config.read(os.path.join('..', 'settings', 'development.ini'))
     logging.basicConfig()
-    end_point = config('services', 'fundamental_data')
+    end_point = config.get('services', 'fundamental_data')
     serve(end_point)

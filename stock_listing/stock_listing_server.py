@@ -31,6 +31,8 @@ def serve(end_point, max_workers):
     server.add_insecure_port(end_point)
     server.start()
     print('Listing server started...')
+    print('Listening on {}'.format(end_point))
+
     server.wait_for_termination()
 
 

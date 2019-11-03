@@ -102,9 +102,11 @@ def serve(ib_client: IbClient, config, request_manager: RequestManager, max_work
     request_data_pb2_grpc.add_RequestDataServicer_to_server(RequestData(ib_client, request_manager),
                                                             server
                                                             )
-    server.add_insecure_port(config.get('services', 'ib'))
+
+    end_point = config.get('services', 'ib')
+    server.add_insecure_port(end_point)
     server.start()
-    print("server started")
+    print("server started on {}".format(end_point))
     try:
         while True:
             time.sleep(_ONE_DAY_IN_SECONDS)
