@@ -14,11 +14,11 @@ from data.repository import Repository
 
 
 class StockParser:
-    def __init__(self, exchange_url, exchange_name):
+    def __init__(self, exchange_url, exchange_code):
         self.logger = logging.getLogger()
         self.url = exchange_url
         self.first_html = ''
-        self.exchange_name = exchange_name
+        self.exchange_name = exchange_code
         self.number_of_web_pages = 0
 
     def get_first_html(self):

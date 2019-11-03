@@ -55,7 +55,7 @@ def get_stocks():
 
     for exchange in exchanges:
         exchange_url = base_url + exchange.link
-        stock_parser = StockParser(exchange_url, exchange.name)
+        stock_parser = StockParser(exchange_url, exchange.code)
         stock_parser.parse_stock_web_pages()
 
 
