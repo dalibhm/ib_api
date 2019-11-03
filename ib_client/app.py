@@ -23,7 +23,7 @@ def main():
     app_thread = Thread(target=ib_client.run)
     app_thread.start()
 
-    grpc_thread = Thread(target=serve, args=(ib_client, config, request_manager, 10))
+    grpc_thread = Thread(target=secdrve, args=(ib_client, config, request_manager, 10))
     grpc_thread.start()
 
 
@@ -47,7 +47,7 @@ def parse_args():
 def init_config(mode: str):
     config = ConfigParser()
     if mode.lower() in ['dev', 'development', 'development.ini']:
-        config.read(os.path.join('.', 'settings', 'development.ini'))
+        config.read(os.path.join('..', 'settings', 'development.ini'))
     else:
         raise NotImplementedError
     return config
@@ -55,8 +55,8 @@ def init_config(mode: str):
 
 def init_logging(config):
     # settings = config.get_settings()
-    log_level = config['logging']['log_level']
-    log_filename = config['logging']['log_filename']
+    log_level = config.get('logging', 'log_level')
+    log_filename = config.get('logging', 'log_filename')
 
     # Here the LogBook app logger is instanciated
     # to be distinguished from the logbook log of the IBAPI client
