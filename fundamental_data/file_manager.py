@@ -4,14 +4,16 @@ from glob import glob
 
 import re
 
+# TIME_FORMAT = '%Y-%m-%d %H:%M:%S.%f'
+TIME_FORMAT = '%Y%m%d_%H%M%S'
 
 
 def get_latest(files, pattern):
     regex = re.compile(pattern)
     dates_str = [regex.search(file).group(1) for file in files]
-    dates = [datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S.%f') for date_str in dates_str]
+    dates = [datetime.strptime(date_str, TIME_FORMAT) for date_str in dates_str]
     most_recent_date = max(dates)
-    most_recent_file = pattern.replace('(.*)', datetime.strftime(most_recent_date, '%Y-%m-%d %H:%M:%S.%f'))
+    most_recent_file = pattern.replace('(.*)', datetime.strftime(most_recent_date, TIME_FORMAT))
     return most_recent_file
 
 
@@ -39,7 +41,7 @@ class FileManager:
             re_pattern = os.path.join(self.base_directory, '{}_{}_(.*).xml'.format(symbol, report_type))
             regex = re.compile(re_pattern)
             dates_str = [regex.search(file).group(1) for file in files]
-            dates = [datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S.%f') for date_str in dates_str]
+            dates = [datetime.strptime(date_str, TIME_FORMAT) for date_str in dates_str]
             most_recent_date = max(dates)
             return datetime.strftime(most_recent_date, '%Y-%m-%d')
 
