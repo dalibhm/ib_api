@@ -20,7 +20,7 @@ class EWrapperImpl(EWrapper):
         self.asynchronous = False
         self.request_manager = request_manager
         self.response_processor = ResponseProcessorFactory(config).create()
-        self.response_manager = GrpcResponseManager(config.get('data api', 'fundamental_data_server'))
+        self.response_manager = GrpcResponseManager(config.get('services', 'fundamental_data'))
 
     # ! [connectack]
     def connectAck(self):
