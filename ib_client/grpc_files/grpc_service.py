@@ -102,7 +102,7 @@ def serve(ib_client: IbClient, config, request_manager: RequestManager, max_work
     request_data_pb2_grpc.add_RequestDataServicer_to_server(RequestData(ib_client, request_manager),
                                                             server
                                                             )
-    server.add_insecure_port(config.get('grpc server', 'url'))
+    server.add_insecure_port(config.get('services', 'ib'))
     server.start()
     print("server started")
     try:
