@@ -4,7 +4,6 @@ import os
 import time
 from configparser import ConfigParser
 
-
 from ib_client import IbClient
 
 
@@ -34,10 +33,11 @@ def SetupLogger():
 
     # logging.basicConfig( level=logging.DEBUG,
     #                    format=recfmt, datefmt=timefmt)
-    logging.basicConfig(filename=time.strftime(os.path.join("log", "ibapi_%Y%m%d_%H_%M_%S.log"),
+    logging.basicConfig(filename=time.strftime(os.path.join("log", "ibapi_%Y%m%d_%H_%M_%S.log")),
                         filemode="w",
                         level=logging.INFO,
                         format=recfmt, datefmt=timefmt)
+
     # logger = logging.getLogger(__name__)
     # logger.setLevel(logging.INFO)
     # formatter = logging.Formatter(fmt=recfmt, datefmt=timefmt)
