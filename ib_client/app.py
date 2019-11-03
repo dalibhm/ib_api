@@ -23,7 +23,7 @@ def main():
     app_thread = Thread(target=ib_client.run)
     app_thread.start()
 
-    grpc_thread = Thread(target=secdrve, args=(ib_client, config, request_manager, 10))
+    grpc_thread = Thread(target=serve, args=(ib_client, config, request_manager, 10))
     grpc_thread.start()
 
 
