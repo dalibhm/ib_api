@@ -12,7 +12,7 @@ class ExchangeParser:
     def __init__(self, url):
         self.url = url
         self.html = ''
-        self.logger = logging.getLogger()
+        self.logger = logging.getLogger('listing')
         self.exchanges = []
 
     def parse_and_post(self):

@@ -35,7 +35,7 @@ def SetupLogger():
     #                    format=recfmt, datefmt=timefmt)
     logging.basicConfig(filename=time.strftime(os.path.join("log", "ibapi_%Y%m%d_%H_%M_%S.log")),
                         filemode="w",
-                        level=logging.INFO,
+                        level=logging.DEBUG,
                         format=recfmt, datefmt=timefmt)
 
     # logger = logging.getLogger(__name__)

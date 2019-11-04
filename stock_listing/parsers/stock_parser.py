@@ -15,7 +15,7 @@ from data.repository import Repository
 
 class StockParser:
     def __init__(self, exchange_url, exchange_code):
-        self.logger = logging.getLogger()
+        self.logger = logging.getLogger('listing')
         self.url = exchange_url
         self.first_html = ''
         self.exchange_name = exchange_code

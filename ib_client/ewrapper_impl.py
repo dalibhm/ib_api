@@ -11,7 +11,7 @@ from ibapi.wrapper import EWrapper
 from ib_response_manager.grpc_reponse_manager import GrpcResponseManager
 from ib_response_manager.response_processor_factory import ResponseProcessorFactory
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 class EWrapperImpl(EWrapper):
@@ -116,6 +116,7 @@ class EWrapperImpl(EWrapper):
         print('from fundamental data')
         super().fundamentalData(reqId, data)
         request = self.request_manager.get_request_by_id(reqId)
+        logger.info('{} {} {}'.format(reqId, request.reportType, request.contract.symbol))
         self.response_manager.process_financial_data(request, data)
 
     # ! [fundamentaldata]

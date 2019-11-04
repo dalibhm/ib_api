@@ -58,7 +58,7 @@ class FileManager:
             return content_has_changed
 
     def save_report(self, symbol, report_type, report_content):
-        filename = '{}_{}_{}.xml'.format(symbol, report_type, datetime.now())
-        full_path = os.path.join('.', self.base_directory, filename)
+        filename = '{}_{}_{}.xml'.format(symbol, report_type, datetime.strftime(datetime.now(), TIME_FORMAT))
+        full_path = os.path.join(self.base_directory, filename)
         with open(full_path, "w") as file_writer:
             file_writer.write(report_content)

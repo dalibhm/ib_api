@@ -28,12 +28,12 @@ def init_logger():
     if not os.path.exists("log"):
         os.makedirs("log")
 
-    log_file = time.strftime("./log/listing_%Y%m%d_%H.%M.%S.log")
+    log_file = time.strftime("./log/listing_%Y%m%d_%H%M%S.log")
     recfmt = '(%(threadName)s) %(asctime)s.%(msecs)03d %(levelname)s %(filename)s:%(lineno)d %(message)s'
     timefmt = '%y%m%d_%H:%M:%S'
 
     logger = logging.getLogger('listing')
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter(fmt=recfmt, datefmt=timefmt)
     file_handler = logging.FileHandler(log_file)
     file_handler.setFormatter(formatter)
@@ -64,7 +64,7 @@ def main():
     # config.read('./setup/development.ini')
     init_db()
     init_logger()
-    get_exchanges()
+    # get_exchanges()
     get_stocks()
 
 
