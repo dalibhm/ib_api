@@ -6,6 +6,7 @@ from configparser import ConfigParser
 
 from ibapi.client import EClient
 
+
 from ewrapper_impl import EWrapperImpl
 from ib_response_manager.grpc_reponse_manager import GrpcResponseManager
 from ib_response_manager.response_processor_factory import ResponseProcessorFactory
@@ -16,6 +17,7 @@ logger = logging.getLogger()
 class IbClient(EClient):
 
     def __init__(self, config: ConfigParser, request_manager):
+        self.connection_manager = None
         wrapper = EWrapperImpl(config=config, request_manager=request_manager)
 
         super().__init__(wrapper)
@@ -48,3 +50,7 @@ class IbClient(EClient):
         oid = self.nextValidOrderId
         self.nextValidOrderId += 1
         return oid
+
+    def register_connection_manager(self, connection_manager):
+        self.connection_manager = connection_manager
+        self.wrapper.connection_manager = connection_manager

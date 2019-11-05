@@ -124,7 +124,8 @@ class EWrapperImpl(EWrapper):
     # ! [error]
     def error(self, reqId: TickerId, errorCode: int, errorString: str):
         super().error(reqId, errorCode, errorString)
-        print("Error. Id:", reqId, "Code:", errorCode, "Msg:", errorString)
+        if errorCode == 501:
+            self.connection_manager.connect()
 
     # ! [error] self.reqId2nErr[reqId] += 1
 

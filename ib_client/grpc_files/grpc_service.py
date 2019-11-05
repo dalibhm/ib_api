@@ -1,6 +1,7 @@
 from ibapi.contract import Contract
 
 from Services.LogService import LogService
+from connection_manager import ConnectionManager
 
 from proto import request_data_pb2, request_data_pb2_grpc
 
@@ -29,12 +30,12 @@ def get_contract(request):
 
 class RequestData(request_data_pb2_grpc.RequestDataServicer):
 
-    def __init__(self, ib_client: IbClient, request_manager: RequestManager):
+    def __init__(self, ib_client: IbClient, request_manager: RequestManager, connection_manager):
         # super.__init__()
         self.ib_client = ib_client
         self.request_id_gen = RequestIdGenerator()
         self.request_manager = request_manager
-
+        self.connection_manager = connection_manager
         self.logger = LogService.get_startup_log()
 
     # these logs propagate to the root logger
@@ -89,7 +90,9 @@ class RequestData(request_data_pb2_grpc.RequestDataServicer):
                                               request.reportType,
                                               []
                                               )
-        except Exception as e:
+        except BrokenPipeError:
+            self.connection_manager.reconnect()
+        finally:
             self.logger.exception('Unable to request {}  {} for {:15s} : {}'.format(request_id,
                                                                                     request.reportType,
                                                                                     request.contract.symbol))
@@ -97,9 +100,9 @@ class RequestData(request_data_pb2_grpc.RequestDataServicer):
         return request_data_pb2.Status(message=True)
 
 
-def serve(ib_client: IbClient, config, request_manager: RequestManager, max_workers):
+def serve(ib_client: IbClient, config, request_manager: RequestManager, max_workers, connection_manager: ConnectionManager):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
-    request_data_pb2_grpc.add_RequestDataServicer_to_server(RequestData(ib_client, request_manager),
+    request_data_pb2_grpc.add_RequestDataServicer_to_server(RequestData(ib_client, request_manager, connection_manager),
                                                             server
                                                             )
 
