@@ -54,7 +54,11 @@ def get_stocks():
     exchanges = Repository.get_all_exchanges()
 
     for exchange in exchanges:
+        print('[ Downloading stock listing for exchange {} ]'.format(exchange))
+
         exchange_url = base_url + exchange.link
+        print(exchange_url)
+
         stock_parser = StockParser(exchange_url, exchange.code)
         stock_parser.parse_stock_web_pages()
 

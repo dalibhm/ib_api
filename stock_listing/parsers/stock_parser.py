@@ -35,6 +35,7 @@ class StockParser:
     def parse_stock_web_pages(self):
         self.get_first_html()
         self.get_number_of_web_pages()
+        print('[{} pages to parse]')
 
         global loop
         loop = asyncio.get_event_loop()
@@ -47,8 +48,13 @@ class StockParser:
             tasks.append((page_number, loop.create_task(self.get_html(page_number))))
 
         for n, t in tasks:
-            html = await t
-            self.parse_html(html)
+            try:
+                html = await t
+                self.parse_html(html)
+            except Exception as e:
+                print('[ page {} failed due to {} ]'.format(n, e))
+            finally:
+                print('[ page {} : from finally as exception could not be written ]'.format(n))
 
     async def get_html(self, page_number: int) -> str:
         url = self.url + '&p=&cc=&limit=100&page=' + str(page_number)
