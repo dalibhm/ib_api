@@ -1,7 +1,10 @@
+import os
+
 import sqlalchemy
 import sqlalchemy.orm
 
 from data.sqlalchemy_base import SqlAlchemyBase
+from configparser import ConfigParser
 
 
 class DbSessionFactory:
@@ -9,10 +12,16 @@ class DbSessionFactory:
 
     @classmethod
     def global_init(cls):
-        conn_string = 'postgresql://ib_test:ib_test@localhost:5432/ib_test'
+        config = ConfigParser()
+        config.read(os.path.join('..', 'settings', 'development.ini'))
+        conn_string = 'postgresql://{}:{}@{}:{}/{}'.format(config.get('postgres', 'user'),
+                                                           config.get('postgres', 'password'),
+                                                           config.get('postgres', 'host'),
+                                                           config.get('postgres', 'port'),
+                                                           config.get('postgres', 'db'))
 
         # print("Connection string: " + conn_string)
-        engine = sqlalchemy.create_engine(conn_string, echo=False)
+        engine = sqlalchemy.create_engine(conn_string, echo=config.get('postgres', 'echo'))
 
         SqlAlchemyBase.metadata.create_all(engine)
 
