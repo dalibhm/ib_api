@@ -36,7 +36,11 @@ class KafkaResponseManager(ResponseManager):
         request: HistoricalDataRequest = self.request_manager.get_request_by_id(requestId)
         r = {
             'symbol': request.contract.symbol,
-            'secType': request.contract.secType,
+            # 'secType': request.contract.secType,
+            # this field id probably empty because it is supposed to be read from the contract table, which
+            # is not used for now, keep in mind
+            'secType': 'STK',
+            'exchange': request.contract.exchange,
             'currency': request.contract.currency,
             'barSize': request.barSizeSetting,
             'whatToShow': request.whatToShow,

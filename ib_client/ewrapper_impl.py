@@ -69,7 +69,7 @@ class EWrapperImpl(EWrapper):
 
     # ! [historicaldata]
     def historicalData(self, reqId: int, bar: BarData):
-        print("HistoricalData. ReqId:", reqId, "BarData.", bar)
+        # print("HistoricalData. ReqId:", reqId, "BarData.", bar)
         self.response_processor.process_historical_data(reqId, bar)
 
     # ! [historicaldata]
