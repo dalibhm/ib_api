@@ -1,5 +1,0 @@
-(IB) dali Testbed
-$ python -m grpc_tools.protoc -I./proto --python_out=./proto --grpc_python_out=. ./proto/request_data.proto
-
-(IB) dali Testbed
-$ python -m grpc_tools.protoc -I./proto --python_out=./proto --grpc_python_out=. ./proto/response_data.proto

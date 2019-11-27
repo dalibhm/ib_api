@@ -1,3 +1,6 @@
+import os
+from configparser import ConfigParser
+
 import sqlalchemy
 import sqlalchemy.orm
 
@@ -9,10 +12,16 @@ class DbSessionFactory:
 
     @classmethod
     def global_init(cls):
-        conn_string = 'postgresql://ib_test:ib_test@localhost:5432/ib_test'
+        config = ConfigParser()
+        config.read(os.path.join('..', 'settings', 'development.ini'))
+        conn_string = 'postgresql://{}:{}@{}:{}/{}'.format(config.get('postgres', 'user'),
+                                                           config.get('postgres', 'password'),
+                                                           config.get('postgres', 'host'),
+                                                           config.get('postgres', 'port'),
+                                                           config.get('postgres', 'db'))
 
-        # print("Connection string: " + conn_string)
-        engine = sqlalchemy.create_engine(conn_string, echo=False)
+        print("[ Connecting to database : {} ]".format(conn_string))
+        engine = sqlalchemy.create_engine(conn_string, echo=config.getboolean('postgres', 'echo'))
 
         SqlAlchemyBase.metadata.create_all(engine)
 
