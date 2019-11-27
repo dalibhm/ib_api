@@ -64,7 +64,7 @@ def main():
     # config.read('./setup/development.ini')
     init_db()
     init_logger()
-    # get_exchanges()
+    get_exchanges()
     get_stocks()
 
 
