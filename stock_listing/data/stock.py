@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import sqlalchemy
 
 from data.sqlalchemy_base import SqlAlchemyBase
@@ -12,8 +14,9 @@ class Stock(SqlAlchemyBase):
     ib_symbol = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     currency = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     symbol = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    exchange = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    exchange = sqlalchemy.Column(sqlalchemy.String, nullable=False, primary_key=True)
     product_description_link = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    insert_date = sqlalchemy.Column(sqlalchemy.DateTime, nullable=False, default=datetime.now)
 
     @staticmethod
     def from_json(json_stock):

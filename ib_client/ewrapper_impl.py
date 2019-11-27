@@ -8,7 +8,7 @@ from ibapi.order import Order
 from ibapi.order_state import OrderState
 from ibapi.wrapper import EWrapper
 
-from ib_response_manager.grpc_reponse_manager import GrpcResponseManager
+from ib_response_manager.grpc.grpc_reponse_manager import GrpcResponseManager
 from ib_response_manager.response_processor_factory import ResponseProcessorFactory
 
 logger = logging.getLogger(__name__)
@@ -19,7 +19,7 @@ class EWrapperImpl(EWrapper):
         super().__init__()
         self.asynchronous = False
         self.request_manager = request_manager
-        self.response_processor = ResponseProcessorFactory(config).create()
+        self.response_processor = ResponseProcessorFactory(config).create(request_manager)
         self.response_manager = GrpcResponseManager(config.get('services', 'fundamental_data'))
 
     # ! [connectack]
@@ -70,14 +70,14 @@ class EWrapperImpl(EWrapper):
     # ! [historicaldata]
     def historicalData(self, reqId: int, bar: BarData):
         print("HistoricalData. ReqId:", reqId, "BarData.", bar)
-        request = self.request_manager.get_request_by_id(reqId)
-        self.response_processor.process_historical_data(request, bar)
+        self.response_processor.process_historical_data(reqId, bar)
 
     # ! [historicaldata]
 
     # ! [historicaldataend]
     def historicalDataEnd(self, reqId: int, start: str, end: str):
         super().historicalDataEnd(reqId, start, end)
+        self.request_manager.decrement_counter()
         print("HistoricalDataEnd. ReqId:", reqId, "from", start, "to", end)
 
     # ! [historicaldataend]

@@ -52,6 +52,7 @@ def get_general_info(node):
 
     return general_info
 
+
 def parse_statement_info(node: ET.Element):
     result = {}
     child_node: ET.Element
@@ -62,6 +63,7 @@ def parse_statement_info(node: ET.Element):
         else:
             raise TypeError
     return result
+
 
 def parse_notes(node: ET.Element):
     result = {}

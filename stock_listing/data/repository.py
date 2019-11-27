@@ -2,6 +2,7 @@ import random
 
 # noinspection PyPackageRequirements
 # from dateutil.parser import parse
+from sqlalchemy import and_
 
 from data.db_factory import DbSessionFactory
 from data.exchange import Exchange
@@ -46,6 +47,17 @@ class Repository:
         session = DbSessionFactory.create_session()
 
         stock = session.query(Stock).filter(Stock.con_id == con_id).first()
+
+        session.close()
+
+        return stock
+
+    @classmethod
+    def get_stock_by_id_and_exchange(cls, con_id, exchange):
+        session = DbSessionFactory.create_session()
+
+        stock = session.query(Stock).filter(and_(Stock.con_id == con_id,
+                                                 Stock.exchange == exchange)).first()
 
         session.close()
 

@@ -1,3 +1,4 @@
+import logging
 import grpc
 
 from ib_response_manager.response_manager import ResponseManager
@@ -7,7 +8,7 @@ from .proto import fundamental_data_pb2
 
 class GrpcResponseManager(ResponseManager):
     def __init__(self, server_url):
-        self.logger = None
+        self.logger = logging.getLogger('__name__')
         self.channel = grpc.insecure_channel(server_url)
         self.stub = fundamental_data_pb2_grpc.FundamentalDataStub(self.channel)
 

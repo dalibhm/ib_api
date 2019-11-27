@@ -1,9 +1,10 @@
 {
-  "stocks_financial_data_download": {
+
+    "stocks_financial_data_download": {
     "type": "data download",
     "config": {
-      "exchanges": [
-        "byx"
+      "stocks": [
+        "PAYC", "SHOP", "TTS"
       ],
       "data": {
         "type": "fundamental",

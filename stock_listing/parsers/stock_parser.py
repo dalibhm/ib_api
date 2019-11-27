@@ -57,8 +57,12 @@ class StockParser:
         ssl_context = ssl.create_default_context(purpose=ssl.Purpose.CLIENT_AUTH)
         async with aiohttp.ClientSession() as session:
             async with session.get(url, ssl=ssl_context) as resp:
-                resp.raise_for_status()
-
+                # resp.raise_for_status()
+                try:
+                    result = resp.text()
+                except:
+                    result = ''
+                    print('http request failed for : {}'.format(url))
                 return await resp.text()
 
     def get_number_of_web_pages(self):
@@ -72,6 +76,14 @@ class StockParser:
             self.number_of_web_pages = 1
 
     def parse_html(self, html: str) -> List[dict]:
+        """
+        Parses html and adds stock to database
+        if the http request does not succeed, then html = '' and no action is taken
+        :param html:
+        :return:
+        """
+        if html == '':
+            return
         soup = BeautifulSoup(html, 'html.parser')
         rows = soup.findAll('tr')
 
@@ -79,7 +91,7 @@ class StockParser:
             processed_row = self.process_stock_row(row)
             if processed_row:
                 stock = processed_row
-                stock_db = Repository.get_stock_by_id(stock['con_id'])
+                stock_db = Repository.get_stock_by_id_and_exchange(stock['con_id'], stock['exchange'])
                 if not stock_db:
                     Repository.add_stock(stock)
 

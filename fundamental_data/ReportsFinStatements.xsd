@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ReportFinancialStatements" type="ReportFinancialStatementsType"/>
+  <xs:complexType name="CoIDType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Type" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="CoIDsType">
+    <xs:sequence>
+      <xs:element type="CoIDType" name="CoID" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IssueIDType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Type" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="ExchangeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code"/>
+        <xs:attribute type="xs:string" name="Country"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="MostRecentSplitType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Date"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="IssueType">
+    <xs:sequence>
+      <xs:element type="IssueIDType" name="IssueID" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="ExchangeType" name="Exchange"/>
+      <xs:element type="MostRecentSplitType" name="MostRecentSplit"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="ID"/>
+    <xs:attribute type="xs:string" name="Type"/>
+    <xs:attribute type="xs:string" name="Desc"/>
+    <xs:attribute type="xs:string" name="Order"/>
+  </xs:complexType>
+  <xs:complexType name="IssuesType">
+    <xs:sequence>
+      <xs:element type="IssueType" name="Issue"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CoStatusType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="CoTypeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="ReportingCurrencyType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="MostRecentExchangeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Date"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="CoGeneralInfoType">
+    <xs:sequence>
+      <xs:element type="CoStatusType" name="CoStatus"/>
+      <xs:element type="CoTypeType" name="CoType"/>
+      <xs:element type="xs:string" name="LastModified"/>
+      <xs:element type="xs:string" name="LatestAvailableAnnual"/>
+      <xs:element type="xs:string" name="LatestAvailableInterim"/>
+      <xs:element type="ReportingCurrencyType" name="ReportingCurrency"/>
+      <xs:element type="MostRecentExchangeType" name="MostRecentExchange"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="COATypeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="BalanceSheetDisplayType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="CashFlowMethodType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="StatementInfoType">
+    <xs:sequence>
+      <xs:element type="COATypeType" name="COAType"/>
+      <xs:element type="BalanceSheetDisplayType" name="BalanceSheetDisplay"/>
+      <xs:element type="CashFlowMethodType" name="CashFlowMethod"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CFAAvailabilityType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="IAvailabilityType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="ISIAvailabilityType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="BSIAvailabilityType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="CFIAvailabilityType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="NotesType">
+    <xs:sequence>
+      <xs:element type="CFAAvailabilityType" name="CFAAvailability"/>
+      <xs:element type="IAvailabilityType" name="IAvailability"/>
+      <xs:element type="ISIAvailabilityType" name="ISIAvailability"/>
+      <xs:element type="BSIAvailabilityType" name="BSIAvailability"/>
+      <xs:element type="CFIAvailabilityType" name="CFIAvailability"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="mapItemType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="coaItem" use="optional"/>
+        <xs:attribute type="xs:string" name="statementType" use="optional"/>
+        <xs:attribute type="xs:string" name="lineID" use="optional"/>
+        <xs:attribute type="xs:string" name="precision" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="COAMapType">
+    <xs:sequence>
+      <xs:element type="mapItemType" name="mapItem" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="periodTypeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="UpdateTypeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="AuditorNameType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="AuditorOpinionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Code" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="SourceType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="Date" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="FPHeaderType">
+    <xs:sequence>
+      <xs:element name="PeriodLength" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="12"/>
+            <xs:enumeration value="3"/>
+            <xs:enumeration value="6"/>
+            <xs:enumeration value="9"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="periodTypeType" name="periodType" minOccurs="0"/>
+      <xs:element type="UpdateTypeType" name="UpdateType"/>
+      <xs:element type="xs:string" name="AccountingStd" minOccurs="0"/>
+      <xs:element name="StatementDate">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="2018-12-31"/>
+            <xs:enumeration value="2017-12-31"/>
+            <xs:enumeration value="2016-12-31"/>
+            <xs:enumeration value="2015-12-31"/>
+            <xs:enumeration value="2014-12-31"/>
+            <xs:enumeration value="2013-12-31"/>
+            <xs:enumeration value="2019-06-30"/>
+            <xs:enumeration value="2019-03-31"/>
+            <xs:enumeration value="2018-09-30"/>
+            <xs:enumeration value="2018-06-30"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="AuditorNameType" name="AuditorName" minOccurs="0"/>
+      <xs:element type="AuditorOpinionType" name="AuditorOpinion" minOccurs="0"/>
+      <xs:element type="SourceType" name="Source"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lineItemType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="coaCode" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="StatementType">
+    <xs:sequence>
+      <xs:element type="FPHeaderType" name="FPHeader"/>
+      <xs:element type="lineItemType" name="lineItem" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="Type" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="FiscalPeriodType">
+    <xs:sequence>
+      <xs:element type="StatementType" name="Statement" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="Type" use="optional"/>
+    <xs:attribute type="xs:string" name="EndDate" use="optional"/>
+    <xs:attribute type="xs:string" name="FiscalYear" use="optional"/>
+    <xs:attribute type="xs:string" name="FiscalPeriodNumber" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="AnnualPeriodsType">
+    <xs:sequence>
+      <xs:element type="FiscalPeriodType" name="FiscalPeriod" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InterimPeriodsType">
+    <xs:sequence>
+      <xs:element type="FiscalPeriodType" name="FiscalPeriod" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FinancialStatementsType">
+    <xs:sequence>
+      <xs:element type="COAMapType" name="COAMap"/>
+      <xs:element type="AnnualPeriodsType" name="AnnualPeriods"/>
+      <xs:element type="InterimPeriodsType" name="InterimPeriods"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReportFinancialStatementsType">
+    <xs:sequence>
+      <xs:element type="CoIDsType" name="CoIDs"/>
+      <xs:element type="IssuesType" name="Issues"/>
+      <xs:element type="CoGeneralInfoType" name="CoGeneralInfo"/>
+      <xs:element type="StatementInfoType" name="StatementInfo"/>
+      <xs:element type="NotesType" name="Notes"/>
+      <xs:element type="FinancialStatementsType" name="FinancialStatements"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="Major"/>
+    <xs:attribute type="xs:string" name="Minor"/>
+    <xs:attribute type="xs:string" name="Revision"/>
+  </xs:complexType>
+</xs:schema>

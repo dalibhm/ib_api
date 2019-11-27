@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="data" type="dataType"/>
+  <xs:complexType name="EarningsType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Q1" minOccurs="0"/>
+      <xs:element type="xs:string" name="Q2" minOccurs="0"/>
+      <xs:element type="xs:string" name="Q3" minOccurs="0"/>
+      <xs:element type="xs:string" name="TimeZone" minOccurs="0"/>
+      <xs:element type="xs:string" name="Q4" minOccurs="0"/>
+      <xs:element name="Period" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Q1"/>
+            <xs:enumeration value="Q3"/>
+            <xs:enumeration value="Q4"/>
+            <xs:enumeration value="Q2"/>
+            <xs:enumeration value="Q3 2019"/>
+            <xs:enumeration value="Q2 2020"/>
+            <xs:enumeration value="Q1 2020"/>
+            <xs:enumeration value="Q3 2020"/>
+            <xs:enumeration value="Q4 2019"/>
+            <xs:enumeration value="Interim 2019"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Time" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Before Market"/>
+            <xs:enumeration value="After Market"/>
+            <xs:enumeration value="During Market"/>
+            <xs:enumeration value="Unspecified"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Etype">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Unconfirmed"/>
+            <xs:enumeration value="Completed"/>
+            <xs:enumeration value="Confirmed"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="Date"/>
+      <xs:element type="xs:string" name="TimeStamp"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EarningsListType">
+    <xs:sequence>
+      <xs:element type="EarningsType" name="Earnings" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ShareHolderMeetingType">
+    <xs:sequence>
+      <xs:element name="Type">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="S"/>
+            <xs:enumeration value="B"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="TimeZone" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="EST"/>
+            <xs:enumeration value="CET"/>
+            <xs:enumeration value="EET"/>
+            <xs:enumeration value="GMT"/>
+            <xs:enumeration value="Asia/Taipei"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Time" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="18:00"/>
+            <xs:enumeration value="19:00"/>
+            <xs:enumeration value="13:00"/>
+            <xs:enumeration value="08:00"/>
+            <xs:enumeration value="12:00"/>
+            <xs:enumeration value="16:00"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="Date"/>
+      <xs:element type="xs:string" name="TimeStamp"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ShareHolderMeetingListType">
+    <xs:sequence>
+      <xs:element type="ShareHolderMeetingType" name="ShareHolderMeeting" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PresentationType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="TimeZone" minOccurs="0"/>
+      <xs:element type="xs:string" name="Title" minOccurs="0"/>
+      <xs:element type="xs:string" name="Time" minOccurs="0"/>
+      <xs:element type="xs:string" name="EventName"/>
+      <xs:element type="xs:string" name="TimeStamp"/>
+      <xs:element type="xs:string" name="Date"/>
+      <xs:element type="xs:string" name="Name"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PresentationListType">
+    <xs:sequence>
+      <xs:element type="PresentationType" name="Presentation" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompanyType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="Ticker"/>
+      <xs:element type="xs:string" name="ISIN"/>
+      <xs:element name="Exchange">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="NYSE"/>
+            <xs:enumeration value="NSDQ"/>
+            <xs:enumeration value="AMEX"/>
+            <xs:enumeration value="TSE"/>
+            <xs:enumeration value="OTC"/>
+            <xs:enumeration value="CBOE"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Country">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="USA"/>
+            <xs:enumeration value="Canada"/>
+            <xs:enumeration value="Norway"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="conid"/>
+      <xs:element type="EarningsListType" name="EarningsList"/>
+      <xs:element type="ShareHolderMeetingListType" name="ShareHolderMeetingList"/>
+      <xs:element type="EarningsCallListType" name="EarningsCallList"/>
+      <xs:element type="EarningsCallTranscriptListType" name="EarningsCallTranscriptList"/>
+      <xs:element type="PresentationListType" name="PresentationList"/>
+      <xs:element type="EventListType" name="EventList"/>
+      <xs:element type="AnalystMeetingListType" name="AnalystMeetingList"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="WSHDataType">
+    <xs:sequence>
+      <xs:element type="CompanyType" name="Company"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EarningsCallType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="ConfNumber" minOccurs="0"/>
+      <xs:element type="xs:string" name="TimeZone"/>
+      <xs:element type="xs:string" name="GotoBroadcast" minOccurs="0"/>
+      <xs:element type="xs:string" name="ConfPasscode" minOccurs="0"/>
+      <xs:element type="xs:string" name="Time"/>
+      <xs:element type="xs:string" name="Date"/>
+      <xs:element type="xs:string" name="TimeStamp"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EarningsCallListType">
+    <xs:sequence>
+      <xs:element type="EarningsCallType" name="EarningsCall"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EarningsCallTranscriptType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="TimeZone" minOccurs="0"/>
+      <xs:element name="Period">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Q3 2019"/>
+            <xs:enumeration value="Q2 2020"/>
+            <xs:enumeration value="Q1 2020"/>
+            <xs:enumeration value="Q4 2019"/>
+            <xs:enumeration value="Q2 2019"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="URL"/>
+      <xs:element type="xs:string" name="TimeStamp"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EarningsCallTranscriptListType">
+    <xs:sequence>
+      <xs:element type="EarningsCallTranscriptType" name="EarningsCallTranscript"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EventType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:element name="Status">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Unconfirmed"/>
+            <xs:enumeration value="Completed"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Type">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="BUSINESS_UPDATE"/>
+            <xs:enumeration value="CAPITAL_MARKETS"/>
+            <xs:enumeration value="R_AND_D"/>
+            <xs:enumeration value="COMPANY_TRAVEL"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="TimeZone">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="EST"/>
+            <xs:enumeration value="GMT"/>
+            <xs:enumeration value="AST"/>
+            <xs:enumeration value="AEST"/>
+            <xs:enumeration value="CST"/>
+            <xs:enumeration value="PST"/>
+            <xs:enumeration value="CET"/>
+            <xs:enumeration value="BRT"/>
+            <xs:enumeration value="MST"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="State">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="NY"/>
+            <xs:enumeration value="IL"/>
+            <xs:enumeration value="MA"/>
+            <xs:enumeration value="KY"/>
+            <xs:enumeration value="UT"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="City">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="London"/>
+            <xs:enumeration value="New York"/>
+            <xs:enumeration value="Chicago"/>
+            <xs:enumeration value="Boston"/>
+            <xs:enumeration value="Louisville"/>
+            <xs:enumeration value="Ogden"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Time">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="8:30 AM"/>
+            <xs:enumeration value="4:30 AM"/>
+            <xs:enumeration value="8:00 AM"/>
+            <xs:enumeration value="4:30 PM"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="TimeStamp"/>
+      <xs:element type="xs:string" name="Date"/>
+      <xs:element name="URL">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="https://www.flushingbank.com/about-us/investor-relations/event-calendar.html"/>
+            <xs:enumeration value="https://edge.media-server.com/mmc/p/sc94yugi"/>
+            <xs:enumeration value="https://axsometherapeuticsinc.gcs-web.com/news-releases/upcoming-events?field_nir_news_date_value[min]=2019"/>
+            <xs:enumeration value="https://edge.media-server.com/mmc/p/qjvmyxv2"/>
+            <xs:enumeration value="http://ir.blueprintmedicines.com/events-and-presentations/events-presentations"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="Name"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="EventListType">
+    <xs:sequence>
+      <xs:element type="EventType" name="Event" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AnalystMeetingType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:element name="Status">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Unconfirmed"/>
+            <xs:enumeration value="Completed"/>
+            <xs:enumeration value="Confirmed"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="TimeZone">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="EST"/>
+            <xs:enumeration value="IST"/>
+            <xs:enumeration value="BRT"/>
+            <xs:enumeration value="CLT"/>
+            <xs:enumeration value="CST"/>
+            <xs:enumeration value="CET"/>
+            <xs:enumeration value="Asia/Taipei"/>
+            <xs:enumeration value="PST"/>
+            <xs:enumeration value="MST"/>
+            <xs:enumeration value="GMT"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="Time"/>
+      <xs:element type="xs:string" name="TimeStamp"/>
+      <xs:element type="xs:string" name="Date"/>
+      <xs:element type="xs:string" name="URL"/>
+      <xs:element type="xs:string" name="Name"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="AnalystMeetingListType">
+    <xs:sequence>
+      <xs:element type="AnalystMeetingType" name="AnalystMeeting" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="dataType">
+    <xs:sequence>
+      <xs:element type="WSHDataType" name="WSHData" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

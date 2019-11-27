@@ -1,11 +1,14 @@
+import sys
 import grpc
+
+import logging
 
 from proto.ib_client import request_data_pb2, request_data_pb2_grpc
 
 
 class IbClient:
     def __init__(self, server_url):
-        self.logger = None
+        self.logger = logging.getLogger(__name__)
         self.channel = grpc.insecure_channel(server_url)
         self.stub = request_data_pb2_grpc.RequestDataStub(self.channel)
 
@@ -31,8 +34,8 @@ class IbClient:
         try:
             _ = self.stub.RequestFundamentalData(request)
             self.log_success('fundamental', contract['symbol'], report_type)
-        except Exception as exception:
-            self.log_failure('fundamental', contract['symbol'], report_type)
+        except Exception as e:
+            self.log_failure('fundamental', contract['symbol'], e.debug_error_string(), report_type)
 
     def request_historical_data(self, contract, params):
         contract_grpc = request_data_pb2.Contract(**contract)
@@ -40,18 +43,15 @@ class IbClient:
         try:
             _ = self.stub.RequestHistoricalData(request)
             self.log_success('historical', contract['symbol'])
-        except Exception as exception:
-            self.log_failure('fundamental', contract['symbol'])
+        except Exception as e:
+            self.log_failure('historical', contract['symbol'], e.debug_error_string())
 
     def log_success(self, request_type, symbol, report_type=None):
         pass
         # self.logger.info('{}: {} {} request sent'.format(request_type, symbol, report_type))
 
-    def log_failure(self, request_type, symbol, report_type=None):
-        pass
-        # if report_type is None:
-        #     self.logger.exception('{}: {} request failed'.format(request_type, symbol),
-        #                           exc_info=sys.exc_info())
-        # else:
-        #     self.logger.exception('{}: {} {} request failed'.format(request_type, symbol, report_type),
-        #                           exc_info=sys.exc_info())
+    def log_failure(self, request_type, symbol, error_string, report_type=None):
+        if report_type is None:
+            self.logger.error('{}: {} request failed'.format(request_type, symbol), error_string)
+        else:
+            self.logger.error('{}: {} {} request failed: {}'.format(request_type, symbol, report_type, error_string))

@@ -44,5 +44,26 @@
         }
       }
     }
+  },
+    "stocks_financial_data_download": {
+    "type": "data download",
+    "config": {
+      "exchanges": [
+        "nyse"
+      ],
+      "data": {
+        "type": "fundamental",
+        "params": {
+          "report_types": [
+            "ReportsFinSummary",
+            "ReportsOwnership",
+            "ReportSnapshot",
+            "ReportsFinStatements",
+            "RESC",
+            "CalendarReport"
+          ]
+        }
+      }
+    }
   }
 }

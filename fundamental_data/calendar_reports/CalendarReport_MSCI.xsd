@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="WSHData" type="WSHDataType"/>
+  <xs:complexType name="EarningsType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Q1"/>
+      <xs:element type="xs:string" name="Q2"/>
+      <xs:element type="xs:string" name="Q3"/>
+      <xs:element type="xs:string" name="TimeZone"/>
+      <xs:element type="xs:string" name="Q4"/>
+      <xs:element type="xs:string" name="Period"/>
+      <xs:element type="xs:string" name="Time"/>
+      <xs:element type="xs:string" name="Etype"/>
+      <xs:element type="xs:string" name="Date"/>
+      <xs:element type="xs:string" name="TimeStamp"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EarningsListType">
+    <xs:sequence>
+      <xs:element type="EarningsType" name="Earnings"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EarningsCallType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="ConfNumber"/>
+      <xs:element type="xs:string" name="TimeZone"/>
+      <xs:element type="xs:string" name="GotoBroadcast"/>
+      <xs:element type="xs:string" name="ConfPasscode"/>
+      <xs:element type="xs:string" name="Time"/>
+      <xs:element type="xs:string" name="Date"/>
+      <xs:element type="xs:string" name="TimeStamp"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EarningsCallListType">
+    <xs:sequence>
+      <xs:element type="EarningsCallType" name="EarningsCall"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompanyType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="Ticker"/>
+      <xs:element type="xs:string" name="ISIN"/>
+      <xs:element type="xs:string" name="Exchange"/>
+      <xs:element type="xs:string" name="Country"/>
+      <xs:element name="conid" maxOccurs="unbounded" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="80743526"/>
+            <xs:enumeration value="47101335"/>
+            <xs:enumeration value="371152020"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="EarningsListType" name="EarningsList"/>
+      <xs:element type="EarningsCallListType" name="EarningsCallList"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WSHDataType">
+    <xs:sequence>
+      <xs:element type="CompanyType" name="Company"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

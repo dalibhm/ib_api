@@ -4,7 +4,7 @@ import os
 from threading import Thread
 
 import connection_manager
-from grpc_files.grpc_service import serve
+from grpc_service.grpc_service import serve
 from init_app import init_ib_client
 
 from configparser import ConfigParser

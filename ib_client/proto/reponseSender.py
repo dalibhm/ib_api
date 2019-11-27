@@ -1,7 +1,7 @@
 from __future__ import print_function
 from ibapi import Contract as ib_contract
 
-import grpc_files
+import grpc_service
 
 import proto.response_data_pb2 as rd
 import proto.response_data_pb2_grpc as rd_grpc
@@ -9,7 +9,7 @@ import proto.response_data_pb2_grpc as rd_grpc
 
 class ResponseSender:
     def __init__(self):
-        channel = grpc_files.insecure_channel('localhost:50051')
+        channel = grpc_service.insecure_channel('localhost:50051')
         self.stub = rd_grpc.RequestDataStub(channel)
 
     @staticmethod

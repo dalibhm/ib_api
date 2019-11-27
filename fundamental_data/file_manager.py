@@ -14,7 +14,7 @@ def get_latest(files, pattern):
     dates = [datetime.strptime(date_str, TIME_FORMAT) for date_str in dates_str]
     most_recent_date = max(dates)
     most_recent_file = pattern.replace('(.*)', datetime.strftime(most_recent_date, TIME_FORMAT))
-    return most_recent_file
+    return most_recent_date, most_recent_file
 
 
 def check_for_new_content(latest_file, report_content):
@@ -24,41 +24,43 @@ def check_for_new_content(latest_file, report_content):
 
 
 class FileManager:
-    def __init__(self, base_directory):
-        self.base_directory = base_directory
+    @classmethod
+    def init_directory(cls, base_directory):
+        cls.base_directory = base_directory
 
-    def process_report(self, symbol, report_type, report_content):
-        report_already_downloaded = self.check_if_already_downloaded(symbol, report_type, report_content)
+    @classmethod
+    def process_report(cls, symbol, report_type, report_content):
+        report_already_downloaded = cls.check_if_already_downloaded(symbol, report_type, report_content)
         if not report_already_downloaded:
-            self.save_report(symbol, report_type, report_content)
+            cls.save_report(symbol, report_type, report_content)
 
-    def get_latest_report_date(self, symbol, report_type):
-        file_pattern = os.path.join(self.base_directory, '{}_{}*.xml'.format(symbol, report_type))
+    @classmethod
+    def get_latest_report(cls, symbol, report_type):
+        file_pattern = os.path.join(cls.base_directory, '{}_{}*.xml'.format(symbol, report_type))
         files = glob(file_pattern)
         if not len(files) > 0:
             return ''
         else:
-            re_pattern = os.path.join(self.base_directory, '{}_{}_(.*).xml'.format(symbol, report_type))
-            regex = re.compile(re_pattern)
-            dates_str = [regex.search(file).group(1) for file in files]
-            dates = [datetime.strptime(date_str, TIME_FORMAT) for date_str in dates_str]
-            most_recent_date = max(dates)
-            return datetime.strftime(most_recent_date, '%Y-%m-%d')
+            re_pattern = os.path.join(cls.base_directory, '{}_{}_(.*).xml'.format(symbol, report_type))
+            latest_date, latest_file = get_latest(files, re_pattern)
+            return latest_date, latest_file
 
-    def check_if_already_downloaded(self, symbol, report_type, report_content):
+    @classmethod
+    def check_if_already_downloaded(cls, symbol, report_type, report_content):
         # os.chdir(self.base_directory)
-        pattern = os.path.join(self.base_directory, '{}_{}*.xml'.format(symbol, report_type))
-        files = glob(pattern)
-        if not len(files) > 0:
-            return False
-        else:
-            re_pattern = os.path.join(self.base_directory, '{}_{}_(.*).xml'.format(symbol, report_type))
-            latest_file = get_latest(files, re_pattern)
-            content_has_changed = check_for_new_content(latest_file, report_content)
-            return content_has_changed
+        _, latest_file = cls.get_latest_report(symbol, report_type)
+        content_has_changed = check_for_new_content(latest_file, report_content)
+        return content_has_changed
 
-    def save_report(self, symbol, report_type, report_content):
+    @classmethod
+    def save_report(cls, symbol, report_type, report_content):
         filename = '{}_{}_{}.xml'.format(symbol, report_type, datetime.strftime(datetime.now(), TIME_FORMAT))
-        full_path = os.path.join(self.base_directory, filename)
+        full_path = os.path.join(cls.base_directory, filename)
         with open(full_path, "w") as file_writer:
             file_writer.write(report_content)
+
+
+if __name__ == '__main__':
+    file_manager = FileManager('/Users/dali/workspace/ib_python/fundamental_data/data')
+    latest = file_manager.get_latest_report_date(symbol='AA', report_type='ReportsFinStatements')
+    print(latest)

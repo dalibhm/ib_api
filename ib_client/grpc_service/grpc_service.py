@@ -1,5 +1,5 @@
 from ibapi.contract import Contract
-
+from .kafka_producer import KafkaRequestManager
 from Services.LogService import LogService
 from connection_manager import ConnectionManager
 
@@ -28,15 +28,16 @@ def get_contract(request):
     return contract
 
 
-class RequestData(request_data_pb2_grpc.RequestDataServicer):
+class RequestService(request_data_pb2_grpc.RequestDataServicer):
 
-    def __init__(self, ib_client: IbClient, request_manager: RequestManager, connection_manager):
+    def __init__(self, config, ib_client: IbClient, request_manager: RequestManager, connection_manager):
         # super.__init__()
         self.ib_client = ib_client
         self.request_id_gen = RequestIdGenerator()
         self.request_manager = request_manager
         self.connection_manager = connection_manager
         self.logger = LogService.get_startup_log()
+        self.kafka_request_manager = KafkaRequestManager(config)
 
     # these logs propagate to the root logger
     # self.logger = logging.getLogger(type(self).__name__)
@@ -59,7 +60,11 @@ class RequestData(request_data_pb2_grpc.RequestDataServicer):
         request_id = self.request_id_gen.get_id()
         self.logger.notice("sending request {} for historical data : {}".format(request_id, contract))
         try:
+            # avoid more than 50 requests at a time
+            while self.request_manager.requests_number() > 50:
+                continue
             self.request_manager.register_request(request_id, request)
+            self.kafka_request_manager.push_historical_request(request_id, request)
             self.ib_client.reqHistoricalData(request_id,
                                              contract,
                                              request.endDateTime,
@@ -72,7 +77,7 @@ class RequestData(request_data_pb2_grpc.RequestDataServicer):
                                              []
                                              )
             return request_data_pb2.Status(message=True)
-        except:
+        except Exception as e:
             self.logger.exception('Unable to request {} historical data for {}'.format(request_id,
                                                                                        contract)
                                   )
@@ -92,17 +97,22 @@ class RequestData(request_data_pb2_grpc.RequestDataServicer):
                                               )
         except BrokenPipeError:
             self.connection_manager.reconnect()
-        finally:
-            self.logger.exception('Unable to request {}  {} for {:15s} : {}'.format(request_id,
-                                                                                    request.reportType,
-                                                                                    request.contract.symbol))
-
+            return request_data_pb2.Status(message=False)
+        except Exception as e:
+            self.logger.exception('Unable to request {}  {} for {:15s}'.format(request_id,
+                                                                               request.reportType,
+                                                                               request.contract.symbol))
+            return request_data_pb2.Status(message=False)
         return request_data_pb2.Status(message=True)
 
 
-def serve(ib_client: IbClient, config, request_manager: RequestManager, max_workers, connection_manager: ConnectionManager):
+def serve(ib_client: IbClient, config, request_manager: RequestManager, max_workers,
+          connection_manager: ConnectionManager):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
-    request_data_pb2_grpc.add_RequestDataServicer_to_server(RequestData(ib_client, request_manager, connection_manager),
+    request_data_pb2_grpc.add_RequestDataServicer_to_server(RequestService(config,
+                                                                           ib_client,
+                                                                           request_manager,
+                                                                           connection_manager),
                                                             server
                                                             )
 

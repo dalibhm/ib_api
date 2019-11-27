@@ -1,6 +1,4 @@
 # ! [socket_init]
-import collections
-import datetime
 import logging
 from configparser import ConfigParser
 
@@ -8,8 +6,6 @@ from ibapi.client import EClient
 
 
 from ewrapper_impl import EWrapperImpl
-from ib_response_manager.grpc_reponse_manager import GrpcResponseManager
-from ib_response_manager.response_processor_factory import ResponseProcessorFactory
 
 logger = logging.getLogger()
 
