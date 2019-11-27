@@ -20,8 +20,8 @@ class DbSessionFactory:
                                                            config.get('postgres', 'port'),
                                                            config.get('postgres', 'db'))
 
-        # print("Connection string: " + conn_string)
-        engine = sqlalchemy.create_engine(conn_string, echo=config.get('postgres', 'echo'))
+        print("[ Connecting to database : {} ]".format(conn_string))
+        engine = sqlalchemy.create_engine(conn_string, echo=config.getboolean('postgres', 'echo'))
 
         SqlAlchemyBase.metadata.create_all(engine)
 
