@@ -1,11 +1,17 @@
 # from confluent_kafka import avro
+import os
+from configparser import ConfigParser
+
 from confluent_kafka import KafkaError
 from confluent_kafka.avro import AvroConsumer
 
 from data import db_factory
 from data.repository import Repository
 
-config = {
+config = ConfigParser()
+config.read(os.path.join('..', 'settings', 'development.ini'))
+
+kafka_config = {
     "api.version.request": True,
     "enable.auto.commit": True,
     "enable.auto.offset.store": False,
@@ -16,9 +22,10 @@ config = {
     "default.topic.config": {"auto.offset.reset": "smallest"}
 }
 
-consumer = AvroConsumer(config)
+consumer = AvroConsumer(kafka_config)
 
-topic = 'historical-data'
+
+topic = config.get('kafka', 'historical-data-responses-topic')
 consumer.subscribe([topic])
 
 db_factory.DbSessionFactory.global_init()
