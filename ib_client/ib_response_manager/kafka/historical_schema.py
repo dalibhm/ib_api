@@ -17,6 +17,10 @@ value_schema_str = """
        "type" : "string"
      },
      {
+       "name" : "exchange",
+       "type" : "string"
+     },
+     {
        "name" : "barSize",
        "type" : "string"
      },
