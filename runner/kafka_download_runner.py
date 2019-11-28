@@ -9,7 +9,7 @@ from confluent_kafka.avro import AvroConsumer
 
 from request_templates.params import HistoricalRequestTemplate
 
-MAX_COUNTER = 20
+MAX_COUNTER = 10000000000
 
 
 class KafkaDownloadRunner:
@@ -67,7 +67,7 @@ class KafkaDownloadRunner:
         while self.q:
             contract = self.q.get()
             params = {
-                "start_date": "2012-01-01",
+                "start_date": "1999-01-01",
                 "end_date": "2019-10-22",
                 "bar_size": "1 day",
                 "price_type": "TRADES"
