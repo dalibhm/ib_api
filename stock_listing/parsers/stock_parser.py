@@ -35,7 +35,7 @@ class StockParser:
     def parse_stock_web_pages(self):
         self.get_first_html()
         self.get_number_of_web_pages()
-        print('[{} pages to parse]')
+        print('[{} pages to parse]'.format(self.number_of_web_pages))
 
         global loop
         loop = asyncio.get_event_loop()

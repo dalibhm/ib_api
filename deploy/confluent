@@ -1,0 +1,32 @@
+# install docker
+apt install docker.io
+
+# launch docker and set it to start at start time
+systemctl start docker
+systemctl enable docker
+
+# get docker version
+docker --version
+
+# add user to docker group
+sudo usermod -aG docker $USER
+
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+
+# install docker compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+docker-compose --version
+
+
+# install confluent
+git clone https://github.com/confluentinc/examples
+cd examples
+git checkout 5.3.1-post
+
+cd cp-all-in-one/
+
+sudo docker-compose up -d --build
+sudo docker-compose ps

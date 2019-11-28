@@ -1,3 +1,5 @@
+sudo apt-get install python3-venv
+
 BASE_DIR=.
 
 ## create base directory

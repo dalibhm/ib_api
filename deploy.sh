@@ -31,10 +31,6 @@ ${DATA_API_DIR}/venv/bin/python flask_app.py runserver
 #venv/bin/uwsgi -H venv --master --processes 4 --threads 2 --http :5000 --manage -script-name --python-path . --mount /=wsgi:app
 
 
-
-
-
-
 # these packege do something that needs to be checked
 apt install libpq-dev python3-dev
 
