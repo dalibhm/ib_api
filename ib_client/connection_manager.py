@@ -14,10 +14,11 @@ class ConnectionManager:
     def connect(self):
         while (datetime.now() - self.last_connection_trial_time).total_seconds() < 5:
             time.sleep(5)
-            continue;
+            continue
         self.ib_client.connect(self.host, self.port, 0)
         self.last_connection_trial_time = datetime.now()
 
     def reconnect(self):
         self.ib_client.disconnect()
+        self.ib_client.done = True
         self.connect()
