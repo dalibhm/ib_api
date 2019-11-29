@@ -130,10 +130,10 @@ class EWrapperImpl(EWrapper):
     # ! [fundamentaldata]
 
     # ! [error]
-    def error(self, reqId: TickerId, errorCode: int, errorString: str):
-        super().error(reqId, errorCode, errorString)
-        if errorCode == 504:
-            self.connection_manager.connect()
+    # def error(self, reqId: TickerId, errorCode: int, errorString: str):
+    #     super().error(reqId, errorCode, errorString)
+    #     if errorCode == 504:
+    #         self.connection_manager.connect()
 
     # ! [error] self.reqId2nErr[reqId] += 1
 
