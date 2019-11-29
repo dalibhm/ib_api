@@ -9,7 +9,7 @@ from confluent_kafka.avro import AvroConsumer
 
 from request_templates.params import HistoricalRequestTemplate
 
-MAX_COUNTER = 10000000000
+MAX_COUNTER = 168624
 
 
 class KafkaDownloadRunner:
