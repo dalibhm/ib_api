@@ -32,7 +32,7 @@ class KafkaResponseManager(ResponseManager):
         print(request_id, contract_details)
 
     def process_historical_data(self, requestId: int, bar_data: BarData):
-        print(requestId, bar_data)
+        # print(requestId, bar_data)
         request: HistoricalDataRequest = self.request_manager.get_request_by_id(requestId)
         r = {
             'symbol': request.contract.symbol,

@@ -41,6 +41,14 @@ class EWrapperImpl(EWrapper):
         # we can start now
         # self.start()
 
+    def connectionClosed(self):
+        """This function is called when TWS closes the sockets
+        connection with the ActiveX control, or when TWS is shut down."""
+
+        super().connectionClosed()
+        # as the connection is closed, reconnect
+        self.connection_manager.connect()
+
     # ! [currenttime]
     def currentTime(self, time: int):
         super().currentTime(time)
@@ -70,7 +78,7 @@ class EWrapperImpl(EWrapper):
     # ! [historicaldata]
     def historicalData(self, reqId: int, bar: BarData):
         # print("HistoricalData. ReqId:", reqId, "BarData.", bar)
-        self.response_processor.process_historical_data(reqId, bar)
+        self.response_processor.process_xhistorical_data(reqId, bar)
 
     # ! [historicaldata]
 

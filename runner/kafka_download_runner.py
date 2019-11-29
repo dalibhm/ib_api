@@ -11,6 +11,7 @@ from request_templates.params import HistoricalRequestTemplate
 
 MAX_COUNTER = 168624
 
+TO_SKIP = ['AAP', 'ABM', 'ABT', 'ADC', 'ADM', 'ADX', 'AEG', 'AEM', 'AEP', 'AFL', 'AGCO', 'AIN', 'AIR', 'AIT', 'AJG', 'ALB', 'ALK', 'ALL', 'AME', 'AMX', 'AP', 'APA', 'APD', 'APH', 'ARW', 'ASA', 'ATO', 'ATR', 'AU', 'AVP', 'AVY', 'AWF', 'AXP', 'AZO', 'AZSEY', 'B', 'BA', 'BAM', 'BBVA', 'BBY', 'BC', 'BCS', 'BDX', 'BEN', 'BF A', 'BF B', 'BFS', 'BGG', 'BHP', 'BIG', 'BKH', 'BKN', 'BKT', 'BLK', 'BLL', 'BLX', 'BMO', 'BMY', 'BOH', 'BP', 'BPT', 'BRK A', 'BSX', 'BWA', 'BYD', 'CAG', 'CAH', 'CAT', 'CBL', 'CBT', 'CCK', 'CCL', 'CDNS', 'CET', 'CFR', 'CHD', 'CHE', 'CHN', 'CL', 'CLB', 'CLI', 'CLX', 'CMA', 'CMC', 'CMI', 'CMO', 'CMS', 'CNA', 'COF', 'COG', 'COO', 'CPB', 'CPK', 'CPT', 'CR', 'CRD A', 'CRD B', 'CRR', 'CRS', 'CRT', 'CSL', 'CSS', 'CTB', 'CTO', 'CTS', 'CVX', 'CW', 'CWT', 'CX', 'CYD', 'D', 'DBD', 'DCI', 'DDAIF', 'DDF', 'ECF', 'EPAC', 'FAX']
 
 class KafkaDownloadRunner:
     def __init__(self, services, config=None):
@@ -56,6 +57,8 @@ class KafkaDownloadRunner:
             contract = {k: v for (k, v) in msg.value().items() if
                         k in ['con_id', 'symbol', 'secType', 'exchange', 'currency']}
             contract['conId'] = contract.pop('con_id')
+            if contract['symbol'] in TO_SKIP:
+                return
             self.q.put(contract)
         elif msg.error().code() == KafkaError._PARTITION_EOF:
             print('End of partition reached {0}/{1}'
@@ -89,3 +92,123 @@ class KafkaDownloadRunner:
             self.services['ib'].request_fundamental_data(contract, report_type)
             time.sleep(0.5)
         self.q.task_done()
+
+
+skip = """AAP
+ABM
+ABT
+ADC
+ADM
+ADX
+AEG
+AEM
+AEP
+AFL
+AGCO
+AIN
+AIR
+AIT
+AJG
+ALB
+ALK
+ALL
+AME
+AMX
+AP
+APA
+APD
+APH
+ARW
+ASA
+ATO
+ATR
+AU
+AVP
+AVY
+AWF
+AXP
+AZO
+AZSEY
+B
+BA
+BAM
+BBVA
+BBY
+BC
+BCS
+BDX
+BEN
+BF A
+BF B
+BFS
+BGG
+BHP
+BIG
+BKH
+BKN
+BKT
+BLK
+BLL
+BLX
+BMO
+BMY
+BOH
+BP
+BPT
+BRK A
+BSX
+BWA
+BYD
+CAG
+CAH
+CAT
+CBL
+CBT
+CCK
+CCL
+CDNS
+CET
+CFR
+CHD
+CHE
+CHN
+CL
+CLB
+CLI
+CLX
+CMA
+CMC
+CMI
+CMO
+CMS
+CNA
+COF
+COG
+COO
+CPB
+CPK
+CPT
+CR
+CRD A
+CRD B
+CRR
+CRS
+CRT
+CSL
+CSS
+CTB
+CTO
+CTS
+CVX
+CW
+CWT
+CX
+CYD
+D
+DBD
+DCI
+DDAIF
+DDF
+ECF
+EPAC
+FAX""".split('\n')

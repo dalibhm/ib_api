@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+from datetime import datetime, time
 
 import ib_client
 
@@ -8,9 +9,14 @@ class ConnectionManager:
         self.host = config.get('ib client', 'host')
         self.port = config.getint('ib client', 'port')
         self.ib_client = ib_client
+        self.last_connection_trial_time = datetime.now()
 
     def connect(self):
+        while (datetime.now() - self.last_connection_trial_time).total_seconds() < 5:
+            time.sleep(5)
+            continue;
         self.ib_client.connect(self.host, self.port, 0)
+        self.last_connection_trial_time = datetime.now()
 
     def reconnect(self):
         self.ib_client.disconnect()
