@@ -62,7 +62,7 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
         self.logger.notice("sending request {} for historical data : {}".format(request_id, contract))
         try:
             # avoid more than 50 requests at a time
-            while self.request_manager.requests_number() > 40:
+            while self.request_manager.requests_number() > 20:
                 continue
             self.request_manager.register_request(request_id, request)
             self.kafka_request_manager.push_historical_request(request_id, request)
