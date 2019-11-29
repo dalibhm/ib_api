@@ -41,13 +41,13 @@ class EWrapperImpl(EWrapper):
         # we can start now
         # self.start()
 
-    def connectionClosed(self):
-        """This function is called when TWS closes the sockets
-        connection with the ActiveX control, or when TWS is shut down."""
-
-        super().connectionClosed()
-        # as the connection is closed, reconnect
-        self.connection_manager.connect()
+    # def connectionClosed(self):
+    #     """This function is called when TWS closes the sockets
+    #     connection with the ActiveX control, or when TWS is shut down."""
+    #
+    #     super().connectionClosed()
+    #     # as the connection is closed, reconnect
+    #     self.connection_manager.connect()
 
     # ! [currenttime]
     def currentTime(self, time: int):
@@ -130,10 +130,10 @@ class EWrapperImpl(EWrapper):
     # ! [fundamentaldata]
 
     # ! [error]
-    def error(self, reqId: TickerId, errorCode: int, errorString: str):
-        super().error(reqId, errorCode, errorString)
-        if errorCode == 501:
-            self.connection_manager.connect()
+    # def error(self, reqId: TickerId, errorCode: int, errorString: str):
+    #     super().error(reqId, errorCode, errorString)
+    #     if errorCode == 504:
+    #         self.connection_manager.connect()
 
     # ! [error] self.reqId2nErr[reqId] += 1
 
