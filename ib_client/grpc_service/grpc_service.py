@@ -33,7 +33,7 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
 
     def __init__(self, config, ib_client: IbClient, request_manager: RequestManager, connection_manager):
         # super.__init__()
-        self.ib_client = ib_client
+        self.ib_client: IbClient = ib_client
         self.request_id_gen = RequestIdGenerator()
         self.request_manager = request_manager
         self.connection_manager = connection_manager
@@ -52,6 +52,7 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
     def RequestContractDetails(self, request, context):
         contract = get_contract(request)
         request_id = self.request_id_gen.get_id()
+        self.check_connection()
         self.logger.notice("sending request {} for contract details : {}".format(request_id, contract))
         self.ib_client.reqContractDetails(request_id, contract)
         return request_data_pb2.Status(message=True)
@@ -64,6 +65,7 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
             # avoid more than 50 requests at a time
             while self.request_manager.requests_number() > 20:
                 continue
+            self.check_connection()
             self.request_manager.register_request(request_id, request)
             self.kafka_request_manager.push_historical_request(request_id, request)
             self.ib_client.reqHistoricalData(request_id,
@@ -90,6 +92,7 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
                                                                                    request.reportType,
                                                                                    request.contract.symbol))
         try:
+            self.check_connection()
             self.request_manager.register_request(request_id, request)
             self.ib_client.reqFundamentalData(request_id,
                                               contract,
@@ -105,6 +108,10 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
                                                                                request.contract.symbol))
             return request_data_pb2.Status(message=False)
         return request_data_pb2.Status(message=True)
+
+    def check_connection(self):
+        while not self.ib_client.isConnected():
+            self.connection_manager.reconnect()
 
 
 def serve(ib_client: IbClient, config, request_manager: RequestManager, max_workers,
