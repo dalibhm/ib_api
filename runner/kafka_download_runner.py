@@ -24,7 +24,7 @@ class KafkaDownloadRunner:
             "group.id": 'runner.group1',
             'schema.registry.url': config.get('kafka', 'schema.registry.url'),
             # the consumer was not running without default.topic.config
-            "default.topic.config": {"auto.offset.reset": "smallest"}
+            "default.topic.config": {"auto.offset.reset": "earliest"}
         }
         self.consumer = AvroConsumer(kafka_config)
         topic = config.get('kafka', 'stocks-topic')
@@ -68,13 +68,14 @@ class KafkaDownloadRunner:
             contract = self.q.get()
             params = {
                 "start_date": "1999-01-01",
-                "end_date": "2019-10-22",
+                "end_date": "2019-11-27",
                 "bar_size": "1 day",
                 "price_type": "TRADES"
             }
             arranged_params = HistoricalRequestTemplate(params).params
+            contract['exchange'] = 'SMART'
             self.services['ib'].request_historical_data(contract, arranged_params)
-            time.sleep(2)
+            time.sleep(0.5)
             self.q.task_done()
 
     def send_fundamental_request(self):
