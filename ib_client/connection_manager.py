@@ -1,5 +1,6 @@
 from configparser import ConfigParser
 from datetime import datetime, time
+from threading import Thread
 
 import ib_client
 
@@ -18,6 +19,8 @@ class ConnectionManager:
         # time.sleep(5)
         # continue
         self.ib_client.connect(self.host, self.port, 0)
+        app_thread = Thread(target=self.ib_client.run)
+        app_thread.start()
         # self.last_connection_trial_time = datetime.now()
 
     def reconnect(self):

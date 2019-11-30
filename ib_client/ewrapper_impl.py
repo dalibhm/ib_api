@@ -86,7 +86,7 @@ class EWrapperImpl(EWrapper):
     def historicalDataEnd(self, reqId: int, start: str, end: str):
         super().historicalDataEnd(reqId, start, end)
         self.request_manager.decrement_counter()
-        print("HistoricalDataEnd. ReqId:", reqId, "from", start, "to", end)
+        print(datetime.datetime.now(), "HistoricalDataEnd. ReqId:", reqId, "from", start, "to", end)
 
     # ! [historicaldataend]
 
