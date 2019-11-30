@@ -1,3 +1,5 @@
+import threading
+
 from ibapi.contract import Contract
 from .kafka_producer import KafkaRequestManager
 from Services.LogService import LogService
@@ -39,6 +41,7 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
         self.connection_manager = connection_manager
         self.logger = LogService.get_startup_log()
         self.kafka_request_manager = KafkaRequestManager(config)
+        self.lock = threading.Lock()
 
     # these logs propagate to the root logger
     # self.logger = logging.getLogger(type(self).__name__)
@@ -93,7 +96,9 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
                                                                                    request.reportType,
                                                                                    request.contract.symbol))
         try:
+            self.lock.acquire()
             self.check_connection()
+            self.lock.release()
             self.request_manager.register_request(request_id, request)
             self.ib_client.reqFundamentalData(request_id,
                                               contract,
