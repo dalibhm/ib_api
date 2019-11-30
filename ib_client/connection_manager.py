@@ -14,7 +14,6 @@ class ConnectionManager:
         self.host = config.get('ib client', 'host')
         self.port = config.getint('ib client', 'port')
         self.ib_client: EClient = ib_client
-        self.lock = threading.Lock()
         # self.last_connection_trial_time = datetime.now()
         # self.disconnect_time = None
 
@@ -32,9 +31,8 @@ class ConnectionManager:
         # self.last_connection_trial_time = datetime.now()
 
     def reconnect(self):
-        self.lock.acquire()
+
         self.ib_client.disconnect()
         # self.ib_client.done = True
         # self.disconnect_time = datetime.now()
         self.connect()
-        self.lock.release()
