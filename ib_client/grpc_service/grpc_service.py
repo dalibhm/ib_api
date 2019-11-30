@@ -79,11 +79,12 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
                                              int(request.keepUpToDate),
                                              []
                                              )
-            return request_data_pb2.Status(message=True)
         except Exception as e:
             self.logger.exception('Unable to request {} historical data for {}'.format(request_id,
                                                                                        contract)
                                   )
+            return request_data_pb2.Status(message=False)
+        return request_data_pb2.Status(message=True)
 
     def RequestFundamentalData(self, request, context):
         contract = get_contract(request)
