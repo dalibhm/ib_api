@@ -3,7 +3,7 @@ import os
 # import sys
 from threading import Thread
 
-import connection_manager
+from connection_manager import ConnectionManager
 from grpc_service.grpc_service import serve
 from init_app import init_ib_client
 
@@ -20,15 +20,15 @@ def main():
     request_manager = RequestManager()
 
     ib_client = init_ib_client(config, request_manager)
-    cm = connection_manager.ConnectionManager(config, ib_client)
-    ib_client.register_connection_manager(cm)
+    conn_manager = ConnectionManager(config, ib_client)
+    ib_client.register_connection_manager(conn_manager)
 
     app_thread = Thread(target=ib_client.run)
     app_thread.start()
 
 
 
-    grpc_thread = Thread(target=serve, args=(ib_client, config, request_manager, 10, connection_manager))
+    grpc_thread = Thread(target=serve, args=(ib_client, config, request_manager, 10, conn_manager))
     grpc_thread.start()
 
 
