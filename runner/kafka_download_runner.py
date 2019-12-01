@@ -57,8 +57,8 @@ class KafkaDownloadRunner:
             contract = {k: v for (k, v) in msg.value().items() if
                         k in ['con_id', 'symbol', 'secType', 'exchange', 'currency']}
             contract['conId'] = contract.pop('con_id')
-            if contract['symbol'] in TO_SKIP:
-                return
+#            if contract['symbol'] in TO_SKIP:
+#                return
             self.q.put(contract)
         elif msg.error().code() == KafkaError._PARTITION_EOF:
             print('End of partition reached {0}/{1}'
