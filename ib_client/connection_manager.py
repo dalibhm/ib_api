@@ -22,16 +22,19 @@ class ConnectionManager:
         #         or (datetime.now() - self.disconnect_time).total_seconds() < 5:
         # time.sleep(5)
         # continue
+        trial_number = 1
         while not self.ib_client.isConnected():
             self.ib_client.connect(self.host, self.port, 0)
             logger.error('reconnecting to IB API')
+            trial_number += 1
+        logger.debug('EClient.run() starting')
         app_thread = Thread(target=self.ib_client.run)
         app_thread.start()
-        logger.error('EClient.run() started')
+        logger.debug('EClient.run() started')
         # self.last_connection_trial_time = datetime.now()
 
     def reconnect(self):
-
+        self.ib_client.done = True
         self.ib_client.disconnect()
         # self.ib_client.done = True
         # self.disconnect_time = datetime.now()
