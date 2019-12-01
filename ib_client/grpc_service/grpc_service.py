@@ -33,12 +33,16 @@ def get_contract(request):
 
 class RequestService(request_data_pb2_grpc.RequestDataServicer):
 
-    def __init__(self, config, ib_client: IbClient, request_manager: RequestManager, connection_manager):
+    def __init__(self,
+                 config,
+                 ib_client: IbClient,
+                 request_manager: RequestManager,
+                 conn_manager: ConnectionManager):
         # super.__init__()
         self.ib_client: IbClient = ib_client
         self.request_id_gen = RequestIdGenerator()
-        self.request_manager = request_manager
-        self.connection_manager = connection_manager
+        self.request_manager: RequestManager = request_manager
+        self.conn_manager: ConnectionManager = conn_manager
         self.logger = LogService.get_startup_log()
         self.kafka_request_manager = KafkaRequestManager(config)
         self.lock = threading.Lock()
@@ -116,7 +120,7 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
                                               []
                                               )
         except BrokenPipeError:
-            self.connection_manager.reconnect()
+            self.conn_manager.reconnect()
             return request_data_pb2.Status(message=False)
         except Exception as e:
             self.logger.exception('Unable to request {}  {} for {:15s}'.format(request_id,
@@ -127,16 +131,16 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
 
     def check_connection(self):
         while not self.ib_client.isConnected():
-            self.connection_manager.reconnect()
+            self.conn_manager.reconnect()
 
 
 def serve(ib_client: IbClient, config, request_manager: RequestManager, max_workers,
-          connection_manager: ConnectionManager):
+          conn_manager: ConnectionManager):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
     request_data_pb2_grpc.add_RequestDataServicer_to_server(RequestService(config,
                                                                            ib_client,
                                                                            request_manager,
-                                                                           connection_manager),
+                                                                           conn_manager),
                                                             server
                                                             )
 
