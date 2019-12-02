@@ -51,7 +51,7 @@ if __name__ == '__main__':
     end_point = config.get('services', 'fundamental_data')
 
     # FileManager.init_directory(os.path.join('.', 'data'))
-    from mongo_model import mongo_init
+    from mongo_data import mongo_init
 
     mongo_init.global_init()
     repository = MongoRepository

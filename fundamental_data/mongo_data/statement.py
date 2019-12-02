@@ -3,7 +3,6 @@ import uuid
 import mongoengine
 
 
-
 class Statement(mongoengine.Document):
     ticker = mongoengine.StringField(required=True)
     insert_date = mongoengine.DateTimeField(required=True, default=datetime.datetime.now)
@@ -12,7 +11,7 @@ class Statement(mongoengine.Document):
 
     meta = {
         'db_alias': 'financialDataRepository',
-        'collection': 'rawData',
+        'collection': 'financialDataRepository',
         'ordering': ['-insert_date'],
         'indexes': [
             'ticker', 'insert_date', 'report_type',
