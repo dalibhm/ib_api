@@ -1,3 +1,4 @@
+import logging
 import time
 from queue import Queue
 from threading import Thread
@@ -7,17 +8,33 @@ from download_manager.download_manager_factory import DownloadManagerFactory
 from confluent_kafka import KafkaError
 from confluent_kafka.avro import AvroConsumer
 
+from fundamental_runner import FundamentalRunner
+from historical_runner import HistoricalRunner
 from request_templates.params import HistoricalRequestTemplate
 
 MAX_COUNTER = 168624
 
-# TO_SKIP = ['AAP', 'ABM', 'ABT', 'ADC', 'ADM', 'ADX', 'AEG', 'AEM', 'AEP', 'AFL', 'AGCO', 'AIN', 'AIR', 'AIT', 'AJG', 'ALB', 'ALK', 'ALL', 'AME', 'AMX', 'AP', 'APA', 'APD', 'APH', 'ARW', 'ASA', 'ATO', 'ATR', 'AU', 'AVP', 'AVY', 'AWF', 'AXP', 'AZO', 'AZSEY', 'B', 'BA', 'BAM', 'BBVA', 'BBY', 'BC', 'BCS', 'BDX', 'BEN', 'BF A', 'BF B', 'BFS', 'BGG', 'BHP', 'BIG', 'BKH', 'BKN', 'BKT', 'BLK', 'BLL', 'BLX', 'BMO', 'BMY', 'BOH', 'BP', 'BPT', 'BRK A', 'BSX', 'BWA', 'BYD', 'CAG', 'CAH', 'CAT', 'CBL', 'CBT', 'CCK', 'CCL', 'CDNS', 'CET', 'CFR', 'CHD', 'CHE', 'CHN', 'CL', 'CLB', 'CLI', 'CLX', 'CMA', 'CMC', 'CMI', 'CMO', 'CMS', 'CNA', 'COF', 'COG', 'COO', 'CPB', 'CPK', 'CPT', 'CR', 'CRD A', 'CRD B', 'CRR', 'CRS', 'CRT', 'CSL', 'CSS', 'CTB', 'CTO', 'CTS', 'CVX', 'CW', 'CWT', 'CX', 'CYD', 'D', 'DBD', 'DCI', 'DDAIF', 'DDF', 'ECF', 'EPAC', 'FAX']
+logger = logging.getLogger(__name__)
+
 
 class KafkaDownloadRunner:
-    def __init__(self, services, config=None):
+    """
+    At the moment running multiple runners in the same process is not possible.
+    Please run historical data separately from fundamental data for example.
+    """
+
+    def __init__(self, services, historical, fundamental, config=None):
         self.services = services
+
+        self.historical = historical
+        self.fundamental = fundamental
+
+        if not self.historical and not self.fundamental:
+            exit('nothing to run --> exiting program')
+        self.threads = []
+
         # self.consumer = AvroConsumer(config.get('runner-kafka-config'))
-        kafka_config = {
+        self.kafka_config = {
             "api.version.request": True,
             "enable.auto.commit": True,
             "enable.auto.offset.store": False,
@@ -27,188 +44,47 @@ class KafkaDownloadRunner:
             # the consumer was not running without default.topic.config
             "default.topic.config": {"auto.offset.reset": "earliest"}
         }
-        self.consumer = AvroConsumer(kafka_config)
-        topic = config.get('kafka', 'stocks-topic')
-        self.consumer.subscribe([topic])
+        self.consumer = AvroConsumer(self.kafka_config)
+        self.topic = config.get('kafka', 'stocks-topic')
+        self.consumer.subscribe([self.topic])
 
-        self.last_fundamental_request_time = None
-        self.q = Queue()
-        self.th = Thread(target=self.send_historical_request, daemon=True)
-        self.th.start()
-        # tf = Thread(target=self.send_fundamental_request, daemon=True)
-        # tf.start()
-        self.first = True
+        self.msg_queue = Queue()
 
     def go(self):
+        self.start()
         counter = 0
+        logger.debug('polling data from kafka topic {} on {}'.format(self.topic, self.kafka_config['bootstrap.servers']))
         while True and counter < MAX_COUNTER:
             self.poll()
             counter += 1
 
         # self.pull()
-        self.th.join()
+        for thread in self.threads:
+            thread.join()
+
+    def start(self):
+        if self.historical:
+            historical_runner = HistoricalRunner(self.services['ib'], self.msg_queue)
+            historical_runner.start()
+            self.threads.append(historical_runner)
+        if self.fundamental:
+            fundamental_runner = FundamentalRunner(self.services['ib'], self.msg_queue)
+            fundamental_runner.start()
+            self.threads.append(fundamental_runner)
 
     def poll(self):
         msg = self.consumer.poll(10)
         if msg is None:
             return
         elif not msg.error():
-            print('Received message: {}'.format(msg.value()))
+            logger.info('Received message: {}'.format(msg.value()))
             contract = {k: v for (k, v) in msg.value().items() if
                         k in ['con_id', 'symbol', 'secType', 'exchange', 'currency']}
             contract['conId'] = contract.pop('con_id')
-#            if contract['symbol'] in TO_SKIP:
-#                return
-            self.q.put(contract)
+            #            if contract['symbol'] in TO_SKIP:
+            #                return
+            self.msg_queue.put(contract)
         elif msg.error().code() == KafkaError._PARTITION_EOF:
-            print('End of partition reached {0}/{1}'
-                  .format(msg.topic(), msg.partition()))
+            logger.info('End of partition reached {0}/{1}'.format(msg.topic(), msg.partition()))
         else:
-            print('Error occured: {0}'.format(msg.error().str()))
-
-    def send_historical_request(self):
-        while self.q:
-            contract = self.q.get()
-            params = {
-                "start_date": "1999-01-01",
-                "end_date": "2019-11-27",
-                "bar_size": "1 day",
-                "price_type": "TRADES"
-            }
-            arranged_params = HistoricalRequestTemplate(params).params
-            contract['exchange'] = 'SMART'
-            self.services['ib'].request_historical_data(contract, arranged_params)
-            time.sleep(0.5)
-            self.q.task_done()
-
-    def send_fundamental_request(self):
-        contract = self.q.get()
-        for report_type in ["ReportsFinSummary",
-                            "ReportsOwnership",
-                            "ReportSnapshot",
-                            "ReportsFinStatements",
-                            "RESC",
-                            "CalendarReport"]:
-            self.services['ib'].request_fundamental_data(contract, report_type)
-            time.sleep(0.5)
-        self.q.task_done()
-
-
-skip = """AAP
-ABM
-ABT
-ADC
-ADM
-ADX
-AEG
-AEM
-AEP
-AFL
-AGCO
-AIN
-AIR
-AIT
-AJG
-ALB
-ALK
-ALL
-AME
-AMX
-AP
-APA
-APD
-APH
-ARW
-ASA
-ATO
-ATR
-AU
-AVP
-AVY
-AWF
-AXP
-AZO
-AZSEY
-B
-BA
-BAM
-BBVA
-BBY
-BC
-BCS
-BDX
-BEN
-BF A
-BF B
-BFS
-BGG
-BHP
-BIG
-BKH
-BKN
-BKT
-BLK
-BLL
-BLX
-BMO
-BMY
-BOH
-BP
-BPT
-BRK A
-BSX
-BWA
-BYD
-CAG
-CAH
-CAT
-CBL
-CBT
-CCK
-CCL
-CDNS
-CET
-CFR
-CHD
-CHE
-CHN
-CL
-CLB
-CLI
-CLX
-CMA
-CMC
-CMI
-CMO
-CMS
-CNA
-COF
-COG
-COO
-CPB
-CPK
-CPT
-CR
-CRD A
-CRD B
-CRR
-CRS
-CRT
-CSL
-CSS
-CTB
-CTO
-CTS
-CVX
-CW
-CWT
-CX
-CYD
-D
-DBD
-DCI
-DDAIF
-DDF
-ECF
-EPAC
-FAX""".split('\n')
+            logger.error('Error occured in Kafka: {0}'.format(msg.error().str()))
