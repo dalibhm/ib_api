@@ -24,7 +24,11 @@ class HistoricalRequestTemplate(RequestTemplate):
         price_type = param_config['price_type']
 
         period_length = relativedelta(end_date, start_date)
-        if period_length.days < 0 or period_length.months < 0 or period_length.years < 0 :
+        if period_length.days < 0 or period_length.months < 0 or period_length.years < 0 \
+                or (period_length.days == 1 and period_length.months == 0 and period_length.years == 0):
+            # last condition is for when there is no data to retrieve as historical data request ignores
+            # the last date
+            # this should work unless end date is Monday
             logging.error('the start date in the database is more recent than the end date')
             raise Exception('the start date in the database is more recent than the end date')
 
