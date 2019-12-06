@@ -18,15 +18,16 @@ class HistoricalRunner(Thread):
         self.end_date = end_date
 
     def run(self) -> None:
+        start_date = self.start_date
         try:
             logger.debug('starting historical runner loop')
             while self.msg_queue:
                 contract = self.msg_queue.get()
                 latest_timestamp = self.historical_data_service.get_latest_timestamp(contract['symbol'], "%Y-%m-%d")
                 if latest_timestamp:
-                    self.start_date = latest_timestamp
+                    start_date = latest_timestamp
                 params = {
-                    "start_date": self.start_date,  # "1999-01-01",
+                    "start_date": start_date,  # "1999-01-01",
                     "end_date": self.end_date,  # "2019-11-27",
                     "bar_size": "1 day",
                     "price_type": "TRADES"

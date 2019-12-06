@@ -58,10 +58,10 @@ class HistoricalData(historical_data_pb2_grpc.HistoricalDataServicer):
             if date:
                 return historical_data_pb2.Result(date=date)
             else:
-                return historical_data_pb2.Empty
+                return historical_data_pb2.Empty()
         except:
             logger.exception('unhandled exception in GetLatestTimeStamp for {}'.format(stock))
-            return historical_data_pb2.Empty
+            return historical_data_pb2.Empty()
 
 
 def serve(endpoint, max_workers):
