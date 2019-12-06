@@ -51,10 +51,10 @@ class HistoricalData(historical_data_pb2_grpc.HistoricalDataServicer):
             price_type = request.priceType
             date_format = request.dateFormat
             date = Repository.get_latest_date(stock, date_format)
-            result = historical_data_pb2.Timestamp(date)
-            return result
+            # result = historical_data_pb2.Timestamp(date)
+            return historical_data_pb2.Result(date=date)
         except:
-            logger.exception('unhandled exception in GetLatestTimeStamp')
+            logger.exception('unhandled exception in GetLatestTimeStamp for {}'.format(stock))
             return historical_data_pb2.Empty
 
 

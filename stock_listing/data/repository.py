@@ -79,6 +79,7 @@ class Repository:
 
         db_stock = Stock(**stock)
 
+        query = session.query(HistoricalData.symbol)
         session.add(db_stock)
         session.commit()
 

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='historical_data',
   syntax='proto3',
   serialized_options=_b('\242\002\002HD'),
-  serialized_pb=_b('\n\x15historical_data.proto\x12\x0fhistorical_data\"\x82\x01\n\x07\x42\x61rData\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0c\n\x04open\x18\x02 \x01(\x01\x12\x0c\n\x04high\x18\x03 \x01(\x01\x12\x0b\n\x03low\x18\x04 \x01(\x01\x12\r\n\x05\x63lose\x18\x05 \x01(\x01\x12\x0e\n\x06volume\x18\x06 \x01(\x05\x12\x10\n\x08\x62\x61rCount\x18\x07 \x01(\x05\x12\x0f\n\x07\x61verage\x18\x08 \x01(\x01\"c\n\x07Request\x12\r\n\x05stock\x18\x01 \x01(\t\x12\x11\n\tstartDate\x18\x02 \x01(\t\x12\x0f\n\x07\x65ndDate\x18\x03 \x01(\t\x12\x11\n\tpriceType\x18\x04 \x01(\t\x12\x12\n\ndateFormat\x18\x05 \x01(\t\"\x15\n\x13HistoricalDataToAdd\"\x07\n\x05\x45mpty\"\x19\n\tTimestamp\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t2\xa2\x03\n\x0eHistoricalData\x12N\n\x14GetOneHistoricalData\x12\x18.historical_data.Request\x1a\x18.historical_data.BarData\"\x00\x30\x01\x12Q\n\x15GetManyHistoricalData\x12\x18.historical_data.Request\x1a\x18.historical_data.BarData\"\x00(\x01\x30\x01\x12S\n\x11\x41\x64\x64HistoricalData\x12$.historical_data.HistoricalDataToAdd\x1a\x16.historical_data.Empty\"\x00\x12J\n\x10GetHeadTimeStamp\x12\x18.historical_data.Request\x1a\x1a.historical_data.Timestamp\"\x00\x12L\n\x12GetLatestTimeStamp\x12\x18.historical_data.Request\x1a\x1a.historical_data.Timestamp\"\x00\x42\x05\xa2\x02\x02HDb\x06proto3')
+  serialized_pb=_b('\n\x15historical_data.proto\x12\x0fhistorical_data\"\x82\x01\n\x07\x42\x61rData\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0c\n\x04open\x18\x02 \x01(\x01\x12\x0c\n\x04high\x18\x03 \x01(\x01\x12\x0b\n\x03low\x18\x04 \x01(\x01\x12\r\n\x05\x63lose\x18\x05 \x01(\x01\x12\x0e\n\x06volume\x18\x06 \x01(\x05\x12\x10\n\x08\x62\x61rCount\x18\x07 \x01(\x05\x12\x0f\n\x07\x61verage\x18\x08 \x01(\x01\"c\n\x07Request\x12\r\n\x05stock\x18\x01 \x01(\t\x12\x11\n\tstartDate\x18\x02 \x01(\t\x12\x0f\n\x07\x65ndDate\x18\x03 \x01(\t\x12\x11\n\tpriceType\x18\x04 \x01(\t\x12\x12\n\ndateFormat\x18\x05 \x01(\t\"\x15\n\x13HistoricalDataToAdd\"\x07\n\x05\x45mpty\"\x19\n\tTimestamp\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\"\x16\n\x06Result\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t2\x9c\x03\n\x0eHistoricalData\x12N\n\x14GetOneHistoricalData\x12\x18.historical_data.Request\x1a\x18.historical_data.BarData\"\x00\x30\x01\x12Q\n\x15GetManyHistoricalData\x12\x18.historical_data.Request\x1a\x18.historical_data.BarData\"\x00(\x01\x30\x01\x12S\n\x11\x41\x64\x64HistoricalData\x12$.historical_data.HistoricalDataToAdd\x1a\x16.historical_data.Empty\"\x00\x12G\n\x10GetHeadTimeStamp\x12\x18.historical_data.Request\x1a\x17.historical_data.Result\"\x00\x12I\n\x12GetLatestTimeStamp\x12\x18.historical_data.Request\x1a\x17.historical_data.Result\"\x00\x42\x05\xa2\x02\x02HDb\x06proto3')
 )
 
 
@@ -243,11 +243,43 @@ _TIMESTAMP = _descriptor.Descriptor(
   serialized_end=333,
 )
 
+
+_RESULT = _descriptor.Descriptor(
+  name='Result',
+  full_name='historical_data.Result',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='date', full_name='historical_data.Result.date', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=335,
+  serialized_end=357,
+)
+
 DESCRIPTOR.message_types_by_name['BarData'] = _BARDATA
 DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
 DESCRIPTOR.message_types_by_name['HistoricalDataToAdd'] = _HISTORICALDATATOADD
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
 DESCRIPTOR.message_types_by_name['Timestamp'] = _TIMESTAMP
+DESCRIPTOR.message_types_by_name['Result'] = _RESULT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 BarData = _reflection.GeneratedProtocolMessageType('BarData', (_message.Message,), {
@@ -285,6 +317,13 @@ Timestamp = _reflection.GeneratedProtocolMessageType('Timestamp', (_message.Mess
   })
 _sym_db.RegisterMessage(Timestamp)
 
+Result = _reflection.GeneratedProtocolMessageType('Result', (_message.Message,), {
+  'DESCRIPTOR' : _RESULT,
+  '__module__' : 'historical_data_pb2'
+  # @@protoc_insertion_point(class_scope:historical_data.Result)
+  })
+_sym_db.RegisterMessage(Result)
+
 
 DESCRIPTOR._options = None
 
@@ -294,8 +333,8 @@ _HISTORICALDATA = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=336,
-  serialized_end=754,
+  serialized_start=360,
+  serialized_end=772,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetOneHistoricalData',
@@ -330,7 +369,7 @@ _HISTORICALDATA = _descriptor.ServiceDescriptor(
     index=3,
     containing_service=None,
     input_type=_REQUEST,
-    output_type=_TIMESTAMP,
+    output_type=_RESULT,
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
@@ -339,7 +378,7 @@ _HISTORICALDATA = _descriptor.ServiceDescriptor(
     index=4,
     containing_service=None,
     input_type=_REQUEST,
-    output_type=_TIMESTAMP,
+    output_type=_RESULT,
     serialized_options=None,
   ),
 ])

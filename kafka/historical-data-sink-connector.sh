@@ -9,7 +9,7 @@ curl -X POST http://localhost:8083/connectors -H "Content-Type: application/json
         "connection.user": "ib_test",
         "connection.password": "ib_test",
         "topics": "historical-data",
-        "insert.mode": "upsert",
+        "insert.mode": "insert",
         "auto.create": true,
         "auto.evolve": true,
         "pk.mode": "record_value",

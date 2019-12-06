@@ -25,13 +25,13 @@ class Listing(listing_pb2_grpc.ListingServicer):
             yield stock.get_stock_listing()
 
 
-def serve(end_point, max_workers):
+def serve(endpoint, max_workers):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
     listing_pb2_grpc.add_ListingServicer_to_server(Listing(), server)
-    server.add_insecure_port(end_point)
+    server.add_insecure_port(endpoint)
     server.start()
     print('Listing server started...')
-    print('Listening on {}'.format(end_point))
+    print('Listening on {}'.format(endpoint))
 
     server.wait_for_termination()
 
@@ -39,9 +39,9 @@ def serve(end_point, max_workers):
 if __name__ == '__main__':
     config = ConfigParser()
     config.read(os.path.join('..', 'settings', 'development.ini'))
-    end_point = config.get('services', 'stock_listing')
+    endpoint = config.get('services', 'stock_listing')
 
     # initialize database
     DbSessionFactory.global_init()
     logging.basicConfig()
-    serve(end_point, 10)
+    serve(endpoint, 10)
