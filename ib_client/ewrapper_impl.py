@@ -41,13 +41,13 @@ class EWrapperImpl(EWrapper):
         # we can start now
         # self.start()
 
-    # def connectionClosed(self):
-    #     """This function is called when TWS closes the sockets
-    #     connection with the ActiveX control, or when TWS is shut down."""
-    #
-    #     super().connectionClosed()
-    #     # as the connection is closed, reconnect
-    #     self.connection_manager.connect()
+    def connectionClosed(self):
+        """This function is called when TWS closes the sockets
+        connection with the ActiveX control, or when TWS is shut down."""
+
+        super().connectionClosed()
+        # as the connection is closed, reconnect
+        self.connection_manager.connection_closed = True
 
     # ! [currenttime]
     def currentTime(self, time: int):

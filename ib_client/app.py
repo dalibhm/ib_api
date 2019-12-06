@@ -26,6 +26,8 @@ def main():
     app_thread = Thread(target=ib_client.run)
     app_thread.start()
 
+    conn_manager.start()
+
 
 
     grpc_thread = Thread(target=serve, args=(ib_client, config, request_manager, 10, conn_manager))

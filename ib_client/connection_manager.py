@@ -10,8 +10,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class ConnectionManager:
+class ConnectionManager(Thread):
     def __init__(self, config: ConfigParser, ib_client):
+        self.connection_closed = False
         self.host = config.get('ib client', 'host')
         self.port = config.getint('ib client', 'port')
         self.ib_client: EClient = ib_client
@@ -24,10 +25,11 @@ class ConnectionManager:
         # time.sleep(5)
         # continue
         trial_number = 1
-        while not self.ib_client.isConnected():
+        while self.connection_closed:
             try:
                 self.ib_client.connect(self.host, self.port, 0)
                 logger.info('reconnecting to IB API {} trial(s)'.format(trial_number))
+                self.connection_closed = False
             except Exception as e:
                 logger.exception('error while reconnecting to IB API {} trial(s)'.format(trial_number))
             time.sleep(5)
@@ -42,3 +44,8 @@ class ConnectionManager:
         # self.ib_client.done = True
         # self.ib_client.disconnect()
         self.connect()
+
+    def run(self) -> None:
+        while True:
+            if self.connection_closed:
+                self.connect()

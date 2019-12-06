@@ -14,9 +14,12 @@ from proto import historical_data_pb2_grpc
 if not os.path.exists("log"):
     os.makedirs("log")
 
+FORMAT = '%(asctime)-15s %(levelname)s %(name)-s %(message)s'
+
 logging.basicConfig(filename=time.strftime(os.path.join("log", "historical_data_%Y%m%d_%H_%M_%S.log")),
                     filemode="w",
-                    level=logging.DEBUG)
+                    level=logging.DEBUG,
+                    format=FORMAT)
 logger = logging.getLogger()
 
 
@@ -52,7 +55,10 @@ class HistoricalData(historical_data_pb2_grpc.HistoricalDataServicer):
             date_format = request.dateFormat
             date = Repository.get_latest_date(stock, date_format)
             # result = historical_data_pb2.Timestamp(date)
-            return historical_data_pb2.Result(date=date)
+            if date:
+                return historical_data_pb2.Result(date=date)
+            else:
+                return historical_data_pb2.Empty
         except:
             logger.exception('unhandled exception in GetLatestTimeStamp for {}'.format(stock))
             return historical_data_pb2.Empty

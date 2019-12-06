@@ -15,7 +15,10 @@ class HistoricalDataService:
         try:
             request = historical_data_pb2.Request(stock=stock, dateFormat=format)
             response = self.stub.GetLatestTimeStamp(request)
-            return response.date
+            if isinstance(response, historical_data_pb2.Result):
+                return response.date
+            else:
+                return False
         except Exception as e:
             logger.exception('unhandled exception getting latest timestamp for {}'.format(stock))
             return False

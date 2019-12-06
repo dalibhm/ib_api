@@ -10,7 +10,7 @@ from ewrapper_impl import EWrapperImpl
 logger = logging.getLogger()
 
 
-class IbClient(EClient):
+class IbClient(EClient, Threading):
 
     def __init__(self, config: ConfigParser, request_manager):
         self.connection_manager = None

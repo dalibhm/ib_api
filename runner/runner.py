@@ -52,9 +52,11 @@ def main():
     if not os.path.exists("log"):
         os.makedirs("log")
 
+    FORMAT = '%(asctime)-15s %(levelname)s %(name)-s %(message)s'
     logging.basicConfig(filename=time.strftime(os.path.join("log", "runner_%Y%m%d_%H_%M_%S.log")),
                         filemode="w",
-                        level=logging.DEBUG)
+                        level=logging.DEBUG,
+                        format=FORMAT)
 
     # run program
     # runner_manager = DownloadRunner(download_config, services)

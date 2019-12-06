@@ -37,7 +37,11 @@ class Repository:
             .first()
         session.close()
 
+        if not result:
+            return None
+
         return datetime.strptime(result.date, "%Y%m%d").strftime(date_format)
+
 
     @classmethod
     def get_head_timestamp(cls, symbol):
