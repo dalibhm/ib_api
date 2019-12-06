@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 class ConnectionManager(Thread):
     def __init__(self, config: ConfigParser, ib_client):
+        super().__init__()
         self.connection_closed = False
         self.host = config.get('ib client', 'host')
         self.port = config.getint('ib client', 'port')
