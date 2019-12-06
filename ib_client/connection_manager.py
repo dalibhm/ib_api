@@ -25,8 +25,11 @@ class ConnectionManager:
         # continue
         trial_number = 1
         while not self.ib_client.isConnected():
-            self.ib_client.connect(self.host, self.port, 0)
-            logger.info('reconnecting to IB API {} trial(s)'.format(trial_number))
+            try:
+                self.ib_client.connect(self.host, self.port, 0)
+                logger.info('reconnecting to IB API {} trial(s)'.format(trial_number))
+            except Exception as e:
+                logger.exception('error while reconnecting to IB API {} trial(s)'.format(trial_number))
             time.sleep(5)
             trial_number += 1
         logger.debug('EClient.run() starting')
