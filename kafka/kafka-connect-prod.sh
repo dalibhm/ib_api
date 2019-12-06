@@ -14,3 +14,5 @@ curl -X POST http://localhost:8083/connectors -H "Content-Type: application/json
         "name": "stock-listing"
       }
     }'
+
+bin/kafka-run-class kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic postgres-stocks-all --time -1

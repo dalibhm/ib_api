@@ -76,7 +76,7 @@ for report_type in report_types:
         # file_names = glob.glob("*{}*".format(report_type), recursive=True)
         # full_path_names = [os.path.join(directory, filename) for filename in file_names]
         # {file: time.ctime(os.path.getctime(file)) for file in files}
-        local_files = {file: os.path.getctime(file) for file in full_path_names}
+        local_files = {file: os.stat(file).st_birthtime for file in full_path_names}
         files.update(local_files)
 
 
@@ -88,13 +88,13 @@ for report_type in report_types:
                         symbol_in_filename(symbol, os.path.basename(key), report_type)}
         sorted_files = sorted(zip(symbol_files.values(), symbol_files.keys()))
         for creation_date, file_name in sorted_files:
-            if datetime.fromtimestamp(creation_date) >= datetime(2019, 11, 3):
-                continue
+            # if datetime.fromtimestamp(creation_date) < datetime(2019, 11, 3):
+            #     continue
             print('-----------------------------------------------------------------------')
             print(file_name, time.ctime(creation_date))
             content = read_content(file_name)
-            content = content.replace('\r', '')
             try:
+                content = content.replace('\r', '')
                 # print(symbol, content[0:100])
                 existing_records = Statement.objects(ticker=symbol, report_type=report_type)
                 if existing_records:

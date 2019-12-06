@@ -10,6 +10,11 @@ class RequestTemplate:
         pass
 
 
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 class HistoricalRequestTemplate(RequestTemplate):
     def __init__(self, param_config):
         self.type = RequestType.Historical
@@ -19,6 +24,10 @@ class HistoricalRequestTemplate(RequestTemplate):
         price_type = param_config['price_type']
 
         period_length = relativedelta(end_date, start_date)
+        if period_length.days < 0 or period_length.months < 0 or period_length.years < 0 :
+            logging.error('the start date in the database is more recent than the end date')
+            raise Exception('the start date in the database is more recent than the end date')
+
         if period_length.years > 0:
             period_length = period_length.years
             period_unit = 'Y'

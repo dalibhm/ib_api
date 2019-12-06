@@ -3,7 +3,7 @@ import mongoengine
 
 def global_init():
     mongoengine.register_connection(alias='financialDataRepository',
-                                    name='financialData',
-                                    host='192.168.1.97')
+                                    name='dev',
+                                    host='127.0.0.1')
     # username='ib_test',
     # password='ib_test')

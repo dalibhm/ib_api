@@ -9,7 +9,8 @@ service HistoricalData {
   rpc GetOneHistoricalData(Request) returns (stream BarData) {}
   rpc GetManyHistoricalData(stream Request) returns (stream BarData) {}
   rpc AddHistoricalData(HistoricalDataToAdd) returns(Empty){}
-  rpc GetHeadTimeStamp(Request) returns (HeadTimestamp) {}
+  rpc GetHeadTimeStamp(Request) returns (Timestamp) {}
+  rpc GetLatestTimeStamp(Request) returns (Timestamp) {}
 }
 
 message BarData {
@@ -28,6 +29,7 @@ message Request {
     string startDate = 2;
     string endDate = 3;
     string priceType = 4;
+    string dateFormat = 5;
 }
 
 message HistoricalDataToAdd {
@@ -35,6 +37,6 @@ message HistoricalDataToAdd {
 
 message Empty {}
 
-message HeadTimestamp {
+message Timestamp {
     string date = 1;
 }

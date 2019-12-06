@@ -12,7 +12,6 @@ from fundamental_runner import FundamentalRunner
 from historical_runner import HistoricalRunner
 from request_templates.params import HistoricalRequestTemplate
 
-MAX_COUNTER = 168624
 
 logger = logging.getLogger(__name__)
 
@@ -23,12 +22,14 @@ class KafkaDownloadRunner:
     Please run historical data separately from fundamental data for example.
     """
 
-    def __init__(self, services, historical, fundamental, config=None):
+    def __init__(self, services, historical, fundamental, start_date, end_date, stock_number, config=None):
         self.services = services
 
         self.historical = historical
         self.fundamental = fundamental
-
+        self.start_date = start_date
+        self.end_date = end_date
+        self.max_counter = stock_number
         if not self.historical and not self.fundamental:
             exit('nothing to run --> exiting program')
         self.threads = []
@@ -54,7 +55,7 @@ class KafkaDownloadRunner:
         self.start()
         counter = 0
         logger.debug('polling data from kafka topic {} on {}'.format(self.topic, self.kafka_config['bootstrap.servers']))
-        while True and counter < MAX_COUNTER:
+        while True and counter < self.max_counter:
             self.poll()
             counter += 1
 
@@ -64,7 +65,9 @@ class KafkaDownloadRunner:
 
     def start(self):
         if self.historical:
-            historical_runner = HistoricalRunner(self.services['ib'], self.msg_queue)
+            historical_runner = HistoricalRunner(self.services['ib'],
+                                                 self.services['historical_data'],
+                                                 self.msg_queue, self.start_date, self.end_date)
             historical_runner.start()
             self.threads.append(historical_runner)
         if self.fundamental:

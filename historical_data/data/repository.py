@@ -2,6 +2,8 @@ import random
 
 # noinspection PyPackageRequirements
 # from dateutil.parser import parse
+from datetime import datetime
+
 from sqlalchemy.orm import load_only
 from sqlalchemy import and_
 
@@ -28,12 +30,14 @@ class Repository:
         return stocks
 
     @classmethod
-    def get_latest_date(cls, symbol):
+    def get_latest_date(cls, symbol, date_format):
         session = DbSessionFactory.create_session()
-        symbol = session.query(HistoricalData.date).filter(HistoricalData.symbol == symbol).first()
+        result = session.query(HistoricalData.date).filter(HistoricalData.symbol == symbol)\
+            .order_by(HistoricalData.date.desc())\
+            .first()
         session.close()
 
-        return symbol
+        return datetime.strptime(result.date, "%Y%m%d").strftime(date_format)
 
     @classmethod
     def get_head_timestamp(cls, symbol):
@@ -92,6 +96,7 @@ class Repository:
         """
         Will not be used as data will sink from Kafka to Postgres
         Kafka postgres proved tricky, will write data here
+        Finally, kafka is used. I will keep the method
 
         :param historical_data:
         :return: BarData

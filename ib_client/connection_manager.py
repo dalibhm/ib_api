@@ -1,6 +1,6 @@
 import threading
 from configparser import ConfigParser
-from datetime import datetime, time
+import time
 from threading import Thread
 
 from ibapi.client import EClient
@@ -8,6 +8,7 @@ from ibapi.client import EClient
 import logging
 
 logger = logging.getLogger(__name__)
+
 
 class ConnectionManager:
     def __init__(self, config: ConfigParser, ib_client):
@@ -25,7 +26,8 @@ class ConnectionManager:
         trial_number = 1
         while not self.ib_client.isConnected():
             self.ib_client.connect(self.host, self.port, 0)
-            logger.error('reconnecting to IB API')
+            logger.info('reconnecting to IB API {} trial(s)'.format(trial_number))
+            time.sleep(5)
             trial_number += 1
         logger.debug('EClient.run() starting')
         app_thread = Thread(target=self.ib_client.run)
@@ -34,8 +36,6 @@ class ConnectionManager:
         # self.last_connection_trial_time = datetime.now()
 
     def reconnect(self):
-        self.ib_client.done = True
-        self.ib_client.disconnect()
         # self.ib_client.done = True
-        # self.disconnect_time = datetime.now()
+        # self.ib_client.disconnect()
         self.connect()

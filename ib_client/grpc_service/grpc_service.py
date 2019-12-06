@@ -131,7 +131,7 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
 
     def check_connection(self):
         while not self.ib_client.isConnected():
-            self.conn_manager.reconnect()
+            self.conn_manager.connect()
 
 
 def serve(ib_client: IbClient, config, request_manager: RequestManager, max_workers,

@@ -1,5 +1,8 @@
 import logging
+import os
+import time
 from concurrent import futures
+from configparser import ConfigParser
 
 import grpc
 
@@ -7,6 +10,14 @@ from data.db_factory import DbSessionFactory
 from data.repository import Repository
 from proto import historical_data_pb2
 from proto import historical_data_pb2_grpc
+
+if not os.path.exists("log"):
+    os.makedirs("log")
+
+logging.basicConfig(filename=time.strftime(os.path.join("log", "historical_data_%Y%m%d_%H_%M_%S.log")),
+                    filemode="w",
+                    level=logging.DEBUG)
+logger = logging.getLogger()
 
 
 class HistoricalData(historical_data_pb2_grpc.HistoricalDataServicer):
@@ -31,16 +42,37 @@ class HistoricalData(historical_data_pb2_grpc.HistoricalDataServicer):
     def AddHistoricalData(self, request, context):
         pass
 
+    def GetHeadTimeStamp(self, request, context):
+        pass
 
-def serve(max_workers):
+    def GetLatestTimeStamp(self, request, context):
+        try:
+            stock = request.stock
+            price_type = request.priceType
+            date_format = request.dateFormat
+            date = Repository.get_latest_date(stock, date_format)
+            result = historical_data_pb2.Timestamp(date)
+            return result
+        except:
+            logger.exception('unhandled exception in GetLatestTimeStamp')
+            return historical_data_pb2.Empty
+
+
+def serve(endpoint, max_workers):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
     historical_data_pb2_grpc.add_HistoricalDataServicer_to_server(HistoricalData(), server)
-    server.add_insecure_port('[::]:50051')
+    server.add_insecure_port(endpoint)
     server.start()
+    logger.info('Listing server started...')
+    logger.info('Listening on {}'.format(endpoint))
     server.wait_for_termination()
 
 
 if __name__ == '__main__':
-    logging.basicConfig()
+    config = ConfigParser()
+    config.read(os.path.join('..', 'settings', 'development.ini'))
+    endpoint = config.get('services', 'historical_data')
+
+    # initialize database
     DbSessionFactory.global_init()
-    serve(10)
+    serve(endpoint, 10)
