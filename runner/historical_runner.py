@@ -53,7 +53,7 @@ class HistoricalRunner(Thread):
             latest = datetime.strptime(latest_timestamp, '%Y-%m-%d')
             if latest >= end_date - timedelta(days=1):
                 logger.info('latest data already ib database for {}'.format(symbol))
-                return None
+                return contract, None
             elif start_date >= end_date - timedelta(days=1):
                 start_date = latest
 
