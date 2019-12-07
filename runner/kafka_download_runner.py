@@ -62,10 +62,11 @@ class KafkaDownloadRunner:
     def go(self):
         self.start()
         counter = 0
-        logger.debug('polling data from kafka topic {} on {}'.format(self.topic, self.kafka_config['bootstrap.servers']))
+        logger.info('polling data from kafka topic {} on {}'.format(self.topic, self.kafka_config['bootstrap.servers']))
         while True:
-            if not self.request_scheduler.send() and counter > self.max_counter:
+            if not self.request_scheduler.send() or counter > self.max_counter:
                 continue
+            logger.info('{} active requests'.format(self.request_scheduler.active_requests))
             self.poll_stock()
             counter += 1
             try:
