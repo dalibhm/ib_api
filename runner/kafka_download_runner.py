@@ -81,6 +81,7 @@ class KafkaDownloadRunner:
         if self.historical:
             historical_runner = HistoricalRunner(self.services['ib'],
                                                  self.services['historical_data'],
+                                                 self.request_scheduler,
                                                  self.msg_queue,
                                                  self.historical_data_end_queue,
                                                  self.start_date, self.end_date)

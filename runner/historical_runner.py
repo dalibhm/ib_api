@@ -9,10 +9,11 @@ logger = logging.getLogger(__name__)
 
 
 class HistoricalRunner(Thread):
-    def __init__(self, ib_client, historical_data_service, msg_queue, hist_data_end_queue, start_date, end_date):
+    def __init__(self, ib_client, historical_data_service, request_scheduler, msg_queue, hist_data_end_queue, start_date, end_date):
         super().__init__()
         self.ib_client = ib_client
         self.historical_data_service: HistoricalDataService = historical_data_service
+        self.request_scheduler = request_scheduler
         self.msg_queue = msg_queue
         self.hist_data_end_queue = hist_data_end_queue
         self.start_date = start_date
@@ -20,7 +21,7 @@ class HistoricalRunner(Thread):
 
     def run(self) -> None:
         start_date = self.start_date
-        active_requests: int = 0
+
         try:
             logger.debug('starting historical runner loop')
             while self.msg_queue:
@@ -37,7 +38,7 @@ class HistoricalRunner(Thread):
                 arranged_params = HistoricalRequestTemplate(params).params
                 contract['exchange'] = 'SMART'
                 status = self.ib_client.request_historical_data(contract, arranged_params)
-                active_requests += 1
+                self.request_scheduler.request_added()
 
                 self.msg_queue.task_done()
                 logger.info('Historical data request sent : {} {} {}'\
