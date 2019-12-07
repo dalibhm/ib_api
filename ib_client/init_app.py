@@ -4,7 +4,7 @@ import os
 import time
 from configparser import ConfigParser
 
-from .ib_client import IbClient
+from ib_client import IbClient
 
 
 def init_ib_client(config: ConfigParser, request_manager):
