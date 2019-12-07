@@ -19,10 +19,11 @@ class HistoricalEndReader(Thread):
             logger.debug('starting historical data end reader loop')
             while self.hist_data_end_queue:
                 try:
-                    if not self.hist_data_end_queue.Empty():
+                    if not self.hist_data_end_queue.empty():
                         hist_data_end = self.hist_data_end_queue.get()
                         logger.info('got historical data end {}'.format(hist_data_end))
                         self.report_scheduler.request_ended()
+                        self.hist_data_end_queue.task_done()
                 except:
                     logger.info('exception trying to access hist_data_end_queue')
         except:
