@@ -29,10 +29,10 @@ class HistoricalRunner(Thread):
                     try:
                         start_date = self.start_date
                         contract = self.msg_queue.get()
-                        arranged_params = self.validate_params(contract)
+                        contract, arranged_params = self.validate_params(contract)
                         if arranged_params:
                             status = self.ib_client.request_historical_data(contract, arranged_params)
-                            if not status:
+                            if status:
                                 self.request_scheduler.request_added()
 
                             self.msg_queue.task_done()
@@ -66,4 +66,4 @@ class HistoricalRunner(Thread):
         params_manager = HistoricalRequestTemplate(params)
         arranged_params = params_manager.get_ib_params()
         contract['exchange'] = 'SMART'
-        return arranged_params
+        return contract, arranged_params
