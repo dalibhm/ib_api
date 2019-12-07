@@ -9,19 +9,30 @@ logger = logging.getLogger(__name__)
 
 
 class HistoricalRunner(Thread):
-    def __init__(self, ib_client, historical_data_service, msg_queue, start_date, end_date):
+    def __init__(self, ib_client, historical_data_service, msg_queue, hist_data_end_queue, start_date, end_date):
         super().__init__()
         self.ib_client = ib_client
         self.historical_data_service: HistoricalDataService = historical_data_service
         self.msg_queue = msg_queue
+        self.hist_data_end_queue = hist_data_end_queue
         self.start_date = start_date
         self.end_date = end_date
 
     def run(self) -> None:
         start_date = self.start_date
+        active_requests: int = 0
         try:
             logger.debug('starting historical runner loop')
             while self.msg_queue:
+                try:
+                    hist_data_end = self.hist_data_end_queue.get()
+                    logger.info('got historical data end {}'.format(hist_data_end))
+                    active_requests -= 1
+                except:
+                    logger.info('exception trying to access hist_data_end_queue')
+
+                if active_requests > 20:
+                    continue
                 contract = self.msg_queue.get()
                 latest_timestamp = self.historical_data_service.get_latest_timestamp(contract['symbol'], "%Y-%m-%d")
                 if latest_timestamp:
@@ -34,8 +45,11 @@ class HistoricalRunner(Thread):
                 }
                 arranged_params = HistoricalRequestTemplate(params).params
                 contract['exchange'] = 'SMART'
-                self.ib_client.request_historical_data(contract, arranged_params)
-                time.sleep(0.1)
+                status = self.ib_client.request_historical_data(contract, arranged_params)
+                active_requests += 1
+
                 self.msg_queue.task_done()
+                logger.info('Historical data request sent : {} {} {}'\
+                            .format(contract['symbol'], start_date, self.end_date))
         except:
-            logger.exception('unhandled exception in HistoricalRunner')
+            logger.exception('unhandled exception in HistoricalRunner for {}'.format(contract['symbol']))

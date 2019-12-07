@@ -1,4 +1,4 @@
-value_schema_str = """            
+historical_data_value_schema_str = """            
 {
    "namespace": "historical",
    "name": "value",
@@ -68,7 +68,7 @@ value_schema_str = """
 }
 """
 
-key_schema_str = """
+historical_data_key_schema_str = """
 {
    "namespace": "historical",
    "name": "key",

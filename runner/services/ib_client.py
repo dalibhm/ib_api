@@ -21,7 +21,7 @@ class IbClient:
                                              currency=contract.currency)
         request = request_data_pb2.ContractDetailsRequest(contract=contract)
         try:
-            _ = self.stub.RequestContractDetails(request)
+            status = self.stub.RequestContractDetails(request)
             self.log_success('contract details', contract.symbol)
         except Exception as e:
             self.log_failure('details details', contract.symbol)
@@ -41,10 +41,12 @@ class IbClient:
         contract_grpc = request_data_pb2.Contract(**contract)
         request = request_data_pb2.HistoricalDataRequest(contract=contract_grpc, **params)
         try:
-            _ = self.stub.RequestHistoricalData(request)
+            status = self.stub.RequestHistoricalData(request)
             self.log_success('historical', contract['symbol'])
+            return status.message
         except Exception as e:
             self.log_failure('historical', contract['symbol'], e.debug_error_string())
+            return False
 
     def log_success(self, request_type, symbol, report_type=None):
         pass

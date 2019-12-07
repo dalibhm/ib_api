@@ -49,17 +49,23 @@ class KafkaDownloadRunner:
         self.topic = config.get('kafka', 'stocks-topic')
         self.consumer.subscribe([self.topic])
 
+        self.historical_data_end_consumer = AvroConsumer(self.kafka_config)
+        self.historical_data_end_topic = config.get('kafka', 'historical-data-end-topic')
+        self.historical_data_end_consumer.subscribe([self.historical_data_end_topic])
+
         self.msg_queue = Queue()
+        self.historical_data_end_queue = Queue()
 
     def go(self):
         self.start()
         counter = 0
         logger.debug('polling data from kafka topic {} on {}'.format(self.topic, self.kafka_config['bootstrap.servers']))
-        while True and counter < self.max_counter:
-            self.poll()
-            counter += 1
+        while True:
+            if counter < self.max_counter:
+                self.poll_stock()
+                counter += 1
+            self.poll_historical_data_end()
 
-        # self.pull()
         for thread in self.threads:
             thread.join()
 
@@ -67,7 +73,9 @@ class KafkaDownloadRunner:
         if self.historical:
             historical_runner = HistoricalRunner(self.services['ib'],
                                                  self.services['historical_data'],
-                                                 self.msg_queue, self.start_date, self.end_date)
+                                                 self.msg_queue,
+                                                 self.historical_data_end_queue,
+                                                 self.start_date, self.end_date)
             historical_runner.start()
             self.threads.append(historical_runner)
         if self.fundamental:
@@ -75,7 +83,7 @@ class KafkaDownloadRunner:
             fundamental_runner.start()
             self.threads.append(fundamental_runner)
 
-    def poll(self):
+    def poll_stock(self):
         msg = self.consumer.poll(10)
         if msg is None:
             return
@@ -87,6 +95,18 @@ class KafkaDownloadRunner:
             #            if contract['symbol'] in TO_SKIP:
             #                return
             self.msg_queue.put(contract)
+        elif msg.error().code() == KafkaError._PARTITION_EOF:
+            logger.info('End of partition reached {0}/{1}'.format(msg.topic(), msg.partition()))
+        else:
+            logger.error('Error occured in Kafka: {0}'.format(msg.error().str()))
+
+    def poll_historical_data_end(self):
+        msg = self.historical_data_end_consumer.poll(10)
+        if msg is None:
+            return
+        elif not msg.error():
+            logger.info('historical_data_end: {}'.format(msg.value()))
+            self.historical_data_end_queue.put(msg.value())
         elif msg.error().code() == KafkaError._PARTITION_EOF:
             logger.info('End of partition reached {0}/{1}'.format(msg.topic(), msg.partition()))
         else:
