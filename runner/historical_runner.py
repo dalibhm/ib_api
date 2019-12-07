@@ -24,15 +24,6 @@ class HistoricalRunner(Thread):
         try:
             logger.debug('starting historical runner loop')
             while self.msg_queue:
-                try:
-                    hist_data_end = self.hist_data_end_queue.get()
-                    logger.info('got historical data end {}'.format(hist_data_end))
-                    active_requests -= 1
-                except:
-                    logger.info('exception trying to access hist_data_end_queue')
-
-                if active_requests > 20:
-                    continue
                 contract = self.msg_queue.get()
                 latest_timestamp = self.historical_data_service.get_latest_timestamp(contract['symbol'], "%Y-%m-%d")
                 if latest_timestamp:

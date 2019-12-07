@@ -9,6 +9,7 @@ from confluent_kafka import KafkaError
 from confluent_kafka.avro import AvroConsumer
 
 from fundamental_runner import FundamentalRunner
+from historical_en_reader import RequestScheduler, HistoricalEndReader
 from historical_runner import HistoricalRunner
 from request_templates.params import HistoricalRequestTemplate
 
@@ -55,16 +56,22 @@ class KafkaDownloadRunner:
 
         self.msg_queue = Queue()
         self.historical_data_end_queue = Queue()
+        self.request_scheduler = RequestScheduler()
+
 
     def go(self):
         self.start()
         counter = 0
         logger.debug('polling data from kafka topic {} on {}'.format(self.topic, self.kafka_config['bootstrap.servers']))
         while True:
-            if counter < self.max_counter:
-                self.poll_stock()
-                counter += 1
-            self.poll_historical_data_end()
+            if not self.request_scheduler.send() and counter > self.max_counter:
+                continue
+            self.poll_stock()
+            counter += 1
+            try:
+                self.poll_historical_data_end()
+            except:
+                logger.exception('exception polling data from historical_data_end')
 
         for thread in self.threads:
             thread.join()
@@ -78,13 +85,16 @@ class KafkaDownloadRunner:
                                                  self.start_date, self.end_date)
             historical_runner.start()
             self.threads.append(historical_runner)
+            historical_end_reader = HistoricalEndReader(self.historical_data_end_queue, self.request_scheduler)
+            historical_end_reader.start()
+            self.threads.append(historical_end_reader)
         if self.fundamental:
             fundamental_runner = FundamentalRunner(self.services['ib'], self.msg_queue)
             fundamental_runner.start()
             self.threads.append(fundamental_runner)
 
     def poll_stock(self):
-        msg = self.consumer.poll(10)
+        msg = self.consumer.poll(0.1)
         if msg is None:
             return
         elif not msg.error():
@@ -101,7 +111,7 @@ class KafkaDownloadRunner:
             logger.error('Error occured in Kafka: {0}'.format(msg.error().str()))
 
     def poll_historical_data_end(self):
-        msg = self.historical_data_end_consumer.poll(10)
+        msg = self.historical_data_end_consumer.poll(0.1)
         if msg is None:
             return
         elif not msg.error():
