@@ -10,14 +10,13 @@ logger = logging.getLogger(__name__)
 
 
 class HistoricalRunner(Thread):
-    def __init__(self, ib_client, historical_data_service, request_scheduler, msg_queue, hist_data_end_queue,
-                 start_date, end_date):
+    def __init__(self, start_date, end_date,
+                 ib_client=None, historical_data_service=None, request_scheduler=None, msg_queue=None):
         super().__init__()
         self.ib_client = ib_client
         self.historical_data_service: HistoricalDataService = historical_data_service
         self.request_scheduler = request_scheduler
         self.msg_queue = msg_queue
-        self.hist_data_end_queue = hist_data_end_queue
         self.start_date = start_date
         self.end_date = end_date
 
@@ -31,12 +30,17 @@ class HistoricalRunner(Thread):
                         contract = self.msg_queue.get()
                         contract, arranged_params = self.validate_params(contract)
                         if arranged_params:
+                            logger.info('sending - historical data request sent : {} {} {}'
+                                        .format(contract['symbol'], start_date, self.end_date))
                             status = self.ib_client.request_historical_data(contract, arranged_params)
+                            logger.info('sent - historical data request  : {} {} {}'
+                                        .format(contract['symbol'], start_date, self.end_date))
+                            logger.info('status : {}'.format(status))
                             if status:
                                 self.request_scheduler.request_added()
 
                             self.msg_queue.task_done()
-                            logger.info('Historical data request sent : {} {} {}' \
+                            logger.info('Historical data request sent : {} {} {}'
                                         .format(contract['symbol'], start_date, self.end_date))
                     except:
                         logger.exception('exception while sending historical request'.format(contract['symbol']))

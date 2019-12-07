@@ -80,12 +80,13 @@ class KafkaDownloadRunner:
 
     def start(self):
         if self.historical:
-            historical_runner = HistoricalRunner(self.services['ib'],
+            historical_runner = HistoricalRunner(self.start_date, self.end_date,
+                                                 self.services['ib'],
                                                  self.services['historical_data'],
                                                  self.request_scheduler,
                                                  self.msg_queue,
-                                                 self.historical_data_end_queue,
-                                                 self.start_date, self.end_date)
+                                                 self.historical_data_end_queue
+                                                 )
             historical_runner.start()
             self.threads.append(historical_runner)
             historical_end_reader = HistoricalEndReader(self.historical_data_end_queue, self.request_scheduler)
