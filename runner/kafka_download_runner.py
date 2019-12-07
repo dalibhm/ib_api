@@ -84,8 +84,7 @@ class KafkaDownloadRunner:
                                                  self.services['ib'],
                                                  self.services['historical_data'],
                                                  self.request_scheduler,
-                                                 self.msg_queue,
-                                                 self.historical_data_end_queue
+                                                 self.msg_queue
                                                  )
             historical_runner.start()
             self.threads.append(historical_runner)
