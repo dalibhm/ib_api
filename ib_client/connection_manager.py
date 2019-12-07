@@ -17,6 +17,7 @@ class ConnectionManager(Thread):
         self.host = config.get('ib client', 'host')
         self.port = config.getint('ib client', 'port')
         self.ib_client: EClient = ib_client
+        self.hold_on_requests = False
         # self.last_connection_trial_time = datetime.now()
         # self.disconnect_time = None
 
@@ -25,6 +26,7 @@ class ConnectionManager(Thread):
         #         or (datetime.now() - self.disconnect_time).total_seconds() < 5:
         # time.sleep(5)
         # continue
+        self.hold_on_requests = True
         trial_number = 1
         while self.connection_closed:
             try:
@@ -39,6 +41,7 @@ class ConnectionManager(Thread):
         app_thread = Thread(target=self.ib_client.run)
         app_thread.start()
         logger.debug('EClient.run() started')
+        self.hold_on_requests = False
         # self.last_connection_trial_time = datetime.now()
 
     def reconnect(self):

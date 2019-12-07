@@ -20,8 +20,8 @@ curl -X POST http://localhost:8083/connectors -H "Content-Type: application/json
         "connection.user": "ib_test",
         "connection.password": "ib_test",
         "mode": "bulk",
-        "topic.prefix": "postgres-stocks-all",
-        "query": "SELECT DISTINCT ON (con_id) con_id, symbol, currency, exchange FROM   stocks;",
+        "topic.prefix": "postgres-stocks",
+        "query": "SELECT DISTINCT ON (con_id) con_id, symbol, currency, exchange FROM stocks;",
         "name": "stock-listing"
       }
     }'
