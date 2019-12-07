@@ -61,6 +61,7 @@ class KafkaDownloadRunner:
 
     def go(self):
         self.start()
+        time.sleep(2)
         counter = 0
         logger.info('polling data from kafka topic {} on {}'.format(self.topic, self.kafka_config['bootstrap.servers']))
         while True:

@@ -74,7 +74,7 @@ def serve(endpoint, max_workers):
     server.wait_for_termination()
 
 
-if __name__ == '__main__':
+def main():
     config = ConfigParser()
     config.read(os.path.join('..', 'settings', 'development.ini'))
     endpoint = config.get('services', 'historical_data')
@@ -82,3 +82,7 @@ if __name__ == '__main__':
     # initialize database
     DbSessionFactory.global_init()
     serve(endpoint, 10)
+
+
+if __name__ == '__main__':
+    main()
