@@ -65,15 +65,16 @@ class KafkaDownloadRunner:
         counter = 0
         logger.info('polling data from kafka topic {} on {}'.format(self.topic, self.kafka_config['bootstrap.servers']))
         while True:
+            try:
+                self.poll_historical_data_end()
+            except:
+                pass
             if not self.request_scheduler.send() or counter > self.max_counter:
                 continue
             logger.info('{} active requests'.format(self.request_scheduler.active_requests))
             self.poll_stock()
             counter += 1
-            try:
-                self.poll_historical_data_end()
-            except:
-                logger.exception('exception polling data from historical_data_end')
+
 
         for thread in self.threads:
             thread.join()
