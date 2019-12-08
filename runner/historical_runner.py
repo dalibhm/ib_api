@@ -3,6 +3,7 @@ import time
 from datetime import datetime, timedelta
 from threading import Thread
 
+from historical_en_reader import RequestScheduler
 from request_templates.params import HistoricalRequestTemplate
 from services.historical_data_service import HistoricalDataService
 
@@ -15,7 +16,7 @@ class HistoricalRunner(Thread):
         super().__init__()
         self.ib_client = ib_client
         self.historical_data_service: HistoricalDataService = historical_data_service
-        self.request_scheduler = request_scheduler
+        self.request_scheduler: RequestScheduler = request_scheduler
         self.msg_queue = msg_queue
         self.start_date = start_date
         self.end_date = end_date
@@ -30,14 +31,17 @@ class HistoricalRunner(Thread):
                         contract = self.msg_queue.get()
                         contract, arranged_params = self.validate_params(contract)
                         if arranged_params:
-                            logger.info('sending - historical data request sent : {} {} {}'
+                            logger.info('sending - historical data request : {} {} {}'
                                         .format(contract['symbol'], start_date, self.end_date))
                             status = self.ib_client.request_historical_data(contract, arranged_params)
-                            logger.info('sent - historical data request  : {} {} {}'
+                            logger.info('sent - historical data request : {} {} {}'
                                         .format(contract['symbol'], start_date, self.end_date))
+                            self.request_scheduler.request_added()
+                            logger.debug('request accounted for...')
                             logger.info('status : {}'.format(status))
-                            if status:
-                                self.request_scheduler.request_added()
+                            if not status:
+                                self.request_scheduler.request_ended()
+                                logger.debug('{} request removed because unsuccessful'.format(contract['symbol']))
 
                             self.msg_queue.task_done()
                             logger.info('Historical data request sent : {} {} {}'

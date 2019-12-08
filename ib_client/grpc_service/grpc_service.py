@@ -130,7 +130,7 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
         return request_data_pb2.Status(message=True)
 
     def check_connection(self):
-        while not self.conn_manager.hold_on_requests:
+        while self.conn_manager.hold_on_requests:
             continue
 
 
