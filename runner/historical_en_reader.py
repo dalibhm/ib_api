@@ -25,7 +25,7 @@ class HistoricalEndReader(Thread):
                         self.report_scheduler.request_ended()
                         self.hist_data_end_queue.task_done()
                 except:
-                    logger.info('exception trying to access hist_data_end_queue')
+                    logger.exception('exception trying to access hist_data_end_queue')
         except:
             logger.exception('unhandled exception in HistoricalEndReader')
 
