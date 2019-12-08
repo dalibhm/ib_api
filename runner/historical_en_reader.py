@@ -22,7 +22,7 @@ class HistoricalEndReader(Thread):
                     if not self.hist_data_end_queue.empty():
                         hist_data_end = self.hist_data_end_queue.get()
                         logger.info('got historical data end {}'.format(hist_data_end))
-                        self.report_scheduler.request_ended()
+                        self.request_scheduler.request_ended()
                         self.hist_data_end_queue.task_done()
                 except:
                     logger.exception('exception trying to access hist_data_end_queue')
