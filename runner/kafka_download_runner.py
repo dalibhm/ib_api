@@ -51,6 +51,7 @@ class KafkaDownloadRunner:
         self.consumer.subscribe([self.topic])
 
         self.kafka_config["default.topic.config"] = {"auto.offset.reset": "latest"}
+        self.kafka_config["group.id"] = {"hist.data.end.group"}
         self.historical_data_end_consumer = AvroConsumer(self.kafka_config)
         self.historical_data_end_topic = config.get('kafka', 'historical-data-end-topic')
         self.historical_data_end_consumer.subscribe([self.historical_data_end_topic])
