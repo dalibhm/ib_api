@@ -1,6 +1,6 @@
 historical_error_value_schema_str = """            
 {
-   "namespace": "historicalEnd",
+   "namespace": "historicalError",
    "name": "value",
    "type": "record",
    "fields" : [
@@ -21,14 +21,6 @@ historical_error_value_schema_str = """
        "type" : "string"
      },
      {
-       "name" : "start",
-       "type" : "string"
-     },
-     {
-       "name" : "end",
-       "type" : "string"
-     },
-     {
        "name" : "barSize",
        "type" : "string"
      },
@@ -42,7 +34,7 @@ historical_error_value_schema_str = """
      },
      {
         "name" : "errorCode",
-        "type" : "string"
+        "type" : "int"
      },
      {
         "name" : "errorString",
@@ -54,7 +46,7 @@ historical_error_value_schema_str = """
 
 historical_error_key_schema_str = """
 {
-   "namespace": "historicalEnd",
+   "namespace": "historicalError",
    "name": "key",
    "type": "record",
    "fields" : [

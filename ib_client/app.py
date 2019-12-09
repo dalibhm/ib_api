@@ -28,8 +28,6 @@ def main():
 
     conn_manager.start()
 
-
-
     grpc_thread = Thread(target=serve, args=(ib_client, config, request_manager, 10, conn_manager))
     grpc_thread.start()
 

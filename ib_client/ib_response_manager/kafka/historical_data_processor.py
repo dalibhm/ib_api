@@ -7,6 +7,8 @@ from proto.request_data_pb2 import HistoricalDataRequest
 
 from ibapi.common import BarData
 
+from requestmanager.requestmanager import RequestManager
+
 
 class HistoricalDataProcessor:
     def __init__(self, config, request_manager):
@@ -26,6 +28,7 @@ class HistoricalDataProcessor:
 
         self.historical_data_end_topic = config.get('kafka', 'historical-data-end-topic')
 
+        self.request_manager: RequestManager = request_manager
     def produce_msg(self, requestId: int, bar_data: BarData):
         # print(requestId, bar_data)
         request: HistoricalDataRequest = self.request_manager.get_request_by_id(requestId)

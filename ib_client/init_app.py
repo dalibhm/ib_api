@@ -11,7 +11,7 @@ def init_ib_client(config: ConfigParser, request_manager):
     SetupLogger()
     logger = logging.getLogger()
     logger.debug("now is %s", datetime.datetime.now())
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
 
     ib_client = IbClient(config, request_manager)
 
@@ -20,7 +20,8 @@ def init_ib_client(config: ConfigParser, request_manager):
     # ! [connect]
     host = config.get('ib client', 'host')
     port = config.getint('ib client', 'port')
-    ib_client.connect(host, port, clientId=0)
+    client_id = config.getint('ib client', 'client-id')
+    ib_client.connect(host, port, clientId=client_id)
     return ib_client
 
 

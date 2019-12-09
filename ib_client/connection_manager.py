@@ -16,6 +16,7 @@ class ConnectionManager(Thread):
         self.connection_closed = False
         self.host = config.get('ib client', 'host')
         self.port = config.getint('ib client', 'port')
+        self.client_id = config.getint('ib client', 'client-id')
         self.ib_client: EClient = ib_client
         self.hold_on_requests = False
         # self.last_connection_trial_time = datetime.now()
@@ -30,7 +31,7 @@ class ConnectionManager(Thread):
         trial_number = 1
         while self.connection_closed:
             try:
-                self.ib_client.connect(self.host, self.port, 0)
+                self.ib_client.connect(self.host, self.port, self.client_id)
                 logger.info('reconnecting to IB API {} trial(s)'.format(trial_number))
                 self.connection_closed = False
             except Exception as e:

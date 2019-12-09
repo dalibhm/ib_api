@@ -1,6 +1,6 @@
 # shellcheck disable=SC2016
 curl -X POST http://localhost:8083/connectors -H "Content-Type: application/json" -d '{
-    "name": "sink-postgres-3",
+    "name": "sink-postgres",
     "config": {
         "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
         "value.converter": "io.confluent.connect.avro.AvroConverter",
