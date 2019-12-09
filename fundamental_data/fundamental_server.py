@@ -1,5 +1,6 @@
 import logging
 import os
+import time
 from concurrent import futures
 from configparser import ConfigParser
 
@@ -47,12 +48,21 @@ def serve(end_point, repository):
 if __name__ == '__main__':
     config = ConfigParser()
     config.read(os.path.join('..', 'settings', 'development.ini'))
-    logging.basicConfig()
     end_point = config.get('services', 'fundamental_data')
+
+    # configure logging
+    if not os.path.exists("log"):
+        os.makedirs("log")
+
+    FORMAT = '%(asctime)-15s %(levelname)s %(name)-s %(message)s'
+    logging.basicConfig(filename=time.strftime(os.path.join("log", "fundamental_%Y%m%d_%H_%M_%S.log")),
+                        filemode="w",
+                        level=logging.DEBUG,
+                        format=FORMAT)
 
     # FileManager.init_directory(os.path.join('.', 'data'))
     from mongo_data import mongo_init
 
-    mongo_init.global_init()
+    mongo_init.global_init(config)
     repository = MongoRepository
     serve(end_point, repository)

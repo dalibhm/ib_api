@@ -1,9 +1,5 @@
-from mongo_data.statement import Statement
 import mongoengine
-
-from mongo_data import mongo_init
-
-mongo_init.global_init()
+from mongo_data.statement import Statement
 
 
 class MongoRepository:

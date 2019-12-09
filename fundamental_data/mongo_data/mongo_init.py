@@ -1,9 +1,13 @@
+from configparser import ConfigParser
+
 import mongoengine
 
 
-def global_init():
+def global_init(config: ConfigParser):
     mongoengine.register_connection(alias='financialDataRepository',
-                                    name='dev',
-                                    host='127.0.0.1')
+                                    name=config.get('db'),
+                                    host=config.get('host'),
+                                    port=config.getint('port')
+                                    )
     # username='ib_test',
     # password='ib_test')
