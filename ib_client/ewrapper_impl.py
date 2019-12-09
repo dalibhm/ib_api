@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 class EWrapperImpl(EWrapper):
     def __init__(self, config, request_manager):
         super().__init__()
+        self.connection_manager = None
         self.asynchronous = False
         self.request_manager = request_manager
         self.response_processor = ResponseProcessorFactory(config).create(request_manager)
@@ -130,12 +131,15 @@ class EWrapperImpl(EWrapper):
     # ! [fundamentaldata]
 
     # ! [error]
-    # def error(self, reqId: TickerId, errorCode: int, errorString: str):
-    #     super().error(reqId, errorCode, errorString)
-    #     if errorCode == 504:
-    #         self.connection_manager.connect()
+    def error(self, reqId: TickerId, errorCode: int, errorString: str):
+        super().error(reqId, errorCode, errorString)
 
-    # ! [error] self.reqId2nErr[reqId] += 1
+        # historical data error
+        if errorCode == 162:
+            self.response_processor.process_historical_error(reqId, errorCode, errorString)
+
+
+   # ! [error] self.reqId2nErr[reqId] += 1
 
     def winError(self, text: str, lastError: int):
         super().winError(text, lastError)
