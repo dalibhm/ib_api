@@ -5,10 +5,12 @@ from ib_response_manager.response_manager import ResponseManager
 from .proto import fundamental_data_pb2_grpc
 from .proto import fundamental_data_pb2
 
+logger = logging.getLogger(__name__)
+
 
 class GrpcResponseManager(ResponseManager):
     def __init__(self, server_url):
-        self.logger = logging.getLogger('__name__')
+
         self.channel = grpc.insecure_channel(server_url)
         self.stub = fundamental_data_pb2_grpc.FundamentalDataStub(self.channel)
 
@@ -19,9 +21,8 @@ class GrpcResponseManager(ResponseManager):
         try:
             self.stub.ProcessReport(report)
         except grpc.RpcError as e:
-            print('error on {} {}'.format(request.contract.symbol, request.reportType))
-            print(e)
-
+            logger.exception(
+                'error in processing fundamental data {} {}'.format(request.contract.symbol, request.reportType))
 
     def process_historical_data(self, request, bar_data):
         pass

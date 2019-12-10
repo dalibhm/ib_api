@@ -13,35 +13,30 @@ from historical_en_reader import RequestScheduler, HistoricalEndReader
 from historical_runner import HistoricalRunner
 from request_templates.params import HistoricalRequestTemplate
 
-
 logger = logging.getLogger(__name__)
 
 
-class KafkaDownloadRunner:
+class KafkaHistoricalDownloadRunner:
     """
     At the moment running multiple runners in the same process is not possible.
     Please run historical data separately from fundamental data for example.
     """
 
-    def __init__(self, services, historical, fundamental, start_date, end_date, stock_number, config=None):
+    def __init__(self, services,
+                 start_date=None, end_date=None, stock_number=None, config=None):
         self.services = services
 
-        self.historical = historical
-        self.fundamental = fundamental
         self.start_date = start_date
         self.end_date = end_date
-        self.max_counter = stock_number
-        if not self.historical and not self.fundamental:
-            exit('nothing to run --> exiting program')
+        self.max_counter = stock_number or 10
         self.threads = []
 
-        # self.consumer = AvroConsumer(config.get('runner-kafka-config'))
         self.kafka_config = {
             "api.version.request": True,
             "enable.auto.commit": True,
             "enable.auto.offset.store": False,
             'bootstrap.servers': config.get('kafka', 'bootstrap.servers'),
-            "group.id": 'runner.group1',
+            "group.id": 'runner.historical.group',
             'schema.registry.url': config.get('kafka', 'schema.registry.url'),
             # the consumer was not running without default.topic.config
             "default.topic.config": {"auto.offset.reset": "earliest"}
@@ -60,7 +55,6 @@ class KafkaDownloadRunner:
         self.historical_data_end_queue = Queue()
         self.request_scheduler = RequestScheduler()
 
-
     def go(self):
         self.start()
         time.sleep(2)
@@ -77,27 +71,21 @@ class KafkaDownloadRunner:
             self.poll_stock()
             counter += 1
 
-
         for thread in self.threads:
             thread.join()
 
     def start(self):
-        if self.historical:
-            historical_runner = HistoricalRunner(self.start_date, self.end_date,
-                                                 self.services['ib'],
-                                                 self.services['historical_data'],
-                                                 self.request_scheduler,
-                                                 self.msg_queue
-                                                 )
-            historical_runner.start()
-            self.threads.append(historical_runner)
-            historical_end_reader = HistoricalEndReader(self.historical_data_end_queue, self.request_scheduler)
-            historical_end_reader.start()
-            self.threads.append(historical_end_reader)
-        if self.fundamental:
-            fundamental_runner = FundamentalRunner(self.services['ib'], self.msg_queue)
-            fundamental_runner.start()
-            self.threads.append(fundamental_runner)
+        historical_runner = HistoricalRunner(self.start_date, self.end_date,
+                                             self.services['ib'],
+                                             self.services['historical_data'],
+                                             self.request_scheduler,
+                                             self.msg_queue
+                                             )
+        historical_runner.start()
+        self.threads.append(historical_runner)
+        historical_end_reader = HistoricalEndReader(self.historical_data_end_queue, self.request_scheduler)
+        historical_end_reader.start()
+        self.threads.append(historical_end_reader)
 
     def poll_stock(self):
         msg = self.consumer.poll(0.1)

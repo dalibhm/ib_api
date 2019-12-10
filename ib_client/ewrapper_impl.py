@@ -122,7 +122,6 @@ class EWrapperImpl(EWrapper):
 
     # ! [fundamentaldata]
     def fundamentalData(self, reqId: TickerId, data: str):
-        print('from fundamental data')
         super().fundamentalData(reqId, data)
         request = self.request_manager.get_request_by_id(reqId)
         logger.info('{} {} {}'.format(reqId, request.reportType, request.contract.symbol))

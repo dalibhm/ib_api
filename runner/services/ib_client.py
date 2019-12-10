@@ -27,8 +27,9 @@ class IbClient:
             self.log_failure('details details', contract.symbol)
 
     def request_fundamental_data(self, contract, report_type):
+        contract_grpc = request_data_pb2.Contract(**contract)
         request = request_data_pb2.FundamentalDataRequest(
-            contract=contract,
+            contract=contract_grpc,
             reportType=report_type
         )
         try:

@@ -5,8 +5,7 @@ import argparse
 import json
 import os
 
-from kafka_download_runner_builder import KafkaDownloadRunnerBuilder
-
+from kafka_historical_download_runner import KafkaDownloadRunner
 from services.fundamental_service import FundamentalService
 from services.historical_data_service import HistoricalDataService
 from services.ib_client import IbClient
@@ -18,7 +17,7 @@ def main():
     reads the configuration file
     connects to services
     run the DownloadRunner with the configuration requested
-    :return: 
+    :return:
     """
 
     # load configuration
@@ -49,20 +48,16 @@ def main():
     parser.add_argument("--stock-number", help="maximal number of stocks to be processed", action='store')
     args = parser.parse_args()
 
-    # configure logging
-    if not os.path.exists("log"):
-        os.makedirs("log")
+    contract = {"conId": 10089, "symbol": "NAV", "currency": "USD", "exchange": "SMART"}
+    request = {"endDateTime": "20191127 00:00:00",
+               "durationString": "20 Y",
+               "barSizeSetting": "1 day",
+               "whatToShow": "TRADES",
+               "useRTH": 1,
+               "formatDate": 1,
+               "keepUpToDate": False}
 
-    FORMAT = '%(asctime)-15s %(levelname)s %(name)-s %(message)s'
-    logging.basicConfig(filename=time.strftime(os.path.join("log", "runner_%Y%m%d_%H_%M_%S.log")),
-                        filemode="w",
-                        level=logging.DEBUG,
-                        format=FORMAT)
-
-    # run program
-    # runner_manager = DownloadRunner(download_config, services)
-    runner_manager = KafkaDownloadRunnerBuilder.create(services, args, config)
-    runner_manager.go()
+    services['ib'].request_historical_data(contract, request)
 
 
 if __name__ == '__main__':
