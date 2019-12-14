@@ -6,9 +6,9 @@ option objc_class_prefix = "FD";
 package fundamental_data;
 
 service FundamentalData {
-  rpc ProcessReport(ReportRequest) returns(Empty) {}
-  rpc GetLatestFinancialReportDate(StockRequest) returns(ReportMetaData) {}
-  rpc IsUpToDate(StockRequest) returns(UpToDate){}
+    rpc ProcessReport (Report) returns (Empty) {}
+    rpc GetLatestFinancialReportDate (StockRequest) returns (ReportMetaData) {}
+    rpc IsUpToDate (StockRequest) returns (UpToDate) {}
 }
 
 message Empty {}

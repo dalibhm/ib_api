@@ -1,7 +1,3 @@
-from download_manager.download_config import DownloadConfigFactory
-from download_manager.download_manager_factory import DownloadManagerFactory
-from request_templates.params_factory import RequestTemplateFactory
-
 
 class DownloadRunner:
     def __init__(self, download_config, services):

@@ -34,6 +34,6 @@ def app():
     time.sleep(5)
     app.disconnect()
 
-
+@pytest.mark.skip
 def test_app(app):
     pass

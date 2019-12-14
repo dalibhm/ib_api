@@ -10,6 +10,7 @@ from ibapi.wrapper import EWrapper
 
 from ib_response_manager.grpc.grpc_reponse_manager import GrpcResponseManager
 from ib_response_manager.response_processor_factory import ResponseProcessorFactory
+from requestmanager.requestmanager import RequestManager
 
 logger = logging.getLogger(__name__)
 
@@ -19,9 +20,10 @@ class EWrapperImpl(EWrapper):
         super().__init__()
         self.connection_manager = None
         self.asynchronous = False
-        self.request_manager = request_manager
+        self.request_manager: RequestManager = request_manager
         self.response_processor = ResponseProcessorFactory(config).create(request_manager)
-        self.response_manager = GrpcResponseManager(config.get('services', 'fundamental_data'))
+        self.fundamental_response_manager = GrpcResponseManager(config.get('services', 'fundamental_data'),
+                                                                request_manager)
 
     # ! [connectack]
     def connectAck(self):
@@ -86,7 +88,7 @@ class EWrapperImpl(EWrapper):
     # ! [historicaldataend]
     def historicalDataEnd(self, reqId: int, start: str, end: str):
         super().historicalDataEnd(reqId, start, end)
-        self.request_manager.decrement_counter()
+        self.request_manager.on_request_end(reqId, 'historical')
         self.response_processor.process_historical_data_end(reqId, start, end)
 
     # ! [historicaldataend]
@@ -123,9 +125,10 @@ class EWrapperImpl(EWrapper):
     # ! [fundamentaldata]
     def fundamentalData(self, reqId: TickerId, data: str):
         super().fundamentalData(reqId, data)
-        request = self.request_manager.get_request_by_id(reqId)
+
+        self.request_manager.on_request_end(reqId, 'fundamental')
         logger.info('{} {} {}'.format(reqId, request.reportType, request.contract.symbol))
-        self.response_manager.process_financial_data(request, data)
+        self.fundamental_response_manager.process_financial_data(request, data)
 
     # ! [fundamentaldata]
 

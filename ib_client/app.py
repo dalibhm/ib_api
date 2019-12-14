@@ -28,7 +28,7 @@ def main():
 
     conn_manager.start()
 
-    grpc_thread = Thread(target=serve, args=(ib_client, config, request_manager, 10, conn_manager))
+    grpc_thread = Thread(target=serve, args=(ib_client, config, request_manager, conn_manager))
     grpc_thread.start()
 
 
@@ -50,11 +50,9 @@ def parse_args():
 
 
 def init_config(mode: str):
+    environment = os.getenv('environment') or 'development'
     config = ConfigParser()
-    if mode.lower() in ['dev', 'development', 'development.ini']:
-        config.read(os.path.join('..', 'settings', 'development.ini'))
-    else:
-        raise NotImplementedError
+    config.read(os.path.join('..', 'settings', environment + '.ini'))
     return config
 
 

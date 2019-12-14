@@ -5,7 +5,7 @@ import argparse
 import json
 import os
 
-from kafka_download_runner_builder import KafkaDownloadRunnerBuilder
+from download_runner.kafka_download_runner_factory import KafkaDownloadRunnerFactory
 
 from services.fundamental_service import FundamentalService
 from services.historical_data_service import HistoricalDataService
@@ -22,8 +22,9 @@ def main():
     """
 
     # load configuration
+    environment = os.getenv('environment') or 'development'
     config = ConfigParser()
-    config.read(os.path.join('..', 'settings', 'development.ini'))
+    config.read(os.path.join('..', 'settings', environment + '.ini'))
     filename = config.get('data config', 'file')
 
     with open(os.path.join('.', 'settings', filename), 'r') as f:
@@ -61,8 +62,8 @@ def main():
 
     # run program
     # runner_manager = DownloadRunner(download_config, services)
-    runner_manager = KafkaDownloadRunnerBuilder.create(services, args, config)
-    runner_manager.go()
+    runner_manager = KafkaDownloadRunnerFactory.create(services, args, config)
+    runner_manager.run()
 
 
 if __name__ == '__main__':

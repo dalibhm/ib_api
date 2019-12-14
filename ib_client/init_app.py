@@ -11,7 +11,7 @@ def init_ib_client(config: ConfigParser, request_manager):
     SetupLogger()
     logger = logging.getLogger()
     logger.debug("now is %s", datetime.datetime.now())
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.INFO)
 
     ib_client = IbClient(config, request_manager)
 

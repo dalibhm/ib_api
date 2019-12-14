@@ -1,11 +1,8 @@
-import logging
-import time
 from configparser import ConfigParser
 import argparse
 import json
 import os
 
-from kafka_historical_download_runner import KafkaDownloadRunner
 from services.fundamental_service import FundamentalService
 from services.historical_data_service import HistoricalDataService
 from services.ib_client import IbClient

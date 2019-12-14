@@ -5,6 +5,7 @@ import sys
 import time
 
 import pytest
+from _pytest.outcomes import skip
 from ibapi.contract import Contract
 
 module_dir = os.path.dirname(__file__)
@@ -35,6 +36,7 @@ def app():
     app.disconnect()
 
 
+@pytest.mark.skip
 def test_req_fundamental_data(app):
     contract = Contract()
     contract.symbol = "IBKR"
@@ -49,5 +51,3 @@ def test_req_fundamental_data(app):
 
     app.reqFundamentalData(1000, contract, 'ReportsFinSummary', [])
     time.sleep(5)
-
-

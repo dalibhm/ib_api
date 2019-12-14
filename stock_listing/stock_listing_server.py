@@ -37,8 +37,10 @@ def serve(endpoint, max_workers):
 
 
 if __name__ == '__main__':
+    environment = os.getenv('environment') or 'development'
     config = ConfigParser()
-    config.read(os.path.join('..', 'settings', 'development.ini'))
+    config.read(os.path.join('..', 'settings', environment + '.ini'))
+
     endpoint = config.get('services', 'stock_listing')
 
     # initialize database

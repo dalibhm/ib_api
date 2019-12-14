@@ -41,13 +41,13 @@ class IbClient:
     def request_historical_data(self, contract, params):
         contract_grpc = request_data_pb2.Contract(**contract)
         request = request_data_pb2.HistoricalDataRequest(contract=contract_grpc, **params)
-        try:
-            status = self.stub.RequestHistoricalData(request)
-            self.log_success('historical', contract['symbol'])
-            return status.message
-        except Exception as e:
-            self.log_failure('historical', contract['symbol'], e.debug_error_string())
-            return False
+        # try:
+        status = self.stub.RequestHistoricalData(request)
+        self.log_success('historical', contract['symbol'])
+        return status.message
+        # except Exception as e:
+        #     self.log_failure('historical', contract['symbol'])
+        #     return False
 
     def log_success(self, request_type, symbol, report_type=None):
         pass

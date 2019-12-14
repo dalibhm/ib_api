@@ -1,4 +1,5 @@
 import threading
+from configparser import ConfigParser
 
 from ibapi.contract import Contract
 from .kafka_producer import KafkaRequestManager
@@ -34,11 +35,12 @@ def get_contract(request):
 class RequestService(request_data_pb2_grpc.RequestDataServicer):
 
     def __init__(self,
-                 config,
+                 config: ConfigParser,
                  ib_client: IbClient,
                  request_manager: RequestManager,
                  conn_manager: ConnectionManager):
         # super.__init__()
+        self.historical_requests_number_limit = config.getint('ib client', 'historical-requests-number-limit')
         self.ib_client: IbClient = ib_client
         self.request_id_gen = RequestIdGenerator()
         self.request_manager: RequestManager = request_manager
@@ -47,22 +49,11 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
         self.kafka_request_manager = KafkaRequestManager(config)
         self.lock = threading.Lock()
 
-    # these logs propagate to the root logger
-    # self.logger = logging.getLogger(type(self).__name__)
-    # self.logger.setLevel(logging.INFO)
-    # log_name = '{}.log'.format(type(self).__name__)
-    # file_handler = logging.FileHandler(log_name)
-    # formatter = logging.Formatter('%(asctime)-15s %(levelname)s %(name)-s %(message)s')
-    # file_handler.setFormatter(formatter)
-    # self.logger.addHandler(file_handler)
-
     def RequestContractDetails(self, request, context):
         contract = get_contract(request)
         request_id = self.request_id_gen.get_id()
 
-        self.lock.acquire()
         self.check_connection()
-        self.lock.release()
 
         self.logger.notice("sending request {} for contract details : {}".format(request_id, contract))
         self.ib_client.reqContractDetails(request_id, contract)
@@ -74,14 +65,12 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
         self.logger.notice("sending request {} for historical data : {}".format(request_id, contract))
         try:
             # avoid more than 50 requests at a time
-            while self.request_manager.requests_number() > 20:
+            while self.request_manager.number_historical_requests_outstanding() > self.historical_requests_number_limit:
                 continue
 
-            self.lock.acquire()
             self.check_connection()
-            self.lock.release()
 
-            self.request_manager.register_request(request_id, request)
+            self.request_manager.register_historical_request(request_id, request)
             self.kafka_request_manager.push_historical_request(request_id, request)
             self.ib_client.reqHistoricalData(request_id,
                                              contract,
@@ -108,12 +97,9 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
                                                                                    request.reportType,
                                                                                    request.contract.symbol))
         try:
-
-            self.lock.acquire()
             self.check_connection()
-            self.lock.release()
 
-            self.request_manager.register_request(request_id, request)
+            self.request_manager.register_fundamental_request(request_id, request)
             self.ib_client.reqFundamentalData(request_id,
                                               contract,
                                               request.reportType,
@@ -134,9 +120,11 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
             continue
 
 
-def serve(ib_client: IbClient, config, request_manager: RequestManager, max_workers,
+def serve(ib_client: IbClient, config: ConfigParser, request_manager: RequestManager,
           conn_manager: ConnectionManager):
+    max_workers = config.getint('ib client', 'grpc-workers')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
+
     request_data_pb2_grpc.add_RequestDataServicer_to_server(RequestService(config,
                                                                            ib_client,
                                                                            request_manager,

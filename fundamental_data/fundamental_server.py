@@ -46,8 +46,9 @@ def serve(end_point, repository):
 
 
 if __name__ == '__main__':
+    environment = os.getenv('environment') or 'development'
     config = ConfigParser()
-    config.read(os.path.join('..', 'settings', 'development.ini'))
+    config.read(os.path.join('..', 'settings', environment + '.ini'))
     end_point = config.get('services', 'fundamental_data')
 
     # configure logging

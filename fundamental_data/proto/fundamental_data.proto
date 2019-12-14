@@ -6,20 +6,20 @@ option objc_class_prefix = "FD";
 package fundamental_data;
 
 service FundamentalData {
-  rpc ProcessReport(ReportRequest) returns(Empty) {}
-  rpc GetLatestFinancialReportDate(StockRequest) returns(ReportMetaData) {}
-  rpc IsUpToDate(StockRequest) returns(UpToDate){}
+    rpc ProcessReport (Report) returns (Empty) {}
+    rpc GetLatestFinancialReportDate (StockRequest) returns (ReportMetaData) {}
+    rpc IsUpToDate (StockRequest) returns (UpToDate) {}
 }
 
 message Empty {}
 
-message ReportRequest {
+message Report {
     string stock = 1;
     string reportType = 2;
     string content = 3;
 }
 
-message StockRequest{
+message StockRequest {
     string stock = 1;
 }
 message ReportMetaData {
@@ -27,7 +27,7 @@ message ReportMetaData {
     string insertDate = 2;
 }
 
-message UpToDate{
+message UpToDate {
     bool upToDate = 1;
     // add other information later on
 }

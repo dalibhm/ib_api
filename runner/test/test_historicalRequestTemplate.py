@@ -1,13 +1,9 @@
 import os
 import sys
-import time
 
-import pytest
-
-from historical_runner import HistoricalRunner
+from download_runner.impl.historical_runner import HistoricalRunner
 from request_templates.params import HistoricalRequestTemplate
 from services.historical_data_service import HistoricalDataService
-from services.ib_client import IbClient
 
 module_dir = os.path.dirname(__file__)
 sys.path.append(os.path.join(module_dir, '..'))

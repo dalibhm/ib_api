@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='fundamental_data',
   syntax='proto3',
   serialized_options=_b('\242\002\002FD'),
-  serialized_pb=_b('\n\x16\x66undamental_data.proto\x12\x10\x66undamental_data\"\x07\n\x05\x45mpty\"C\n\rReportRequest\x12\r\n\x05stock\x18\x01 \x01(\t\x12\x12\n\nreportType\x18\x02 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x03 \x01(\t\"\x1d\n\x0cStockRequest\x12\r\n\x05stock\x18\x01 \x01(\t\"8\n\x0eReportMetaData\x12\x12\n\nreportDate\x18\x01 \x01(\t\x12\x12\n\ninsertDate\x18\x02 \x01(\t\"\x1c\n\x08UpToDate\x12\x10\n\x08upToDate\x18\x01 \x01(\x08\x32\x8e\x02\n\x0f\x46undamentalData\x12K\n\rProcessReport\x12\x1f.fundamental_data.ReportRequest\x1a\x17.fundamental_data.Empty\"\x00\x12\x62\n\x1cGetLatestFinancialReportDate\x12\x1e.fundamental_data.StockRequest\x1a .fundamental_data.ReportMetaData\"\x00\x12J\n\nIsUpToDate\x12\x1e.fundamental_data.StockRequest\x1a\x1a.fundamental_data.UpToDate\"\x00\x42\x05\xa2\x02\x02\x46\x44\x62\x06proto3')
+  serialized_pb=_b('\n\x16\x66undamental_data.proto\x12\x10\x66undamental_data\"\x07\n\x05\x45mpty\"<\n\x06Report\x12\r\n\x05stock\x18\x01 \x01(\t\x12\x12\n\nreportType\x18\x02 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x03 \x01(\t\"\x1d\n\x0cStockRequest\x12\r\n\x05stock\x18\x01 \x01(\t\"8\n\x0eReportMetaData\x12\x12\n\nreportDate\x18\x01 \x01(\t\x12\x12\n\ninsertDate\x18\x02 \x01(\t\"\x1c\n\x08UpToDate\x12\x10\n\x08upToDate\x18\x01 \x01(\x08\x32\x87\x02\n\x0f\x46undamentalData\x12\x44\n\rProcessReport\x12\x18.fundamental_data.Report\x1a\x17.fundamental_data.Empty\"\x00\x12\x62\n\x1cGetLatestFinancialReportDate\x12\x1e.fundamental_data.StockRequest\x1a .fundamental_data.ReportMetaData\"\x00\x12J\n\nIsUpToDate\x12\x1e.fundamental_data.StockRequest\x1a\x1a.fundamental_data.UpToDate\"\x00\x42\x05\xa2\x02\x02\x46\x44\x62\x06proto3')
 )
 
 
@@ -50,29 +50,29 @@ _EMPTY = _descriptor.Descriptor(
 )
 
 
-_REPORTREQUEST = _descriptor.Descriptor(
-  name='ReportRequest',
-  full_name='fundamental_data.ReportRequest',
+_REPORT = _descriptor.Descriptor(
+  name='Report',
+  full_name='fundamental_data.Report',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='stock', full_name='fundamental_data.ReportRequest.stock', index=0,
+      name='stock', full_name='fundamental_data.Report.stock', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='reportType', full_name='fundamental_data.ReportRequest.reportType', index=1,
+      name='reportType', full_name='fundamental_data.Report.reportType', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='content', full_name='fundamental_data.ReportRequest.content', index=2,
+      name='content', full_name='fundamental_data.Report.content', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -91,7 +91,7 @@ _REPORTREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=53,
-  serialized_end=120,
+  serialized_end=113,
 )
 
 
@@ -121,8 +121,8 @@ _STOCKREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=122,
-  serialized_end=151,
+  serialized_start=115,
+  serialized_end=144,
 )
 
 
@@ -159,8 +159,8 @@ _REPORTMETADATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=153,
-  serialized_end=209,
+  serialized_start=146,
+  serialized_end=202,
 )
 
 
@@ -190,12 +190,12 @@ _UPTODATE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=211,
-  serialized_end=239,
+  serialized_start=204,
+  serialized_end=232,
 )
 
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
-DESCRIPTOR.message_types_by_name['ReportRequest'] = _REPORTREQUEST
+DESCRIPTOR.message_types_by_name['Report'] = _REPORT
 DESCRIPTOR.message_types_by_name['StockRequest'] = _STOCKREQUEST
 DESCRIPTOR.message_types_by_name['ReportMetaData'] = _REPORTMETADATA
 DESCRIPTOR.message_types_by_name['UpToDate'] = _UPTODATE
@@ -208,12 +208,12 @@ Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
   })
 _sym_db.RegisterMessage(Empty)
 
-ReportRequest = _reflection.GeneratedProtocolMessageType('ReportRequest', (_message.Message,), {
-  'DESCRIPTOR' : _REPORTREQUEST,
+Report = _reflection.GeneratedProtocolMessageType('Report', (_message.Message,), {
+  'DESCRIPTOR' : _REPORT,
   '__module__' : 'fundamental_data_pb2'
-  # @@protoc_insertion_point(class_scope:fundamental_data.ReportRequest)
+  # @@protoc_insertion_point(class_scope:fundamental_data.Report)
   })
-_sym_db.RegisterMessage(ReportRequest)
+_sym_db.RegisterMessage(Report)
 
 StockRequest = _reflection.GeneratedProtocolMessageType('StockRequest', (_message.Message,), {
   'DESCRIPTOR' : _STOCKREQUEST,
@@ -245,15 +245,15 @@ _FUNDAMENTALDATA = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=242,
-  serialized_end=512,
+  serialized_start=235,
+  serialized_end=498,
   methods=[
   _descriptor.MethodDescriptor(
     name='ProcessReport',
     full_name='fundamental_data.FundamentalData.ProcessReport',
     index=0,
     containing_service=None,
-    input_type=_REPORTREQUEST,
+    input_type=_REPORT,
     output_type=_EMPTY,
     serialized_options=None,
   ),
