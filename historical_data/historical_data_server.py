@@ -6,7 +6,7 @@ from configparser import ConfigParser
 
 import grpc
 
-from data.db_factory import DbSessionFactory
+# from data.db_factory import DbSessionFactory
 from data.repository import Repository
 from proto import historical_data_pb2
 from proto import historical_data_pb2_grpc
@@ -82,7 +82,8 @@ def main():
     endpoint = config.get('services', 'historical_data')
 
     # initialize database
-    DbSessionFactory.global_init()
+    # DbSessionFactory.global_init()
+    Repository.init(config)
     serve(endpoint, 10)
 
 

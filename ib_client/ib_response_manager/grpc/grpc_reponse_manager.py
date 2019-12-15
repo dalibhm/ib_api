@@ -3,8 +3,8 @@ import grpc
 
 from ib_response_manager.response_manager import ResponseManager
 from requestmanager.requestmanager import RequestManager
-from .proto import fundamental_data_pb2_grpc
-from .proto import fundamental_data_pb2
+from _external import fundamental_data_pb2_grpc
+from _external import fundamental_data_pb2
 
 logger = logging.getLogger(__name__)
 

@@ -16,3 +16,5 @@ do
   ${BASE_DIR}/${service}/venv/bin/pip install --upgrade pip setuptools
   ${BASE_DIR}/${service}/venv/bin/pip install -r ${BASE_DIR}/${service}/requirements.txt
 done
+
+${BASE_DIR}/ib_client/venv/bin/python ${BASE_DIR}/ib_client/pythonclient/setup install

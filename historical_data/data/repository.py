@@ -4,19 +4,40 @@ import random
 # from dateutil.parser import parse
 from datetime import datetime
 
+import sqlalchemy
 from sqlalchemy.orm import load_only
 from sqlalchemy import and_
 
-from data.db_factory import DbSessionFactory
+# from data.db_factory import DbSessionFactory
 from data.bar_data import HistoricalData
 from data.head_timestamp import HeadTimestamp
+from data.sqlalchemy_base import SqlAlchemyBase
 
 
 class Repository:
 
+    __session_factory = None
+
+
+    @classmethod
+    def init(cls, config):
+        conn_string = 'postgresql://{}:{}@{}:{}/{}'.format(config.get('postgres', 'user'),
+                                                           config.get('postgres', 'password'),
+                                                           config.get('postgres', 'host'),
+                                                           config.get('postgres', 'port'),
+                                                           config.get('postgres', 'db'))
+
+        print("[ Connecting to database : {} ]".format(conn_string))
+        engine = sqlalchemy.create_engine(conn_string, echo=config.getboolean('postgres', 'echo'))
+
+        SqlAlchemyBase.metadata.create_all(engine)
+
+        cls.__session_factory = sqlalchemy.orm.sessionmaker(bind=engine)
+
+
     @classmethod
     def get_all_stocks(cls, limit=None):
-        session = DbSessionFactory.create_session()
+        session = cls.__session_factory
 
         query = session.query(HistoricalData.symbol).distinct()
 
@@ -31,7 +52,7 @@ class Repository:
 
     @classmethod
     def get_latest_date(cls, symbol, date_format):
-        session = DbSessionFactory.create_session()
+        session = cls.__session_factory
         result = session.query(HistoricalData.date).filter(HistoricalData.symbol == symbol)\
             .order_by(HistoricalData.date.desc())\
             .first()
@@ -45,7 +66,7 @@ class Repository:
 
     @classmethod
     def get_head_timestamp(cls, symbol):
-        session = DbSessionFactory.create_session()
+        session = cls.__session_factory
         date = session.query(HeadTimestamp).first()
         session.close()
 
@@ -53,7 +74,7 @@ class Repository:
 
     @classmethod
     def get_historical_data_for_stock(cls, stock_symbol, start_date=None, end_date=None, whatToShow=None):
-        session = DbSessionFactory.create_session()
+        session = cls.__session_factory
 
         # fields = ['date', 'open', 'high', 'low', 'close', 'volume', 'barCount', 'average']
         if not start_date:
@@ -75,7 +96,7 @@ class Repository:
 
     # @classmethod
     # def historical_data_for_stocks_in_period(cls, stock_list, start_date, end_date):
-    #     session = DbSessionFactory.create_session()
+    #     session = cls.__session_factory
     #
     #     historical_data = session.query(BarData).filter(BarData.symbol.in_(stock_list)). \
     #         filter(and_(BarData.date <= end_date, BarData.date >= start_date)).all()
@@ -86,7 +107,7 @@ class Repository:
 
     # @classmethod
     # def historical_data_for_stock_in_period(cls, stock_symbol, start_date, end_date, whatToShow=None):
-    #     session = DbSessionFactory.create_session()
+    #     session = cls.__session_factory
     #
     #     historical_data = session.query(BarData).filter(BarData.symbol == stock_symbol). \
     #         filter(and_(BarData.date <= end_date, BarData.date >= start_date)).all()
@@ -105,7 +126,7 @@ class Repository:
         :param historical_data:
         :return: BarData
         """
-        session = DbSessionFactory.create_session()
+        session = cls.__session_factory
 
         db_data = HistoricalData(**historical_data)
 

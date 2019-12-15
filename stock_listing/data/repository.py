@@ -1,7 +1,4 @@
 import random
-
-# noinspection PyPackageRequirements
-# from dateutil.parser import parse
 from sqlalchemy import and_
 
 from data.db_factory import DbSessionFactory
