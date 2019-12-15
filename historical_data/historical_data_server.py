@@ -78,7 +78,7 @@ def main():
     environment = os.getenv('environment') or 'development'
 
     config = ConfigParser()
-    config.read(os.path.join('..', 'settings', environment + '.ini'))
+    config.read(os.path.join('settings', environment + '.ini'))
     endpoint = config.get('services', 'historical_data')
 
     # initialize database

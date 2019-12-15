@@ -24,11 +24,11 @@ def main():
     # load configuration
     environment = os.getenv('environment') or 'development'
     config = ConfigParser()
-    config.read(os.path.join('..', 'settings', environment + '.ini'))
+    config.read(os.path.join('settings', environment + '.ini'))
     filename = config.get('data config', 'file')
 
-    with open(os.path.join('.', 'settings', filename), 'r') as f:
-        download_config = json.load(f)
+    # with open(os.path.join('.', 'settings', filename), 'r') as f:
+    #     download_config = json.load(f)
 
     # configure services
     services = {

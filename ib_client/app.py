@@ -52,7 +52,7 @@ def parse_args():
 def init_config(mode: str):
     environment = os.getenv('environment') or 'development'
     config = ConfigParser()
-    config.read(os.path.join('..', 'settings', environment + '.ini'))
+    config.read(os.path.join('settings', environment + '.ini'))
     return config
 
 
