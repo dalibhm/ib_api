@@ -77,7 +77,7 @@ class Connection:
             self.lock.release()
             return 0
         try:
-            nSent = self.socket.poll_stock(msg)
+            nSent = self.socket.send(msg)
         except socket.error:
             logger.debug("exception from sendMsg %s", sys.exc_info())
             raise
