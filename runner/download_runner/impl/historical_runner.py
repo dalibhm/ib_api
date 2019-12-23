@@ -2,7 +2,7 @@ import logging
 import time
 from datetime import datetime, timedelta
 
-from exceptions import RequestFailed
+from exceptions import RequestFailed, DataAlreadyInDB
 from request_scheduler import RequestScheduler
 from request_templates.params import HistoricalRequestTemplate
 from services.historical_data_service import HistoricalDataService
@@ -34,6 +34,8 @@ class HistoricalRunner:
             else:
                 logger.info('Historical data request sent : {} {} {}'
                             .format(contract['symbol'], start_date, self.end_date))
+        else:
+            raise DataAlreadyInDB
 
     def validate_params(self, contract):
         symbol = contract['symbol']

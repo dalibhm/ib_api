@@ -29,7 +29,8 @@ class KafkaConsumer:
             "group.id": group_id,
             'schema.registry.url': config.get('kafka', 'schema.registry.url'),
             # the consumer was not running without default.topic.config
-            "default.topic.config": default_topic_config
+            "default.topic.config": default_topic_config,
+            "MaxPollIntervalMs": config.get('kafka', 'MaxPollIntervalMs'),
             # "default.topic.config": {"auto.offset.reset": "earliest"}
         }
         self.consumer = AvroConsumer(self.kafka_config)
@@ -45,6 +46,6 @@ class KafkaConsumer:
             logger.info('End of partition reached {0}/{1}'.format(msg.topic(), msg.partition()))
             raise EndOfTopic
         else:
-            logger.error('Error occured in Kafka: {0}'.format(msg.error().str()))
+            logger.exception('Error occured in Kafka: {0}'.format(msg.error().str()))
             raise KafkaException
         return msg.value()

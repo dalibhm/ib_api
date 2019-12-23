@@ -3,7 +3,7 @@ from queue import Queue
 
 import grpc
 
-from exceptions import RequestFailed, EndOfTopic, NoMessage
+from exceptions import RequestFailed, EndOfTopic, NoMessage, DataAlreadyInDB
 from download_runner.impl.historical_end_reader import HistoricalEndReader
 from download_runner.kafka_download_runner import KafkaDownloadRunner
 from request_scheduler import RequestScheduler
@@ -56,6 +56,8 @@ class KafkaHistoricalDownloadRunner(KafkaDownloadRunner):
                     self.request_scheduler.request_added()
                 except RequestFailed:
                     logger.info('historical request failed for {}'.format(stock))
+                except DataAlreadyInDB:
+                    logger.info('historical request not sent for {}, data already in database'.format(stock))
                 except grpc.RpcError as e:
                     logger.exception('GRPC error {}'.format(e.code()))
 
