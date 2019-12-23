@@ -1,4 +1,5 @@
 import logging
+import time
 from threading import Thread
 
 from download_runner.impl.kafka_consumer import KafkaConsumer
@@ -24,12 +25,13 @@ class HistoricalEndReader(Thread):
         try:
             logger.debug('starting historical data end reader loop')
             while True:
+                time.sleep(1)
                 try:
                     hist_data_end = self.consumer.poll()
                     logger.info('got historical data end {}'.format(hist_data_end))
                     self.request_scheduler.on_historical_data_end()
                 except:
-                    logger.exception('exception trying to access hist_data_end_queue')
+                    logger.exception('exception polling hist_data_end topic')
         except:
             logger.exception('unhandled exception in HistoricalEndReader')
 

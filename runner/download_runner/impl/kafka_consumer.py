@@ -5,6 +5,7 @@ from threading import Thread
 
 from confluent_kafka import KafkaError
 from confluent_kafka.avro import AvroConsumer
+from confluent_kafka.cimpl import KafkaException
 
 from exceptions import EndOfTopic, NoMessage
 
@@ -41,8 +42,9 @@ class KafkaConsumer:
         elif not msg.error():
             logger.info('Received message: {}'.format(msg.value()))
         elif msg.error().code() == KafkaError._PARTITION_EOF:
-            # logger.info('End of partition reached {0}/{1}'.format(msg.topic(), msg.partition()))
+            logger.info('End of partition reached {0}/{1}'.format(msg.topic(), msg.partition()))
             raise EndOfTopic
         else:
             logger.error('Error occured in Kafka: {0}'.format(msg.error().str()))
+            raise KafkaException
         return msg.value()

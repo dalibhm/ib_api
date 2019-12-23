@@ -1,6 +1,6 @@
 import logging
 import grpc
-
+from confluent_kafka.cimpl import KafkaException
 
 from exceptions import RequestFailed, EndOfTopic, NoMessage
 from request_scheduler import RequestScheduler
@@ -33,6 +33,10 @@ class KafkaDownloadRunner:
                 continue
             except EndOfTopic:
                 break
+            except KafkaException:
+                continue
+            except:
+                logger.exception('unexpected exception')
 
             stock = modify_stock(stock)
 
