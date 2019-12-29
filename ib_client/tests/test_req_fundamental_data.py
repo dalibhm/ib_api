@@ -5,7 +5,6 @@ import sys
 import time
 
 import pytest
-from _pytest.outcomes import skip
 from ibapi.contract import Contract
 
 module_dir = os.path.dirname(__file__)
@@ -13,7 +12,7 @@ sys.path.append(os.path.join(module_dir, '../ib_client/'))
 
 from init_app import SetupLogger
 
-import ib_client
+from api import ib_client
 
 
 @pytest.fixture(scope="module")

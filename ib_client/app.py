@@ -1,31 +1,85 @@
 import argparse
+import logging
 import os
 # import sys
+from datetime import datetime
 from threading import Thread
 
-from connection_manager import ConnectionManager
+from Services.request_id_generator import RequestIdGenerator
+from api.impl.ib_client_impl import IbClientImpl
+from connection_manager.connection_manager import ConnectionManager
+from connection_manager.impl.connection_manager_impl import ConnectionManagerImpl
+from ewrapper_impl import EWrapperImpl
 from grpc_service.grpc_service import serve
-from init_app import init_ib_client
+from api.ib_client import IbClient
+from ibapi.wrapper import EWrapper
+from init_app import SetupLogger
 
 from configparser import ConfigParser
 from Services.LogService import LogService
-from requestmanager.requestmanager import RequestManager
+from requestmanager.requestmanager import RequestManager, RequestsLimit
+
+from injector import Injector, inject, singleton
+
+
+class Container:
+    def __init__(self):
+        environment = os.getenv('environment') or 'development'
+        self.config = ConfigParser()
+        self.config.read(os.path.join('settings', environment + '.ini'))
+        self.injector = Injector(self.configure, auto_bind=False)
+
+    def configure(self, binder):
+        binder.bind(ConfigParser, to=self.config, scope=singleton)
+        binder.bind(RequestIdGenerator, to=RequestIdGenerator, scope=singleton)
+        binder.bind(ConnectionManager, to=ConnectionManagerImpl, scope=singleton)
+        binder.bind(RequestsLimit, to=RequestsLimit, scope=singleton)
+        binder.bind(EWrapper, to=EWrapperImpl, scope=singleton)
+        binder.bind(IbClient, to=IbClientImpl, scope=singleton)
+        binder.bind(RequestManager, to=RequestManager, scope=singleton)
+
+    # def get(self, class_):
+    #     instance = self.injector(class_)
+
 
 
 def main():
     args = parse_args()
-    config = init_config(args.mode)
+
+
+    # api logging
+    SetupLogger()
+    logger = logging.getLogger()
+    logger.debug("now is %s", datetime.now())
+    logger.setLevel(logging.DEBUG)
+
+    #
+
+    container = Container()
+    injector = container.injector
+
+    config = injector.get(ConfigParser)
+    # app logging
     init_logging(config)
+    # construct client
+    ib_client = injector.get(IbClient)
+    # ib_client.globalCancelOnly = confiig.getboolean('ib client', 'global-cancel')
 
-    request_manager = RequestManager()
+    # connection manager
+    conn_manager = injector.get(ConnectionManager)
+    request_manager = injector.get(RequestManager)
 
-    ib_client = init_ib_client(config, request_manager)
-    conn_manager = ConnectionManager(config, ib_client)
-    ib_client.register_connection_manager(conn_manager)
+    wrapper = injector.get(EWrapper)
+    wrapper.connection_manager = conn_manager
+    wrapper.request_manager = request_manager
 
+
+    # run service
     app_thread = Thread(target=ib_client.run)
     app_thread.start()
 
+    # starts connection manager
+    # connect automatically
     conn_manager.start()
 
     grpc_thread = Thread(target=serve, args=(ib_client, config, request_manager, conn_manager))
@@ -47,13 +101,6 @@ def parse_args():
                                dest="global_cancel", default=False,
                                help="whether to trigger a globalCancel req")
     return cmdLineParser.parse_args()
-
-
-def init_config(mode: str):
-    environment = os.getenv('environment') or 'development'
-    config = ConfigParser()
-    config.read(os.path.join('settings', environment + '.ini'))
-    return config
 
 
 def init_logging(config):

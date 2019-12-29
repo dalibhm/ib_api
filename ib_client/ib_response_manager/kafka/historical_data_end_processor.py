@@ -27,9 +27,8 @@ class HistoricalDataEndProcessor:
 
         self.request_manager: RequestManager = request_manager
 
-    def produce_msg(self, requestId: int, start: str, end: str):
+    def produce_msg(self, requestId: int, request, start: str, end: str):
         # print(requestId, bar_data)
-        request: HistoricalDataRequest = self.request_manager.get_request_by_id(requestId)['request']
         r = {
             'symbol': request.contract.symbol,
             # 'secType': request.contract.secType,

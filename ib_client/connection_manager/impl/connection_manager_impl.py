@@ -7,13 +7,19 @@ from ibapi.client import EClient
 
 import logging
 
+from injector import inject
+
+from api.ib_client import IbClient
+from connection_manager.connection_manager import ConnectionManager
+
 logger = logging.getLogger(__name__)
 
 
-class ConnectionManager(Thread):
-    def __init__(self, config: ConfigParser, ib_client):
+class ConnectionManagerImpl(ConnectionManager):
+    @inject
+    def __init__(self, config: ConfigParser, ib_client: IbClient):
         super().__init__()
-        self.connection_closed = False
+        self.connection_closed = True
         self.host = config.get('ib client', 'host')
         self.port = config.getint('ib client', 'port')
         self.client_id = config.getint('ib client', 'client-id')
@@ -32,11 +38,13 @@ class ConnectionManager(Thread):
         while self.connection_closed:
             try:
                 self.ib_client.connect(self.host, self.port, self.client_id)
+                time.sleep(5)
                 logger.info('reconnecting to IB API {} trial(s)'.format(trial_number))
-                self.connection_closed = False
+                if self.ib_client.isConnected():
+                    self.connection_closed = False
             except Exception as e:
                 logger.exception('error while reconnecting to IB API {} trial(s)'.format(trial_number))
-            time.sleep(5)
+
             trial_number += 1
         logger.debug('EClient.run() starting')
         app_thread = Thread(target=self.ib_client.run)
@@ -53,4 +61,5 @@ class ConnectionManager(Thread):
     def run(self) -> None:
         while True:
             if self.connection_closed:
+                print("[connection to api down]")
                 self.connect()

@@ -57,7 +57,6 @@ curl -X POST http://localhost:8083/connectors -H "Content-Type: application/json
         "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
         "value.converter": "io.confluent.connect.avro.AvroConverter",
         "value.converter.schema.registry.url": "http://localhost:8081",
-
         "connection.url": "jdbc:postgresql://192.168.1.97:5432/ib_test",
         "connection.user": "ib_test",
         "connection.password": "ib_test",

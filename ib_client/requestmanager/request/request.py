@@ -3,12 +3,20 @@ from datetime import datetime
 from ibapi.contract import Contract
 import threading
 
+from api.ib_client import IbClient
+
 
 class Request:
-    def __init__(self, request):
+    def __init__(self, request_id, request, ib_client: IbClient):
+        """
+
+        :type ib_client: object
+        """
         self.request_time = datetime.now()
         self.response_time = None
+        self.request_id = request_id
         self._request = request  # this GRPC raw requests
+        self._ib_client = ib_client
         self.name = ''
         # self._data = None
         self.lock = threading.Lock()

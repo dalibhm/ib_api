@@ -4,7 +4,7 @@ from configparser import ConfigParser
 from ibapi.contract import Contract
 from .kafka_producer import KafkaRequestManager
 from Services.LogService import LogService
-from connection_manager import ConnectionManager
+from connection_manager.connection_manager import ConnectionManager
 
 from proto import request_data_pb2, request_data_pb2_grpc
 
@@ -12,7 +12,7 @@ import grpc
 from concurrent import futures
 import time
 
-from ib_client import IbClient
+from api.ib_client import IbClient
 from Services.request_id_generator import RequestIdGenerator
 from requestmanager.requestmanager import RequestManager
 
@@ -60,34 +60,11 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
         return request_data_pb2.Status(message=True)
 
     def RequestHistoricalData(self, request, context):
-        contract = get_contract(request)
-        request_id = self.request_id_gen.get_id()
-        self.logger.notice("sending request {} for historical data : {}".format(request_id, contract))
-        try:
-            # avoid more than 50 requests at a time
-            while self.request_manager.number_historical_requests_outstanding() > self.historical_requests_number_limit:
-                continue
+        self.request_manager.add_historical_request(request)
 
-            self.check_connection()
-
-            self.request_manager.register_historical_request(request_id, request)
-            self.kafka_request_manager.push_historical_request(request_id, request)
-            self.ib_client.reqHistoricalData(request_id,
-                                             contract,
-                                             request.endDateTime,
-                                             request.durationString,
-                                             request.barSizeSetting,
-                                             request.whatToShow,
-                                             int(request.useRTH),
-                                             request.formatDate,
-                                             int(request.keepUpToDate),
-                                             []
-                                             )
-        except Exception as e:
-            self.logger.exception('Unable to request {} historical data for {}'.format(request_id,
-                                                                                       contract)
-                                  )
-            return request_data_pb2.Status(message=False)
+        # maybe remove the response message
+        # think about a notification mechanism in case
+        # the request fails before going to ibapi
         return request_data_pb2.Status(message=True)
 
     def RequestFundamentalData(self, request, context):

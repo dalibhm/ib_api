@@ -3,19 +3,15 @@ import logging
 from configparser import ConfigParser
 
 from ibapi.client import EClient
-
-
-from ewrapper_impl import EWrapperImpl
+from ibapi.wrapper import EWrapper
+from injector import inject
 
 logger = logging.getLogger()
 
 
-class IbClient(EClient):
-
-    def __init__(self, config: ConfigParser, request_manager):
-        self.connection_manager = None
-        wrapper = EWrapperImpl(config=config, request_manager=request_manager)
-
+class IbClientImpl(EClient):
+    @inject
+    def __init__(self, wrapper: EWrapper):
         super().__init__(wrapper)
         # ! [socket_init]
         self.nKeybInt = 0
@@ -46,7 +42,3 @@ class IbClient(EClient):
         oid = self.nextValidOrderId
         self.nextValidOrderId += 1
         return oid
-
-    def register_connection_manager(self, connection_manager):
-        self.connection_manager = connection_manager
-        self.wrapper.connection_manager = connection_manager

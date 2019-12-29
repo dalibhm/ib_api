@@ -15,13 +15,13 @@ class RequestScheduler:
     def request_added(self):
         self.lock.acquire()
         self.requests_number += 1
-        logger.debug('request added, outstanding : {}'.format(self.requests_number))
+        logger.debug('request added, outstanding : {}'.format(self.requests_number - self.responses_number))
         self.lock.release()
 
     def on_historical_data_end(self):
         self.lock.acquire()
         self.responses_number += 1
-        logger.debug('request ended, outstanding : {}'.format(self.responses_number))
+        logger.debug('request ended, outstanding : {}'.format(self.requests_number - self.responses_number))
         self.lock.release()
 
     def poll_stock(self):

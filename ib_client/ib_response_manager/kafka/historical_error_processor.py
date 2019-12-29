@@ -28,7 +28,7 @@ class HistoricalErrorProcessor:
         self.request_manager: RequestManager = request_manager
 
     def produce_msg(self, requestId: int, errorCode: int, errorString: str):
-        request: HistoricalDataRequest = self.request_manager.get_request_by_id(requestId)
+        request: HistoricalDataRequest = self.request_manager.get_request_by_id(requestId)['request']
         r = {
             'symbol': request.contract.symbol,
             # 'secType': request.contract.secType,

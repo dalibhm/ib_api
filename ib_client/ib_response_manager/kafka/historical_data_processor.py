@@ -30,9 +30,7 @@ class HistoricalDataProcessor:
 
         self.request_manager: RequestManager = request_manager
 
-    def produce_msg(self, requestId: int, bar_data: BarData):
-        # print(requestId, bar_data)
-        request: HistoricalDataRequest = self.request_manager.get_request_by_id(requestId)['request']
+    def produce_msg(self, request_id, request: HistoricalDataRequest, bar_data: BarData):
         r = {
             'symbol': request.contract.symbol,
             # 'secType': request.contract.secType,
@@ -51,6 +49,6 @@ class HistoricalDataProcessor:
         # data['date'] = datetime.strptime(data['date'], "%Y%m%d").date()
         self.historical_data_producer.produce(topic=self.historical_data_topic,
                                               value=r,
-                                              key={'requestId': requestId}
+                                              key={'requestId': request_id}
                                               )
         self.historical_data_producer.flush()

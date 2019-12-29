@@ -1,5 +1,6 @@
 import datetime
 import logging
+from configparser import ConfigParser
 
 from ibapi.common import BarData, ListOfHistoricalTick, ListOfHistoricalTickBidAsk, TickerId, ListOfHistoricalTickLast, \
     OrderId
@@ -7,6 +8,7 @@ from ibapi.contract import ContractDetails, Contract
 from ibapi.order import Order
 from ibapi.order_state import OrderState
 from ibapi.wrapper import EWrapper
+from injector import inject
 
 from ib_response_manager.grpc.grpc_reponse_manager import GrpcResponseManager
 from ib_response_manager.response_processor_factory import ResponseProcessorFactory
@@ -16,14 +18,16 @@ logger = logging.getLogger(__name__)
 
 
 class EWrapperImpl(EWrapper):
-    def __init__(self, config, request_manager):
+    @inject
+    def __init__(self, config: ConfigParser):
         super().__init__()
-        self.connection_manager = None
         self.asynchronous = False
-        self.request_manager: RequestManager = request_manager
-        self.response_processor = ResponseProcessorFactory(config).create(request_manager)
-        self.fundamental_response_manager = GrpcResponseManager(config.get('services', 'fundamental_data'),
-                                                                request_manager)
+
+        # if injected, the two classes below induce circular references as they depend on ib_client
+        # which holds a reference to EWrapper
+        self.connection_manager = None
+        self.request_manager: RequestManager = None
+
 
     # ! [connectack]
     def connectAck(self):
@@ -81,15 +85,17 @@ class EWrapperImpl(EWrapper):
     # ! [historicaldata]
     def historicalData(self, reqId: int, bar: BarData):
         # print("HistoricalData. ReqId:", reqId, "BarData.", bar)
-        self.response_processor.process_historical_data(reqId, bar)
+        # self.response_processor.process_historical_data(reqId, bar)
+        self.request_manager.process_historical_data(reqId, bar)
 
     # ! [historicaldata]
 
     # ! [historicaldataend]
     def historicalDataEnd(self, reqId: int, start: str, end: str):
         super().historicalDataEnd(reqId, start, end)
-        self.request_manager.on_request_end(reqId, 'historical')
+
         self.response_processor.process_historical_data_end(reqId, start, end)
+        self.request_manager.process_historical_data_end(reqId, start, end)
 
     # ! [historicaldataend]
 
@@ -137,8 +143,14 @@ class EWrapperImpl(EWrapper):
         super().error(reqId, errorCode, errorString)
 
         # historical data error
-        if errorCode == 162:
-            self.response_processor.process_historical_error(reqId, errorCode, errorString)
+        # this needs to be treated in a generic way as the error codes may not be
+        # specific to request type
+
+        if errorCode in [err for err in range(501, 505)]:
+            print(reqId, errorCode, errorString[:50])
+        else:
+            self.request_manager.process_error(reqId, errorCode, errorString)
+        # self.response_processor.process_historical_error(reqId, errorCode, errorString)
 
 
    # ! [error] self.reqId2nErr[reqId] += 1

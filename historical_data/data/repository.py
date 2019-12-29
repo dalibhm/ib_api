@@ -37,7 +37,7 @@ class Repository:
 
     @classmethod
     def get_all_stocks(cls, limit=None):
-        session = cls.__session_factory
+        session = cls.__session_factory()
 
         query = session.query(HistoricalData.symbol).distinct()
 
@@ -52,7 +52,7 @@ class Repository:
 
     @classmethod
     def get_latest_date(cls, symbol, date_format):
-        session = cls.__session_factory
+        session = cls.__session_factory()
         result = session.query(HistoricalData.date).filter(HistoricalData.symbol == symbol)\
             .order_by(HistoricalData.date.desc())\
             .first()
@@ -66,7 +66,7 @@ class Repository:
 
     @classmethod
     def get_head_timestamp(cls, symbol):
-        session = cls.__session_factory
+        session = cls.__session_factory()
         date = session.query(HeadTimestamp).first()
         session.close()
 
@@ -74,7 +74,7 @@ class Repository:
 
     @classmethod
     def get_historical_data_for_stock(cls, stock_symbol, start_date=None, end_date=None, whatToShow=None):
-        session = cls.__session_factory
+        session = cls.__session_factory()
 
         # fields = ['date', 'open', 'high', 'low', 'close', 'volume', 'barCount', 'average']
         if not start_date:
@@ -96,7 +96,7 @@ class Repository:
 
     # @classmethod
     # def historical_data_for_stocks_in_period(cls, stock_list, start_date, end_date):
-    #     session = cls.__session_factory
+    #     session = cls.__session_factory()
     #
     #     historical_data = session.query(BarData).filter(BarData.symbol.in_(stock_list)). \
     #         filter(and_(BarData.date <= end_date, BarData.date >= start_date)).all()
@@ -107,7 +107,7 @@ class Repository:
 
     # @classmethod
     # def historical_data_for_stock_in_period(cls, stock_symbol, start_date, end_date, whatToShow=None):
-    #     session = cls.__session_factory
+    #     session = cls.__session_factory()
     #
     #     historical_data = session.query(BarData).filter(BarData.symbol == stock_symbol). \
     #         filter(and_(BarData.date <= end_date, BarData.date >= start_date)).all()
@@ -126,7 +126,7 @@ class Repository:
         :param historical_data:
         :return: BarData
         """
-        session = cls.__session_factory
+        session = cls.__session_factory()
 
         db_data = HistoricalData(**historical_data)
 
