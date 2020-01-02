@@ -30,7 +30,7 @@ class KafkaConsumer:
             'schema.registry.url': config.get('kafka', 'schema.registry.url'),
             # the consumer was not running without default.topic.config
             "default.topic.config": default_topic_config,
-            "MaxPollIntervalMs": config.get('kafka', 'MaxPollIntervalMs'),
+            # "MaxPollIntervalMs": config.get('kafka', 'MaxPollIntervalMs'),
             # "default.topic.config": {"auto.offset.reset": "earliest"}
         }
         self.consumer = AvroConsumer(self.kafka_config)

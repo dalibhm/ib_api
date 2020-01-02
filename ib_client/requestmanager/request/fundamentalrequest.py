@@ -1,18 +1,50 @@
+import logging
 import threading
 
+from api.ib_client import IbClient
+from enums.request_type import RequestType
+from proto.request_data_pb2 import FundamentalDataRequest
 from requestmanager.request.request import Request
+from responsemanager.response_manager import ResponseManager
+
+logger = logging.getLogger(__name__)
 
 
 class FundamentalRequest(Request):
 
-    def __init__(self, request):
-        super().__init__(request)
-        self.lock = threading.Lock()
-        self.name = "FundamentalRequest"
+    def __init__(self,
+                 request_id: int,
+                 request: FundamentalDataRequest,
+                 ib_client: IbClient,
+                 response_manager: ResponseManager):
 
-    # def add_data(self, data):
-    #     self._data = data
-    #
-    # # implement in inherited classes
-    # def __repr__(self):
-    #     return 'symbol {} started {} ended {}'.format(self.symbol, self.response_time, self.response_time)
+        super().__init__(request_id, request, ib_client, RequestType.Fundamental)
+        self.response_manager = response_manager
+
+    def run(self):
+        request = self._request
+        request_id = self.request_id
+        contract = self.get_contract()
+        self.logger.notice("sending request {} for fundamental data : {}".format(request_id, contract))
+        try:
+            # self.kafka_request_manager.push_historical_request(request_id, request)
+            self._ib_client.reqFundamentalData(request_id,
+                                               contract,
+                                               request.reportType,
+                                               []
+                                               )
+        except Exception as e:
+            self.finished = True
+            self.logger.exception('Unable to request {} fundamental data for {}'.format(request_id,
+                                                                                   contract)
+                             )
+
+    def process_data(self, xml_data):
+        self.response_manager.process_fundamental_data(self.request_id, self._request, xml_data)
+
+    def process_data_end(self):
+        self.finished = True
+
+    def process_error(self, error_code, error_string):
+        self.finished = True
+        self.response_manager.process_fundamental_data_error(self.request_id, self._request, error_code, error_string)

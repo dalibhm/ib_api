@@ -25,27 +25,6 @@ class LogService:
 
         LogService.get_startup_log().notice(msg)
 
-    # @staticmethod
-    # def init_ib_client_log():
-    #     if not os.path.exists("log"):
-    #         os.makedirs("log")
-    #
-    #     time.strftime("pyibapi.%Y%m%d_%H%M%S.log")
-    #     recfmt = '(%(threadName)s) %(asctime)s.%(msecs)03d %(levelname)s %(filename)s:%(lineno)d %(message)s'
-    #     timefmt = '%y%m%d_%H:%M:%S'
-    #
-    #     logger = logging.getLogger('ib_logger')
-    #     logger.setLevel(logging.INFO)
-    #     formatter = logging.Formatter(fmt=recfmt, datefmt=timefmt)
-    #     file_handler = logging.FileHandler(time.strftime("log/pyibapi.%Y%m%d_%H:%M:%S.log"))
-    #     file_handler.setFormatter(formatter)
-    #     logger.addHandler(file_handler)
-    #
-    #     # logger = logging.getLogger()
-    #     # console = logging.StreamHandler()
-    #     # console.setLevel(logging.ERROR)
-    #     # logger.addHandler(console)
-
     @staticmethod
     def get_startup_log():
         return logbook.Logger("App")

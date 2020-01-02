@@ -37,6 +37,7 @@ class ConnectionManagerImpl(ConnectionManager):
         trial_number = 1
         while self.connection_closed:
             try:
+                # self.ib_client.disconnect()
                 self.ib_client.connect(self.host, self.port, self.client_id)
                 time.sleep(5)
                 logger.info('reconnecting to IB API {} trial(s)'.format(trial_number))
@@ -53,10 +54,8 @@ class ConnectionManagerImpl(ConnectionManager):
         self.hold_on_requests = False
         # self.last_connection_trial_time = datetime.now()
 
-    def reconnect(self):
-        # self.ib_client.done = True
-        # self.ib_client.disconnect()
-        self.connect()
+    def is_connected(self):
+        return not self.connection_closed
 
     def run(self) -> None:
         while True:

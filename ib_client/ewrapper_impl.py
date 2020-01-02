@@ -3,15 +3,13 @@ import logging
 from configparser import ConfigParser
 
 from ibapi.common import BarData, ListOfHistoricalTick, ListOfHistoricalTickBidAsk, TickerId, ListOfHistoricalTickLast, \
-    OrderId
+    OrderId, SetOfString, SetOfFloat
 from ibapi.contract import ContractDetails, Contract
 from ibapi.order import Order
 from ibapi.order_state import OrderState
 from ibapi.wrapper import EWrapper
 from injector import inject
 
-from ib_response_manager.grpc.grpc_reponse_manager import GrpcResponseManager
-from ib_response_manager.response_processor_factory import ResponseProcessorFactory
 from requestmanager.requestmanager import RequestManager
 
 logger = logging.getLogger(__name__)
@@ -27,7 +25,6 @@ class EWrapperImpl(EWrapper):
         # which holds a reference to EWrapper
         self.connection_manager = None
         self.request_manager: RequestManager = None
-
 
     # ! [connectack]
     def connectAck(self):
@@ -65,20 +62,21 @@ class EWrapperImpl(EWrapper):
 
     def contractDetails(self, reqId: int, contractDetails: ContractDetails):
         super().contractDetails(reqId, contractDetails)
-        self.response_processor.process_contract_details(contractDetails)
+        self.request_manager.process_data(reqId, contractDetails)
 
     # ! [contractdetails]
 
     # ! [contractdetailsend]
     def contractDetailsEnd(self, reqId: int):
         super().contractDetailsEnd(reqId)
-        print("ContractDetailsEnd. ReqId:", reqId)
+        self.request_manager.process_data_end(reqId)
 
     # ! [contractdetailsend]
 
     # ! [headTimestamp]
     def headTimestamp(self, reqId: int, headTimestamp: str):
         print("HeadTimestamp. ReqId:", reqId, "HeadTimeStamp:", headTimestamp)
+        self.request_manager.process_data(reqId, headTimestamp)
 
     # ! [headTimestamp]
 
@@ -86,7 +84,7 @@ class EWrapperImpl(EWrapper):
     def historicalData(self, reqId: int, bar: BarData):
         # print("HistoricalData. ReqId:", reqId, "BarData.", bar)
         # self.response_processor.process_historical_data(reqId, bar)
-        self.request_manager.process_historical_data(reqId, bar)
+        self.request_manager.process_data(reqId, bar)
 
     # ! [historicaldata]
 
@@ -94,8 +92,8 @@ class EWrapperImpl(EWrapper):
     def historicalDataEnd(self, reqId: int, start: str, end: str):
         super().historicalDataEnd(reqId, start, end)
 
-        self.response_processor.process_historical_data_end(reqId, start, end)
-        self.request_manager.process_historical_data_end(reqId, start, end)
+        # self.response_processor.process_historical_data_end(reqId, start, end)
+        self.request_manager.process_data_end(reqId, start, end)
 
     # ! [historicaldataend]
 
@@ -130,11 +128,8 @@ class EWrapperImpl(EWrapper):
 
     # ! [fundamentaldata]
     def fundamentalData(self, reqId: TickerId, data: str):
-        super().fundamentalData(reqId, data)
-
-        self.request_manager.on_request_end(reqId, 'fundamental')
-        logger.info('{} {} {}'.format(reqId, request.reportType, request.contract.symbol))
-        self.fundamental_response_manager.process_financial_data(request, data)
+        # super().fundamentalData(reqId, data)
+        self.request_manager.process_data(reqId, data)
 
     # ! [fundamentaldata]
 
@@ -146,14 +141,13 @@ class EWrapperImpl(EWrapper):
         # this needs to be treated in a generic way as the error codes may not be
         # specific to request type
 
-        if errorCode in [err for err in range(501, 505)]:
+        print(reqId, errorCode, errorString)
+        if errorCode in [err for err in range(501, 505)] or (1000 < errorCode < 2999):
             print(reqId, errorCode, errorString[:50])
         else:
             self.request_manager.process_error(reqId, errorCode, errorString)
-        # self.response_processor.process_historical_error(reqId, errorCode, errorString)
 
-
-   # ! [error] self.reqId2nErr[reqId] += 1
+    # ! [error] self.reqId2nErr[reqId] += 1
 
     def winError(self, text: str, lastError: int):
         super().winError(text, lastError)
@@ -203,3 +197,14 @@ class EWrapperImpl(EWrapper):
               whyHeld, "MktCapPrice:", mktCapPrice)
 
     # ! [orderstatus]
+
+    def securityDefinitionOptionParameter(self, reqId: int, exchange: str,
+                                          underlyingConId: int, tradingClass: str, multiplier: str,
+                                          expirations: SetOfString, strikes: SetOfFloat):
+        print(datetime.datetime.now(), reqId, exchange, underlyingConId, tradingClass, multiplier, expirations, strikes)
+        self.request_manager.process_data(reqId, exchange, underlyingConId, tradingClass, multiplier, expirations,
+                                          strikes)
+
+    def securityDefinitionOptionParameterEnd(self, reqId: int):
+        print(datetime.datetime.now(), reqId, 'securityDefinitionOptionParameterEnd')
+        self.request_manager.process_data_end(reqId)

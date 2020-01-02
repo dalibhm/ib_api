@@ -17,9 +17,17 @@ from init_app import SetupLogger
 
 from configparser import ConfigParser
 from Services.LogService import LogService
-from requestmanager.requestmanager import RequestManager, RequestsLimit
+from requestmanager.requestmanager import RequestManager
 
 from injector import Injector, inject, singleton
+
+from responsemanager.contact_details_processor_impl.contract_details_processor import ContractDetailsProcessorImpl
+from responsemanager.contract_details_processor import ContractDetailsProcessor
+from responsemanager.fundamental_data_processor_impl.grpc_fundamental_processor import GrpcFundamentalDataProcessor
+from responsemanager.fundamental_processor import FundamentalDataProcessor
+from responsemanager.historical_processor import HistoricalDataProcessor
+from responsemanager.historical_processor_impl.kafka_historical_processor import KafkaHistoricalDataProcessor
+from responsemanager.response_manager import ResponseManager
 
 
 class Container:
@@ -33,10 +41,16 @@ class Container:
         binder.bind(ConfigParser, to=self.config, scope=singleton)
         binder.bind(RequestIdGenerator, to=RequestIdGenerator, scope=singleton)
         binder.bind(ConnectionManager, to=ConnectionManagerImpl, scope=singleton)
-        binder.bind(RequestsLimit, to=RequestsLimit, scope=singleton)
+        # binder.bind(RequestsLimit, to=RequestsLimit, scope=singleton)
         binder.bind(EWrapper, to=EWrapperImpl, scope=singleton)
         binder.bind(IbClient, to=IbClientImpl, scope=singleton)
         binder.bind(RequestManager, to=RequestManager, scope=singleton)
+
+        # data processors / response manager
+        binder.bind(FundamentalDataProcessor, to=GrpcFundamentalDataProcessor, scope=singleton)
+        binder.bind(HistoricalDataProcessor, to=KafkaHistoricalDataProcessor, scope=singleton)
+        binder.bind(ContractDetailsProcessor, to=ContractDetailsProcessorImpl, scope=singleton)
+        binder.bind(ResponseManager, to=ResponseManager, scope=singleton)
 
     # def get(self, class_):
     #     instance = self.injector(class_)

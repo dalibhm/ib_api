@@ -17,6 +17,3 @@ class IbClient(EClient):
         oid = self.nextValidOrderId
         self.nextValidOrderId += 1
         return oid
-
-    def register_connection_manager(self, connection_manager):
-        pass
