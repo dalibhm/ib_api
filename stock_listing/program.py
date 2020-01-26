@@ -6,7 +6,7 @@ from configparser import ConfigParser
 from data.db_factory import DbSessionFactory
 from data.repository import Repository
 from parsers.exchange_parser import ExchangeParser
-from parsers.stock_parser import StockParser
+from parsers.stock_parser_bis import StockParser
 
 
 base_url = 'https://www.interactivebrokers.co.uk/en/'
@@ -55,13 +55,14 @@ def get_stocks():
     exchanges = Repository.get_all_exchanges()
 
     for exchange in exchanges:
-        print('[ Downloading stock listing for exchange {} ]'.format(exchange))
+        print('[ Downloading stock listing for exchange {} ]'.format(exchange.code))
 
         exchange_url = base_url + exchange.link
         print(exchange_url)
 
-        stock_parser = StockParser(exchange_url, exchange.code)
-        stock_parser.parse_stock_web_pages()
+        stock_parser = StockParser(exchange)
+        stock_parser.get_stocks()
+        stock_parser.write_stocks()
 
 
 def main():

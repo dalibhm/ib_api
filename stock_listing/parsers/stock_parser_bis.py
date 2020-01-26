@@ -15,6 +15,7 @@ from typing import List, Any, Union
 from data.exchange import Exchange
 from data.repository import Repository
 
+BASE_URL = 'https://www.interactivebrokers.co.uk/en/'
 
 def get_number_of_pages(html):
     soup = BeautifulSoup(html, 'html.parser')
@@ -34,56 +35,44 @@ class StockParser:
         self.exchange = exchange
         self.first_html = ''
         self.number_of_web_pages = 0
+        self.stocks = []
 
-    def parse_stock_web_pages(self):
+    def get_stocks(self):
+        html_list = self.get_html_list()
+        [self.stocks.append(self.parse_html(html)) for html in html_list]
+
+    def write_stocks(self):
+        [Repository.add_stock(stock) for stock in self.stocks]
+
+    def get_html_list(self):
         first_html = self.get_first_html()
         number_of_web_pages = get_number_of_pages(first_html)
         print('[{} pages to parse]'.format(self.number_of_web_pages))
 
-        executor: Union[ThreadPoolExecutor, Any]
-        with futures.ThreadPoolExecutor(max_workers=20) as executor:
-            executor.map(self.parse_html, [1: number_of_web_pages])
-        print("Done.")
+        html_list = []
+        with futures.ThreadPoolExecutor(max_workers=4) as executor:
+            for html in executor.map(self.get_html, range(1, number_of_web_pages + 1)):
+                html_list.append(html)
+        return html_list
 
     def get_first_html(self):
-        url = '{}&p=&cc=&limit=100&page=1'.format(self.exchange.link)
+        url = '{}{}&p=&cc=&limit=100&page=1'.format(BASE_URL, self.exchange.link)
         self.logger.debug('sending request for first page in {}'.format(self.exchange.name))
         self.logger.debug('url : {}'.format(url))
         response = requests.get(url)
-        try:
-            response.raise_for_status()
-        except requests.exceptions.HTTPError as e:
-            self.logger.exception('problem retrieving url : {}'.format(url), e)
         return response.text
 
-    async def parse_task(self):
-        tasks = []
-        for page_number in range(1, self.number_of_web_pages + 1):
-            tasks.append((page_number, loop.create_task(self.get_html(page_number))))
-
-        for n, t in tasks:
-            try:
-                html = await t
-                self.parse_html(html)
-            except Exception as e:
-                print('[ page {} failed due to {} ]'.format(n, e))
-            finally:
-                print('[ page {} : from finally as exception could not be written ]'.format(n))
-
-    async def get_html(self, page_number: int) -> str:
-        url = self.url + '&p=&cc=&limit=100&page=' + str(page_number)
+    def get_html(self, page_number: int) -> str:
+        url = BASE_URL + self.exchange.link + '&p=&cc=&limit=100&page=' + str(page_number)
         self.logger.debug('sending request for page {}'.format(page_number))
         self.logger.debug('url : {}'.format(url))
-        ssl_context = ssl.create_default_context(purpose=ssl.Purpose.CLIENT_AUTH)
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, ssl=ssl_context) as resp:
-                # resp.raise_for_status()
-                try:
-                    result = resp.text()
-                except:
-                    result = ''
-                    print('http request failed for : {}'.format(url))
-                return await resp.text()
+        try:
+            r = requests.get(url)
+            result = r.text
+        except:
+            result = ''
+            print('http request failed for : {}'.format(url))
+        return result
 
     def parse_html(self, html: str) -> List[dict]:
         """
@@ -103,6 +92,7 @@ class StockParser:
             if processed_row:
                 processed_row['exchange'] = self.exchange.name
                 result.append(processed_row)
+        return result
 
 
 def process_stock_row(row):
