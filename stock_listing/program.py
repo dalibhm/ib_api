@@ -1,7 +1,7 @@
 import logging
 import os
 import time
-
+from configparser import ConfigParser
 
 from data.db_factory import DbSessionFactory
 from data.repository import Repository
@@ -18,10 +18,11 @@ url_exchange_listings = {
 
 
 def init_db():
-    # settings = config.get_settings()
-    # db_file = settings.get('db_filename')
+    environment = os.getenv('environment') or 'development'
+    config = ConfigParser()
+    config.read(os.path.join('settings', environment + '.ini'))
 
-    DbSessionFactory.global_init()
+    Repository.init(config=config)
 
 
 def init_logger():
@@ -64,10 +65,15 @@ def get_stocks():
 
 
 def main():
-    # config = ConfigParser()
-    # config.read('./setup/development.ini')
-    init_db()
+    environment = os.getenv('environment') or 'development'
+    config = ConfigParser()
+    config.read(os.path.join('settings', environment + '.ini'))
+
+    # init database
+    Repository.init(config=config)
+
     init_logger()
+
     get_exchanges()
     get_stocks()
 

@@ -44,6 +44,6 @@ class RequestScheduler(Thread):
         while 1:
             if not self.request_queue.empty():
                 request = self.request_queue.get()
-                self.executors[request.request_type].submit(task, request)
+                self.executors[request.request_type].submit(request._bootsrap())
                 self.cache.register_run(request.request_id)
                 self.request_queue.task_done()

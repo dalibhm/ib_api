@@ -25,19 +25,14 @@ class FundamentalRequest(Request):
         request = self._request
         request_id = self.request_id
         contract = self.get_contract()
-        self.logger.notice("sending request {} for fundamental data : {}".format(request_id, contract))
-        try:
-            # self.kafka_request_manager.push_historical_request(request_id, request)
-            self._ib_client.reqFundamentalData(request_id,
-                                               contract,
-                                               request.reportType,
-                                               []
-                                               )
-        except Exception as e:
-            self.finished = True
-            self.logger.exception('Unable to request {} fundamental data for {}'.format(request_id,
-                                                                                   contract)
-                             )
+        self.logger.notice("{} for fundamental data : {} - sending request".format(request_id, contract))
+
+        self._ib_client.reqFundamentalData(request_id,
+                                           contract,
+                                           request.reportType,
+                                           []
+                                           )
+        self.logger.notice("{} for fundamental data : {} - request sent".format(request_id, contract))
 
     def process_data(self, xml_data):
         self.response_manager.process_fundamental_data(self.request_id, self._request, xml_data)

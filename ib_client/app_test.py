@@ -38,7 +38,7 @@ def configure(binder):
     # data processors / response manager
     binder.bind(FundamentalDataProcessor, to=GrpcFundamentalDataProcessor, scope=singleton)
     binder.bind(HistoricalDataProcessor, to=ConsoleHistoricalDataProcessor, scope=singleton)
-    binder.bind(ContractDetailsProcessor, to=GrpcContractDetailsProcessor, scope=singleton)
+    binder.bind(ContractDetailsProcessor, to=ContractDetailsProcessorImpl, scope=singleton)
     binder.bind(OptionParamsProcessor, to=GrpcOptionParamsProcessor, scope=singleton)
     binder.bind(ResponseManager, to=ResponseManager, scope=singleton)
 
@@ -57,9 +57,6 @@ def sample_historical_request():
 
 
 def main():
-    contracts = read_stocks()
-    contract = contracts[1]
-    request = contract_details_request(contract)
 
     injector = Injector(configure)
 
@@ -90,7 +87,11 @@ def main():
     # while not conn_manager.is_connected():
     #     continue
 
-    request_manager.add_request(request, RequestType.ContractDetails)
+    contracts = read_stocks()
+    for contract in contracts[:50]:
+        request = contract_details_request(contract)
+
+        request_manager.add_request(request, RequestType.ContractDetails)
     # request = contract_details_request(contracts[0])
     # request.contract.secType = "OPT";
     # request.contract.exchange = "SMART";

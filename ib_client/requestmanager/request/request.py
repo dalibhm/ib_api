@@ -6,9 +6,10 @@ import logbook
 
 from api.ib_client import IbClient
 from enums.request_type import RequestType
+from requestmanager.actor import Actor
 
 
-class Request(threading.Thread):
+class Request(Actor):
     def __init__(self, request_id, request, ib_client: IbClient, request_type: RequestType):
         """
 
@@ -41,7 +42,8 @@ class Request(threading.Thread):
 
     def run(self):
         raise NotImplementedError
-    
+
+
     def get_contract(self):
         proto_contract = self._request.contract
         contract = Contract()
