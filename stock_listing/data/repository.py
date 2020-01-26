@@ -148,7 +148,7 @@ class Repository:
     def add_exchange(cls, exchange):
         session = cls.__session_factory()
 
-        existing_exchange = session.query(Exchange).filter(Exchange.code == exchange.code).first()
+        existing_exchange = session.query(Exchange).filter(Exchange.code == exchange['code']).first()
         if existing_exchange:
             return
 
