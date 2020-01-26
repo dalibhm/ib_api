@@ -154,7 +154,7 @@ class Repository:
 
         db_exchange = Exchange(**exchange)
         session.add(db_exchange)
-        # session.commit()
+        session.commit()
         session.close()
 
         return db_exchange

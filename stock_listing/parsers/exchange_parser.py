@@ -37,7 +37,7 @@ class ExchangeParser:
                 self.exchanges.append(exchange)
 
     def post_exchanges(self):
-        self.logger.info('adding exchane')
+        self.logger.info('adding exchange')
         for exchange in self.exchanges:
             Repository.add_exchange(exchange)
 
