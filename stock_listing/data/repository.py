@@ -108,7 +108,7 @@ class Repository:
     def add_stock(cls, stock):
         session = cls.__session_factory()
 
-        query = session.query(Stock).filter(and_(Stock.symbol == stock['symbol'], Stock.exchange == stock['exchange']))
+        query = session.query(Stock).filter(and_(Stock.symbol == stock['symbol'], Stock.exchange == stock['exchange'])).first()
         if query:
             return
 
