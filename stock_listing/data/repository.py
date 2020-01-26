@@ -11,7 +11,6 @@ from data.stock import Stock
 
 
 class Repository:
-
     __session_factory = None
 
     @classmethod
@@ -109,11 +108,11 @@ class Repository:
     def add_stock(cls, stock):
         session = cls.__session_factory()
 
-        db_stock = Stock(**stock)
-
-        query = session.query(Stock.symbol)
+        query = session.query(and_(Stock.symbol == stock['symbol'], Stock.exchange == stock['exchange']))
         if query:
             return
+
+        db_stock = Stock(**stock)
         session.add(db_stock)
         session.commit()
 

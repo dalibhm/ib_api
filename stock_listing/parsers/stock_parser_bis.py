@@ -17,6 +17,7 @@ from data.repository import Repository
 
 BASE_URL = 'https://www.interactivebrokers.co.uk/en/'
 
+
 def get_number_of_pages(html):
     soup = BeautifulSoup(html, 'html.parser')
     try:
@@ -39,7 +40,7 @@ class StockParser:
 
     def get_stocks(self):
         html_list = self.get_html_list()
-        [self.stocks.append(self.parse_html(html)) for html in html_list]
+        [self.stocks.extend(self.parse_html(html)) for html in html_list]
 
     def write_stocks(self):
         [Repository.add_stock(stock) for stock in self.stocks]
