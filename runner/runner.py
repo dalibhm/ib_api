@@ -30,13 +30,15 @@ def main():
     :return: 
     """
     # configure logging
+    if not os.path.exists("log"):
+        os.makedirs("log")
+        
     FORMAT = '%(asctime)-15s %(levelname)s %(name)-s:%(lineno)d %(message)s'
     logging.basicConfig(filename=time.strftime(os.path.join("log", "runner_%Y%m%d_%H_%M_%S.log")),
                         filemode="w",
                         level=logging.DEBUG,
                         format=FORMAT)
-    if not os.path.exists("log"):
-        os.makedirs("log")
+
 
         # 'fundamental': FundamentalService(config.get('services', 'fundamental_data'))
 

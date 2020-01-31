@@ -77,7 +77,7 @@ def main():
     SetupLogger()
     logger = logging.getLogger()
     logger.debug("now is %s", datetime.now())
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.INFO)
 
     #
 
