@@ -25,36 +25,41 @@ def get_number_of_pages(html):
         li = pagination_tag.findAll("li")
         if len(li) > 2:
             number_of_web_pages = int(li[-2].text)
+        else:
+            number_of_web_pages = 1
     except IndexError:
         number_of_web_pages = 1
     return number_of_web_pages
 
 
 class StockParser:
-    def __init__(self, exchange: Exchange):
+    def __init__(self, exchange: Exchange, repository: Repository):
         self.logger = logging.getLogger('listing')
         self.exchange = exchange
         self.first_html = ''
         self.number_of_web_pages = 0
         self.stocks = []
+        self.repository = repository
 
     def get_stocks(self):
-        html_list = self.get_html_list()
-        [self.stocks.extend(self.parse_html(html)) for html in html_list]
+        html_pages = self.get_html_pages()
+        for html_page in html_pages:
+            stocks = self.parse_html(html_page)
+            yield from stocks
+        # [self.stocks.extend(self.parse_html(html)) for html in html_list]
 
     def write_stocks(self):
-        [Repository.add_stock(stock) for stock in self.stocks]
+        [self.repository.add_stock(stock) for stock in self.get_stocks()]
 
-    def get_html_list(self):
+    def get_html_pages(self):
         first_html = self.get_first_html()
         number_of_web_pages = get_number_of_pages(first_html)
-        print('[{} pages to parse]'.format(self.number_of_web_pages))
+        print('[{} pages to parse]'.format(number_of_web_pages))
 
-        html_list = []
-        with futures.ThreadPoolExecutor(max_workers=4) as executor:
+        with futures.ThreadPoolExecutor(max_workers=10) as executor:
             for html in executor.map(self.get_html, range(1, number_of_web_pages + 1)):
-                html_list.append(html)
-        return html_list
+                yield html
+
 
     def get_first_html(self):
         url = '{}{}&p=&cc=&limit=100&page=1'.format(BASE_URL, self.exchange.link)
@@ -75,7 +80,7 @@ class StockParser:
             print('http request failed for : {}'.format(url))
         return result
 
-    def parse_html(self, html: str) -> List[dict]:
+    def parse_html(self, html: str):
         """
         Parses html and adds stock to database
         if the http request does not succeed, then html = '' and no action is taken
@@ -87,13 +92,11 @@ class StockParser:
         soup = BeautifulSoup(html, 'html.parser')
         rows = soup.findAll('tr')
 
-        result = []
         for row in rows:
             processed_row = process_stock_row(row)
             if processed_row:
                 processed_row['exchange'] = self.exchange.name
-                result.append(processed_row)
-        return result
+                yield processed_row
 
 
 def process_stock_row(row):

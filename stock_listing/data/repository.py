@@ -1,6 +1,8 @@
 import random
+from configparser import ConfigParser
 
 import sqlalchemy
+from injector import inject
 from sqlalchemy import and_
 
 from data.db_factory import DbSessionFactory
@@ -11,10 +13,8 @@ from data.stock import Stock
 
 
 class Repository:
-    __session_factory = None
-
-    @classmethod
-    def init(cls, config):
+    @inject
+    def __init__(self, config: ConfigParser):
         conn_string = 'postgresql://{}:{}@{}:{}/{}'.format(config.get('postgres', 'user'),
                                                            config.get('postgres', 'password'),
                                                            config.get('postgres', 'host'),
@@ -26,12 +26,11 @@ class Repository:
 
         SqlAlchemyBase.metadata.create_all(engine)
 
-        cls.__session_factory = sqlalchemy.orm.sessionmaker(bind=engine)
+        self.__session_factory = sqlalchemy.orm.sessionmaker(bind=engine)
 
-    @classmethod
-    def get_all_stocks(cls, limit=None):
+    def get_all_stocks(self, limit=None):
         # session = DbSessionFactory.create_session()
-        session = cls.__session_factory()
+        session = self.__session_factory()
 
         query = session.query(Stock)
 
@@ -44,8 +43,7 @@ class Repository:
 
         return stocks
 
-    @classmethod
-    def get_stocks_in_exchange(cls, exchange_code, limit=None):
+    def get_stocks_in_exchange(self, exchange_code, limit=None):
         """
         One stock can be present in multiple exchanges.
 
@@ -53,7 +51,7 @@ class Repository:
         :param limit: maximum number of stocks to retrieve
         :return: list of rows in the exchange
         """
-        session = cls.__session_factory()
+        session = self.__session_factory()
 
         query = session.query(Stock).filter(Stock.exchange == exchange_code)
 
@@ -66,9 +64,8 @@ class Repository:
 
         return stocks
 
-    @classmethod
-    def get_stock_by_id(cls, con_id):
-        session = cls.__session_factory()
+    def get_stock_by_id(self, con_id):
+        session = self.__session_factory()
 
         stock = session.query(Stock).filter(Stock.con_id == con_id).first()
 
@@ -76,9 +73,8 @@ class Repository:
 
         return stock
 
-    @classmethod
-    def get_stock_by_id_and_exchange(cls, con_id, exchange):
-        session = cls.__session_factory()
+    def get_stock_by_id_and_exchange(self, con_id, exchange):
+        session = self.__session_factory()
 
         stock = session.query(Stock).filter(and_(Stock.con_id == con_id,
                                                  Stock.exchange == exchange)).first()
@@ -87,8 +83,7 @@ class Repository:
 
         return stock
 
-    @classmethod
-    def get_stock_by_symbol(cls, stock_symbol):
+    def get_stock_by_symbol(self, stock_symbol):
         """
         THis method returns arbitrary the first row containing the stock.
         => remove the method and replace it with get_stock_by_symbol_and_exchange
@@ -96,7 +91,7 @@ class Repository:
         :param stock_symbol:
         :return:
         """
-        session = cls.__session_factory()
+        session = self.__session_factory()
 
         stock = session.query(Stock).filter(Stock.symbol == stock_symbol).first()
 
@@ -104,12 +99,12 @@ class Repository:
 
         return stock
 
-    @classmethod
-    def add_stock(cls, stock):
-        session = cls.__session_factory()
+    def add_stock(self, stock):
+        session = self.__session_factory()
 
         query = session.query(Stock).filter(and_(Stock.symbol == stock['symbol'], Stock.exchange == stock['exchange'])).first()
         if query:
+            session.close()
             return
 
         db_stock = Stock(**stock)
@@ -119,9 +114,8 @@ class Repository:
 
         return db_stock
 
-    @classmethod
-    def get_all_exchanges(cls, limit=None):
-        session = cls.__session_factory()
+    def get_all_exchanges(self, limit=None):
+        session = self.__session_factory()
 
         query = session.query(Exchange)
 
@@ -134,9 +128,8 @@ class Repository:
 
         return exchanges
 
-    @classmethod
-    def get_exchange_by_code(cls, exchange_code):
-        session = cls.__session_factory()
+    def get_exchange_by_code(self, exchange_code):
+        session = self.__session_factory()
 
         stock = session.query(Exchange).filter(Exchange.code == exchange_code).first()
 
@@ -144,12 +137,12 @@ class Repository:
 
         return stock
 
-    @classmethod
-    def add_exchange(cls, exchange):
-        session = cls.__session_factory()
+    def add_exchange(self, exchange):
+        session = self.__session_factory()
 
         existing_exchange = session.query(Exchange).filter(Exchange.code == exchange['code']).first()
         if existing_exchange:
+            session.close()
             return
 
         db_exchange = Exchange(**exchange)

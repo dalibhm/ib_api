@@ -2,6 +2,7 @@ import threading
 from configparser import ConfigParser
 
 from ibapi.contract import Contract
+from injector import inject
 
 from enums.request_type import RequestType
 from .kafka_producer import KafkaRequestManager
@@ -19,6 +20,8 @@ from Services.request_id_generator import RequestIdGenerator
 from requestmanager.requestmanager import RequestManager
 
 _ONE_DAY_IN_SECONDS = 200000
+
+
 # 55.55 hours
 
 
@@ -34,7 +37,7 @@ def get_contract(request):
     return contract
 
 
-class RequestService(request_data_pb2_grpc.RequestDataServicer):
+class RequestServicer(request_data_pb2_grpc.RequestDataServicer):
 
     def __init__(self,
                  request_manager: RequestManager):
@@ -51,7 +54,7 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
             return request_data_pb2.Status(message=False)
 
         return request_data_pb2.Status(message=True)
-    
+
     def RequestSecDefOptParams(self, request, context):
         try:
             self.request_manager.add_request(request, RequestType.SecDefOptParams)
@@ -79,25 +82,23 @@ class RequestService(request_data_pb2_grpc.RequestDataServicer):
         return request_data_pb2.Status(message=True)
 
 
-def serve(ib_client: IbClient, config: ConfigParser, request_manager: RequestManager,
-          conn_manager: ConnectionManager):
-    max_workers = config.getint('ib client', 'grpc-workers')
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
+class GrpcServer:
+    @inject
+    def __init__(self, config: ConfigParser, request_manager: RequestManager):
+        max_workers = config.getint('ib client', 'grpc-workers')
+        server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
 
-    request_data_pb2_grpc.add_RequestDataServicer_to_server(RequestService(#config,
-                                                                           # ib_client,
-                                                                           request_manager
-                                                                           # conn_manager),
-                                                                           ),
-                                                            server
-                                                            )
+        request_data_pb2_grpc.add_RequestDataServicer_to_server(
+            RequestServicer(request_manager),
+            server
+        )
 
-    end_point = config.get('services', 'ib')
-    server.add_insecure_port(end_point)
-    server.start()
-    print("server started on {}".format(end_point))
-    try:
-        while True:
-            time.sleep(_ONE_DAY_IN_SECONDS)
-    except KeyboardInterrupt:
-        server.stop(0)
+        end_point = config.get('services', 'ib')
+        server.add_insecure_port(end_point)
+        server.start()
+        print("server started on {}".format(end_point))
+        try:
+            while True:
+                time.sleep(_ONE_DAY_IN_SECONDS)
+        except KeyboardInterrupt:
+            server.stop(0)

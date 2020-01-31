@@ -7,7 +7,8 @@ option objc_class_prefix = "RD";
 package sendrequest;
 
 service RequestData {
-  rpc RequestContractDetails(ContractDetailsRequest) returns (Status) {}
+  rpc RequestContractDetails(ContractRequest) returns (Status) {}
+  rpc RequestSecDefOptParams(ContractRequest) returns (Status) {}
   rpc RequestHistoricalData (HistoricalDataRequest) returns (Status) {}
   rpc RequestFundamentalData (FundamentalDataRequest) returns (Status) {}
 }
@@ -38,9 +39,8 @@ message Contract {
 //    self.deltaNeutralContract = None
 }
 
-message ContractDetailsRequest{
-    int32 requestId = 1;
-    Contract contract = 2;
+message ContractRequest{
+    Contract contract = 1;
 }
 
 message HistoricalDataRequest {

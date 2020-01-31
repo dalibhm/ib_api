@@ -1,10 +1,13 @@
 from configparser import ConfigParser
 from threading import Lock
 
+from injector import inject
+
 from download_runner.impl.historical_end_reader import logger
 
 
 class RequestScheduler:
+    @inject
     def __init__(self, config: ConfigParser = None):
         self.max_simultaneous_requests = config.getint('runner', 'max-simultaneous-requests') or 1
         self.requests_number = 0

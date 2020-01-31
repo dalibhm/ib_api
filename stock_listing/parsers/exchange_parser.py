@@ -9,11 +9,12 @@ REG_EX = re.compile(r'.*exch=(.*?)&.*')
 
 
 class ExchangeParser:
-    def __init__(self, url):
+    def __init__(self, url, repository: Repository):
         self.url = url
         self.html = ''
         self.logger = logging.getLogger('listing')
         self.exchanges = []
+        self.repository = repository
 
     def parse_and_post(self):
         self.download_html()
@@ -39,7 +40,7 @@ class ExchangeParser:
     def post_exchanges(self):
         self.logger.info('adding exchange')
         for exchange in self.exchanges:
-            Repository.add_exchange(exchange)
+            self.repository.add_exchange(exchange)
 
 
 def parse_exchange_row(row):

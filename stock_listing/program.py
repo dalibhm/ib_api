@@ -3,11 +3,10 @@ import os
 import time
 from configparser import ConfigParser
 
-from data.db_factory import DbSessionFactory
+from container import Container
 from data.repository import Repository
 from parsers.exchange_parser import ExchangeParser
 from parsers.stock_parser_bis import StockParser
-
 
 base_url = 'https://www.interactivebrokers.co.uk/en/'
 
@@ -45,14 +44,14 @@ def init_logger():
     logger.addHandler(console)
 
 
-def get_exchanges():
+def get_exchanges(repository):
     for url in url_exchange_listings.values():
-        exchange_parser = ExchangeParser(url)
+        exchange_parser = ExchangeParser(url=url, repository=repository)
         exchange_parser.parse_and_post()
 
 
-def get_stocks():
-    exchanges = Repository.get_all_exchanges()
+def get_stocks(repository):
+    exchanges = repository.get_all_exchanges()
 
     for exchange in exchanges:
         print('[ Downloading stock listing for exchange {} ]'.format(exchange.code))
@@ -60,23 +59,20 @@ def get_stocks():
         exchange_url = base_url + exchange.link
         print(exchange_url)
 
-        stock_parser = StockParser(exchange)
-        stock_parser.get_stocks()
+        stock_parser = StockParser(exchange=exchange, repository=repository)
+        # stock_parser.get_stocks()
         stock_parser.write_stocks()
 
 
 def main():
-    environment = os.getenv('environment') or 'development'
-    config = ConfigParser()
-    config.read(os.path.join('settings', environment + '.ini'))
-
-    # init database
-    Repository.init(config=config)
-
     init_logger()
 
-    get_exchanges()
-    get_stocks()
+    container = Container()
+    injector = container.injector
+    repository = injector.get(Repository)
+
+    get_exchanges(repository)
+    get_stocks(repository)
 
 
 if __name__ == '__main__':

@@ -14,12 +14,13 @@ from data.repository import Repository
 
 
 class StockParser:
-    def __init__(self, exchange_url, exchange_code):
+    def __init__(self, exchange_url, exchange_code, repository):
         self.logger = logging.getLogger('listing')
         self.url = exchange_url
         self.first_html = ''
         self.exchange_name = exchange_code
         self.number_of_web_pages = 0
+        self.repository = repository
 
     def get_first_html(self):
         url = '{}&p=&cc=&limit=100&page=1'.format(self.url)
@@ -97,9 +98,9 @@ class StockParser:
             processed_row = self.process_stock_row(row)
             if processed_row:
                 stock = processed_row
-                stock_db = Repository.get_stock_by_id_and_exchange(stock['con_id'], stock['exchange'])
+                stock_db = self.repository.get_stock_by_id_and_exchange(stock['con_id'], stock['exchange'])
                 if not stock_db:
-                    Repository.add_stock(stock)
+                    self.repository.add_stock(stock)
 
     def process_stock_row(self, row):
         link_tag = row.find('a')

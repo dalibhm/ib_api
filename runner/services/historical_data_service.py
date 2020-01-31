@@ -1,12 +1,19 @@
+from configparser import ConfigParser
+
 import grpc
 import logging
+
+from injector import provider, inject
+
 from proto.historical_data import historical_data_pb2, historical_data_pb2_grpc
 
 logger = logging.getLogger()
 
 
 class HistoricalDataService:
-    def __init__(self, server_url=None):
+    @inject
+    def __init__(self, config: ConfigParser):
+        server_url = config.get('services', 'historical_data')
         if server_url:
             self.channel = grpc.insecure_channel(server_url)
             self.stub = historical_data_pb2_grpc.HistoricalDataStub(self.channel)

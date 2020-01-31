@@ -5,29 +5,32 @@ from configparser import ConfigParser
 
 import grpc
 
-from data.db_factory import DbSessionFactory
+from container import Container
+from injector import inject
 from proto import listing_pb2_grpc
 from data.repository import Repository
 
 
 class Listing(listing_pb2_grpc.ListingServicer):
-    def __init__(self):
-        pass
+    @inject
+    def __init__(self, repository: Repository):
+        self.repository = repository
 
     def GetStockListing(self, request, context):
-        response = Repository.get_stock_by_symbol(request.symbol)
+        response = self.repository.get_stock_by_symbol(request.symbol)
         return response.get_stock_listing()
 
     def GetStocksInExchange(self, request, context):
         exchange_code = request.code
-        stocks = Repository.get_stocks_in_exchange(exchange_code)
+        stocks = self.repository.get_stocks_in_exchange(exchange_code)
         for stock in stocks:
             yield stock.get_stock_listing()
 
 
-def serve(endpoint, max_workers):
+def serve(endpoint, max_workers, repository):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
-    listing_pb2_grpc.add_ListingServicer_to_server(Listing(), server)
+    listing_service = Listing(repository=repository)
+    listing_pb2_grpc.add_ListingServicer_to_server(listing_service, server)
     server.add_insecure_port(endpoint)
     server.start()
     print('Listing server started...')
@@ -37,13 +40,10 @@ def serve(endpoint, max_workers):
 
 
 if __name__ == '__main__':
-    environment = os.getenv('environment') or 'development'
-    config = ConfigParser()
-    config.read(os.path.join('settings', environment + '.ini'))
+    container = Container()
 
+    config = container.injector.get(ConfigParser)
     endpoint = config.get('services', 'stock_listing')
-
-    # initialize database
-    DbSessionFactory.global_init()
+    repository = container.injector.get(Repository)
     logging.basicConfig()
-    serve(endpoint, 10)
+    serve(endpoint, 10, repository)

@@ -3,11 +3,16 @@ from queue import Queue
 
 import time
 
+from injector import inject
+
+from services.ib_client import IbClient
+
 logger = logging.getLogger(__name__)
 
 
 class FundamentalRunner:
-    def __init__(self, ib_client):
+    @inject
+    def __init__(self, ib_client: IbClient):
         self.ib_client = ib_client
 
     def run(self, contract) -> None:

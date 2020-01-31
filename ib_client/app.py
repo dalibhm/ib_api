@@ -10,7 +10,7 @@ from api.impl.ib_client_impl import IbClientImpl
 from connection_manager.connection_manager import ConnectionManager
 from connection_manager.impl.connection_manager_impl import ConnectionManagerImpl
 from ewrapper_impl import EWrapperImpl
-from grpc_service.grpc_service import serve
+from grpc_service.grpc_service import GrpcServer
 from api.ib_client import IbClient
 from ibapi.wrapper import EWrapper
 from init_app import SetupLogger
@@ -22,11 +22,17 @@ from requestmanager.requestmanager import RequestManager
 from injector import Injector, inject, singleton
 
 from responsemanager.contact_details_processor_impl.contract_details_processor import ContractDetailsProcessorImpl
+from responsemanager.contact_details_processor_impl.grpc_contract_details_processor import GrpcContractDetailsProcessor
 from responsemanager.contract_details_processor import ContractDetailsProcessor
+from responsemanager.fundamental_data_processor_impl.console_fundamental_processor import \
+    ConsoleFundamentalDataProcessor
 from responsemanager.fundamental_data_processor_impl.grpc_fundamental_processor import GrpcFundamentalDataProcessor
 from responsemanager.fundamental_processor import FundamentalDataProcessor
 from responsemanager.historical_processor import HistoricalDataProcessor
+from responsemanager.historical_processor_impl.console_historical_processor import ConsoleHistoricalDataProcessor
 from responsemanager.historical_processor_impl.kafka_historical_processor import KafkaHistoricalDataProcessor
+from responsemanager.option_param_processor_impl.grpc_option_params_processor import GrpcOptionParamsProcessor
+from responsemanager.option_params_processor import OptionParamsProcessor
 from responsemanager.response_manager import ResponseManager
 
 
@@ -47,10 +53,16 @@ class Container:
         binder.bind(RequestManager, to=RequestManager, scope=singleton)
 
         # data processors / response manager
-        binder.bind(FundamentalDataProcessor, to=GrpcFundamentalDataProcessor, scope=singleton)
-        binder.bind(HistoricalDataProcessor, to=KafkaHistoricalDataProcessor, scope=singleton)
-        binder.bind(ContractDetailsProcessor, to=ContractDetailsProcessorImpl, scope=singleton)
+        binder.bind(FundamentalDataProcessor, to=ConsoleFundamentalDataProcessor, scope=singleton)
+        # binder.bind(FundamentalDataProcessor, to=GrpcFundamentalDataProcessor, scope=singleton)
+        binder.bind(HistoricalDataProcessor, to=ConsoleHistoricalDataProcessor, scope=singleton)
+        # binder.bind(HistoricalDataProcessor, to=KafkaHistoricalDataProcessor, scope=singleton)
+        binder.bind(ContractDetailsProcessor, to=GrpcContractDetailsProcessor, scope=singleton)
+        binder.bind(OptionParamsProcessor, to=GrpcOptionParamsProcessor, scope=singleton)
         binder.bind(ResponseManager, to=ResponseManager, scope=singleton)
+
+        binder.bind(GrpcServer, to=GrpcServer, scope=singleton)
+
 
     # def get(self, class_):
     #     instance = self.injector(class_)
@@ -96,8 +108,7 @@ def main():
     # connect automatically
     conn_manager.start()
 
-    grpc_thread = Thread(target=serve, args=(ib_client, config, request_manager, conn_manager))
-    grpc_thread.start()
+    grpc_server = injector.get(GrpcServer)
 
 
 def parse_args():

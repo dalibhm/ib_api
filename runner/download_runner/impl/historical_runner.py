@@ -2,21 +2,27 @@ import logging
 import time
 from datetime import datetime, timedelta
 
+from injector import inject
+
+from download_runner.historical_params import HistoricalParams
 from exceptions import RequestFailed, DataAlreadyInDB
 from request_scheduler import RequestScheduler
 from request_templates.params import HistoricalRequestTemplate
 from services.historical_data_service import HistoricalDataService
+from services.ib_client import IbClient
 
 logger = logging.getLogger(__name__)
 
 
 class HistoricalRunner:
-    def __init__(self, start_date, end_date,
-                 ib_client=None, historical_data_service=None):
+    @inject
+    def __init__(self, historical_params: HistoricalParams,
+                 ib_client: IbClient = None,
+                 historical_data_service: HistoricalDataService = None):
         self.ib_client = ib_client
         self.historical_data_service: HistoricalDataService = historical_data_service
-        self.start_date = start_date
-        self.end_date = end_date
+        self.start_date = historical_params.start_date
+        self.end_date = historical_params.end_date
 
     def run(self, contract) -> None:
         start_date = self.start_date
