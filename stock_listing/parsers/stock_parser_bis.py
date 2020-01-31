@@ -95,7 +95,7 @@ class StockParser:
         for row in rows:
             processed_row = process_stock_row(row)
             if processed_row:
-                processed_row['exchange'] = self.exchange.name
+                processed_row['exchange'] = self.exchange.code
                 yield processed_row
 
 
