@@ -11,7 +11,7 @@ class ValidationError(Exception):
 
 class ContractDetails(SqlAlchemyBase):
 
-    __tablename__ = "contract_details_test2"
+    __tablename__ = "contract_details"
     
     contractId = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, nullable=False)
     marketName = sqlalchemy.Column(sqlalchemy.String)

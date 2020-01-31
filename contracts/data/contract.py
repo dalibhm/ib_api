@@ -5,7 +5,7 @@ from proto.contract_pb2 import Contract as ProtoContract
 
 
 class Contract(SqlAlchemyBase):
-    __tablename__ = "contracts_test1"
+    __tablename__ = "contracts"
 
     conId = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
     symbol = sqlalchemy.Column(sqlalchemy.String, index=True, nullable=False)
