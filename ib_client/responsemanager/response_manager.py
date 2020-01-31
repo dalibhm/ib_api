@@ -49,6 +49,9 @@ class ResponseManager:
 
     def process_contract_details_end(self, request_id, request):
         self.contract_details_processor.process_data_end(request_id, request)
+        
+    def process_contract_details_error(self, request_id, request, error_code, error_string):
+        self.contract_details_processor.process_error(request_id, request, error_code, error_string)
 
     ####################
     # options params   #

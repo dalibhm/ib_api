@@ -36,4 +36,4 @@ class GrpcContractDetailsProcessor(ContractDetailsProcessor):
         pass
 
     def process_error(self, request_id, request, error_code, error_string):
-        raise NotImplementedError
+        print(request_id, request, error_code, error_string)

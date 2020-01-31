@@ -42,4 +42,4 @@ class ContractDetailsRequest(Request):
 
     def process_error(self, error_code, error_string):
         self.close()
-        self.response_manager.process_fundamental_data_error(self.request_id, self._request, error_code, error_string)
+        self.response_manager.process_contract_details_error(self.request_id, self._request, error_code, error_string)
