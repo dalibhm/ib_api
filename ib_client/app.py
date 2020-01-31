@@ -53,10 +53,10 @@ class Container:
         binder.bind(RequestManager, to=RequestManager, scope=singleton)
 
         # data processors / response manager
-        binder.bind(FundamentalDataProcessor, to=ConsoleFundamentalDataProcessor, scope=singleton)
-        # binder.bind(FundamentalDataProcessor, to=GrpcFundamentalDataProcessor, scope=singleton)
-        binder.bind(HistoricalDataProcessor, to=ConsoleHistoricalDataProcessor, scope=singleton)
-        # binder.bind(HistoricalDataProcessor, to=KafkaHistoricalDataProcessor, scope=singleton)
+        # binder.bind(FundamentalDataProcessor, to=ConsoleFundamentalDataProcessor, scope=singleton)
+        binder.bind(FundamentalDataProcessor, to=GrpcFundamentalDataProcessor, scope=singleton)
+        # binder.bind(HistoricalDataProcessor, to=ConsoleHistoricalDataProcessor, scope=singleton)
+        binder.bind(HistoricalDataProcessor, to=KafkaHistoricalDataProcessor, scope=singleton)
         binder.bind(ContractDetailsProcessor, to=GrpcContractDetailsProcessor, scope=singleton)
         binder.bind(OptionParamsProcessor, to=GrpcOptionParamsProcessor, scope=singleton)
         binder.bind(ResponseManager, to=ResponseManager, scope=singleton)
