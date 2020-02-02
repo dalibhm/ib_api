@@ -2,6 +2,7 @@ import logging
 import threading
 
 from api.ib_client import IbClient
+from connection_manager.connection_manager import ConnectionManager
 from enums.request_type import RequestType
 from proto.request_data_pb2 import ContractRequest
 from requestmanager.request.request import Request
@@ -16,13 +17,15 @@ class ContractDetailsRequest(Request):
                  request_id: int,
                  request: ContractRequest,
                  ib_client: IbClient,
-                 response_manager: ResponseManager):
-        super().__init__(request_id, request, ib_client, RequestType.ContractDetails)
+                 response_manager: ResponseManager,
+                 connection_manager: ConnectionManager):
+        super().__init__(request_id, request, ib_client, RequestType.ContractDetails, connection_manager)
         self.response_manager = response_manager
 
     def run(self):
+        super().run()
         request_id = self.request_id
-        contract = self.get_contract()
+        contract = self.contract
         self.logger.notice("{} for contract details {} : sending request".format(request_id, contract))
 
         # self.kafka_request_manager.push_historical_request(request_id, request)

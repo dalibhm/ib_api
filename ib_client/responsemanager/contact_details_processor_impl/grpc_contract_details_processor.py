@@ -23,6 +23,11 @@ class GrpcContractDetailsProcessor(ContractDetailsProcessor):
         contract_details_dict = contract_details.__dict__
         contract = contract_details_dict.pop('contract')
         contract_details_dict['contractId'] = contract.conId
+
+        # transform a list into a string
+        if contract_details_dict['secIdList']:
+            secIdList = contract_details_dict.pop('secIdList')
+            contract_details_dict['secIdList'] = ''.join([str(item) for item in secIdList])
         contract_details = contract_pb2.ContractDetails(**contract_details_dict)
         contract_message = contract_pb2.Contract(**contract.__dict__)
         try:

@@ -3,6 +3,7 @@ import logging
 import os
 # import sys
 from datetime import datetime
+from queue import Queue
 from threading import Thread
 
 from Services.request_id_generator import RequestIdGenerator
@@ -17,10 +18,14 @@ from init_app import SetupLogger
 
 from configparser import ConfigParser
 from Services.LogService import LogService
+from monitoring.monitoring_tool import MonitoringTool
+from requestmanager.cache import Cache
+from requestmanager.request_scheduler import RequestScheduler
 from requestmanager.requestmanager import RequestManager
 
 from injector import Injector, inject, singleton
 
+from requestmanager.status import Status
 from responsemanager.contact_details_processor_impl.contract_details_processor import ContractDetailsProcessorImpl
 from responsemanager.contact_details_processor_impl.grpc_contract_details_processor import GrpcContractDetailsProcessor
 from responsemanager.contract_details_processor import ContractDetailsProcessor
@@ -31,6 +36,7 @@ from responsemanager.fundamental_processor import FundamentalDataProcessor
 from responsemanager.historical_processor import HistoricalDataProcessor
 from responsemanager.historical_processor_impl.console_historical_processor import ConsoleHistoricalDataProcessor
 from responsemanager.historical_processor_impl.kafka_historical_processor import KafkaHistoricalDataProcessor
+from responsemanager.historical_processor_impl.pass_historical_processor import PassHistoricalDataProcessor
 from responsemanager.option_param_processor_impl.grpc_option_params_processor import GrpcOptionParamsProcessor
 from responsemanager.option_params_processor import OptionParamsProcessor
 from responsemanager.response_manager import ResponseManager
@@ -52,11 +58,21 @@ class Container:
         binder.bind(IbClient, to=IbClientImpl, scope=singleton)
         binder.bind(RequestManager, to=RequestManager, scope=singleton)
 
+        binder.bind(Cache, to=Cache, scope=singleton)
+        binder.bind(Status, to=Status, scope=singleton)
+        binder.bind(Queue, to=Queue, scope=singleton)
+
+        binder.bind(RequestScheduler, to=RequestScheduler, scope=singleton)
+        binder.bind(MonitoringTool, to=MonitoringTool, scope=singleton)
+
+
         # data processors / response manager
         # binder.bind(FundamentalDataProcessor, to=ConsoleFundamentalDataProcessor, scope=singleton)
         binder.bind(FundamentalDataProcessor, to=GrpcFundamentalDataProcessor, scope=singleton)
         # binder.bind(HistoricalDataProcessor, to=ConsoleHistoricalDataProcessor, scope=singleton)
-        binder.bind(HistoricalDataProcessor, to=KafkaHistoricalDataProcessor, scope=singleton)
+        # binder.bind(HistoricalDataProcessor, to=KafkaHistoricalDataProcessor, scope=singleton)
+        binder.bind(HistoricalDataProcessor, to=PassHistoricalDataProcessor, scope=singleton)
+        # binder.bind(ContractDetailsProcessor, to=ContractDetailsProcessorImpl, scope=singleton)
         binder.bind(ContractDetailsProcessor, to=GrpcContractDetailsProcessor, scope=singleton)
         binder.bind(OptionParamsProcessor, to=GrpcOptionParamsProcessor, scope=singleton)
         binder.bind(ResponseManager, to=ResponseManager, scope=singleton)
@@ -94,6 +110,7 @@ def main():
     # connection manager
     conn_manager = injector.get(ConnectionManager)
     request_manager = injector.get(RequestManager)
+    monitoring_tool = injector.get(MonitoringTool)
 
     wrapper = injector.get(EWrapper)
     wrapper.connection_manager = conn_manager

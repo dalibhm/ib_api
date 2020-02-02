@@ -29,8 +29,10 @@ class ContractService(contract_pb2_grpc.ContractServiceServicer):
 
     def AddContract(self, request: contract_pb2.Contract, context):
         contract = Contract.from_proto(request)
+        con_id = contract.conId
+        symbol = contract.symbol
         Repository.add_contract(contract)
-        logger.info('added contract details for {}'.format(contract))
+        logger.info('added contract details for {} {}'.format(con_id, symbol))
         return contract_pb2.Empty()
 
     def GetContract(self, request: contract_pb2.Request, context):
@@ -39,8 +41,9 @@ class ContractService(contract_pb2_grpc.ContractServiceServicer):
 
     def AddContractDetails(self, request: contract_pb2.ContractDetails, context):
         contract_details = ContractDetails.from_proto(request)
+        contract_id = contract_details.contractId
         Repository.add_contract_details(contract_details)
-        logger.info('added contract details for {}'.format(contract_details.contractId))
+        logger.info('added contract details for {}'.format(contract_id))
         return contract_pb2.Empty()
 
     def GetContractDetails(self, request: contract_pb2.Request, context):

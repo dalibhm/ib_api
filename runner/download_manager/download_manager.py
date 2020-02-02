@@ -1,6 +1,7 @@
 from injector import inject
 
 from download_runner.download_runner import DownloadRunner
+from exceptions import DataAlreadyInDB
 from input_manager.input_manager import InputManager
 from request_scheduler import RequestScheduler
 
@@ -20,4 +21,7 @@ class DownloadManager:
             if stock is None:
                 break
             # cont
-            self.runner.run(stock)
+            try:
+                self.runner.run(stock)
+            except DataAlreadyInDB as e:
+                continue

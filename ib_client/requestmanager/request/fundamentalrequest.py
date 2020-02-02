@@ -2,6 +2,7 @@ import logging
 import threading
 
 from api.ib_client import IbClient
+from connection_manager.connection_manager import ConnectionManager
 from enums.request_type import RequestType
 from proto.request_data_pb2 import FundamentalDataRequest
 from requestmanager.request.request import Request
@@ -16,15 +17,17 @@ class FundamentalRequest(Request):
                  request_id: int,
                  request: FundamentalDataRequest,
                  ib_client: IbClient,
-                 response_manager: ResponseManager):
+                 response_manager: ResponseManager,
+                 connection_manager: ConnectionManager):
 
-        super().__init__(request_id, request, ib_client, RequestType.Fundamental)
+        super().__init__(request_id, request, ib_client, RequestType.Fundamental, connection_manager)
         self.response_manager = response_manager
 
     def run(self):
+        super().run()
         request = self._request
         request_id = self.request_id
-        contract = self.get_contract()
+        contract = self.contract
         self.logger.notice("{} for fundamental data : {} - sending request".format(request_id, contract))
 
         self._ib_client.reqFundamentalData(request_id,

@@ -20,9 +20,9 @@ class GrpcFundamentalDataProcessor(FundamentalDataProcessor):
         self.stub = fundamental_data_pb2_grpc.FundamentalDataStub(self.channel)
 
     def process_data(self, request_id, request, xml_data):
-        report = fundamental_data_pb2.ReportRequest(stock=request.contract.symbol,
-                                                    reportType=request.reportType,
-                                                    content=xml_data)
+        report = fundamental_data_pb2.Report(stock=request.contract.symbol,
+                                             reportType=request.reportType,
+                                             content=xml_data)
         try:
             self.stub.ProcessReport(report)
         except grpc.RpcError as e:
@@ -34,4 +34,4 @@ class GrpcFundamentalDataProcessor(FundamentalDataProcessor):
         pass
 
     def process_error(self, request_id, request, error_code, error_string):
-        raise NotImplementedError
+        print(request_id, request, error_code, error_string)

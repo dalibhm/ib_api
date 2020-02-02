@@ -5,22 +5,26 @@ import threading
 import logbook
 
 from api.ib_client import IbClient
+from connection_manager.connection_manager import ConnectionManager
 from enums.request_type import RequestType
 from requestmanager.actor import Actor
 
 
 class Request(Actor):
-    def __init__(self, request_id, request, ib_client: IbClient, request_type: RequestType):
+    def __init__(self, request_id, request, ib_client: IbClient, request_type: RequestType,
+                 connection_manager: ConnectionManager):
         """
 
         :type ib_client: object
         """
         super().__init__()
+        self._request = request  # this GRPC raw requests
+        self._connection_manager =connection_manager
         self.request_type = request_type
         self.request_time = datetime.now()
         self.response_time = None
         self.request_id = request_id
-        self._request = request  # this GRPC raw requests
+        self.contract = self.get_contract()
         self._ib_client = ib_client
         self.name = ''
         # self._data = None
@@ -29,6 +33,8 @@ class Request(Actor):
         self.logger = logbook.Logger("App")
         self.finished = False
 
+    def __repr__(self):
+        return 'request {} {}'.format(self.request_type, self.contract)
     # @property
     # def data(self):
     #     return self._data
@@ -41,7 +47,8 @@ class Request(Actor):
     #     self.response_time = response_time
 
     def run(self):
-        raise NotImplementedError
+        while self._connection_manager.hold_on_requests:
+            continue
 
 
     def get_contract(self):
@@ -63,7 +70,7 @@ class Request(Actor):
 
     def process_error(self, error_code, error_string):
         raise NotImplementedError
-    
+
 # implement in inherited classes
 #     def __repr__(self):
 #         return '{} started {} ended {}'.format(self.response_time, self.response_time)

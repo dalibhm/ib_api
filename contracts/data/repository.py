@@ -25,7 +25,10 @@ class Repository:
                                                            config.get('postgres', 'db'))
 
         print("[ Connecting to database : {} ]".format(conn_string))
-        engine = sqlalchemy.create_engine(conn_string, echo=config.getboolean('postgres', 'echo'))
+        engine = sqlalchemy.create_engine(conn_string,
+                                          echo=config.getboolean('postgres', 'echo'),
+                                          pool_size=10,
+                                          max_overflow=100)
 
         SqlAlchemyBase.metadata.create_all(engine)
 
@@ -37,10 +40,8 @@ class Repository:
 
         query = session.query(Contract).filter(Contract.conId == con_id)
 
-        if query:
-           if len(query) > 1:
-               session.close()
-               raise ResourceWarning
+        if not query:
+            session.close()
 
         session.close()
 
@@ -63,10 +64,12 @@ class Repository:
             .first()
 
         if query:
+            session.close()
             return
 
         session.add(contract)
         session.commit()
+        session.close()
 
 
     @classmethod
@@ -75,10 +78,9 @@ class Repository:
 
         query = session.query(ContractDetails).filter(ContractDetails.contractId == con_id)
 
-        if query:
-           if len(query) > 1:
-               session.close()
-               raise ResourceWarning
+        if not query:
+            return
+            session.close()
 
         session.close()
 
@@ -101,7 +103,9 @@ class Repository:
             .first()
 
         if query:
+            session.close()
             return
 
         session.add(contract_details)
         session.commit()
+        session.close()

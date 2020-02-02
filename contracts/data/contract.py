@@ -49,6 +49,7 @@ class Contract(SqlAlchemyBase):
         pb.comboLegsDescrip = self.comboLegsDescrip
         pb.comboLegs = self.comboLegs
         pb.deltaNeutralContract = self.deltaNeutralContract
+        return pb
         
     @staticmethod
     def from_proto(contract: ProtoContract):

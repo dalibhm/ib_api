@@ -48,4 +48,4 @@ class KafkaHistoricalDataProcessor(HistoricalDataProcessor):
         key = {'requestId': request_id}
         formatted_data = format_error(request, errorCode, errorString)
         self.data_end_processor.send_msg(key, format_data_end(request, '19000101', '19000101'))
-        self.error_processor.produce_msg(key, formatted_data)
+        self.error_processor.send_msg(key, formatted_data)

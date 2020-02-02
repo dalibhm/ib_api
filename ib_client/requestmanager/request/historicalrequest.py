@@ -3,6 +3,7 @@ import threading
 from api.ib_client import IbClient
 from ibapi.common import BarData
 
+from connection_manager.connection_manager import ConnectionManager
 from responsemanager.response_manager import ResponseManager
 from proto.request_data_pb2 import HistoricalDataRequest
 from requestmanager.request.request import Request
@@ -15,16 +16,18 @@ class HistoricalRequest(Request):
                  request_id: int,
                  request: HistoricalDataRequest,
                  ib_client: IbClient,
-                 response_manager: ResponseManager):
+                 response_manager: ResponseManager,
+                 connection_manager: ConnectionManager):
 
-        super().__init__(request_id, request, ib_client, RequestType.Historical)
+        super().__init__(request_id, request, ib_client, RequestType.Historical, connection_manager)
         self.lock = threading.Lock()
         self.response_manager = response_manager
 
     def run(self):
+        super().run()
         request = self._request
         request_id = self.request_id
-        contract = self.get_contract()
+        contract = self.contract
         self.logger.notice("sending request {} for historical data : {}".format(request_id, contract))
         try:
             # self.kafka_request_manager.push_historical_request(request_id, request)
@@ -44,19 +47,28 @@ class HistoricalRequest(Request):
             self.logger.exception('Unable to request {} historical data for {}'.format(request_id,
                                                                                        contract)
                                   )
+            self.close()
+        while not self.finished:
+            continue
 
     def process_data(self, bar_data: BarData):
         self.response_manager.process_historical_data(self.request_id, self._request, bar_data)
 
     def process_data_end(self, *args):
-        self.finished = True
-        start = args[0]
-        end = args[1]
-        self.response_manager.process_historical_data_end(self.request_id, self._request, start, end)
+        try:
+            start = args[0]
+            end = args[1]
+            self.finished = True
+            self.response_manager.process_historical_data_end(self.request_id, self._request, start, end)
+        finally:
+            self.close()
 
     def process_error(self, error_code, error_string):
-        self.finished = True
-        self.response_manager.process_historical_data_error(self.request_id, self._request, error_code, error_string)
+        try:
+            self.finished = True
+            self.response_manager.process_historical_data_error(self.request_id, self._request, error_code, error_string)
+        finally:
+            self.close()
 
     # def add_data(self, data):
     #     self._data.append(data)

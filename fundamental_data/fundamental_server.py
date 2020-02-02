@@ -19,9 +19,12 @@ class FundamentalData(fundamental_data_pb2_grpc.FundamentalDataServicer):
         self.repository = repository
 
     def ProcessReport(self, request, context):
-        self.repository.process_report(symbol=request.stock,
-                                       report_type=request.reportType,
-                                       report_content=request.content)
+        try:
+            self.repository.process_report(symbol=request.stock,
+                                           report_type=request.reportType,
+                                           report_content=request.content)
+        except Exception as e:
+            print(e)
         return fundamental_data_pb2.Empty()
 
     def GetLatestFinancialReportDate(self, request, context):

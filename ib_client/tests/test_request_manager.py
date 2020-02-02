@@ -126,8 +126,8 @@ def test_request_manager_add_fundamental_request(request_manager, sample_fundame
 def test_request_manager_add_historical_response(request_manager: RequestManager, sample_historical_request):
     request_manager.add_request(sample_historical_request, RequestType.Historical)
 
-    for request_id in request_manager.cache.requests.keys():
-        historical_request = request_manager.cache.get_request_by_id(request_id)
+    for request_id in request_manager._cache.requests.keys():
+        historical_request = request_manager._cache.get_request_by_id(request_id)
         historical_request.process_data = MagicMock()
         request_manager.process_data(request_id, 'data')
         historical_request.process_data.assert_called_with('data')

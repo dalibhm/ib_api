@@ -14,6 +14,7 @@ from input_manager.input_manager import InputManager
 from input_manager.impl.static_list import StaticList
 from scope import Scope
 from request_scheduler import RequestScheduler
+from services.contract_details_service import ContractsService
 from services.historical_data_service import HistoricalDataService
 from services.ib_client import IbClient
 from services.listing_service import ListingService
@@ -22,4 +23,5 @@ from services.listing_service import ListingService
 class FundamentalModule(Module):
 
     def configure(self, binder):
+        binder.bind(ContractsService, to=ContractsService, scope=singleton)
         binder.bind(DownloadRunner, to=FundamentalRunner, scope=singleton)

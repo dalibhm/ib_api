@@ -50,7 +50,7 @@ class RequestServicer(request_data_pb2_grpc.RequestDataServicer):
     def RequestContractDetails(self, request, context):
         try:
             self.request_manager.add_request(request, RequestType.ContractDetails)
-        except:
+        except Exception as e:
             return request_data_pb2.Status(message=False)
 
         return request_data_pb2.Status(message=True)

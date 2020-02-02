@@ -3,9 +3,11 @@ syntax = "proto3";
 
 option objc_class_prefix = "CD";
 
-package contract_details;
+package contracts;
 
-service ContractDetailsService {
+service ContractService {
+  rpc GetContract(Request) returns (Contract) {}
+  rpc AddContract(Contract) returns(Empty){}
   rpc GetContractDetails(Request) returns (ContractDetails) {}
   rpc AddContractDetails(ContractDetails) returns(Empty){}
 }
@@ -16,6 +18,33 @@ message Request {
 
 message Empty {}
 
+message Contract {
+
+    int32 conId = 1;
+    string symbol = 2;
+    string secType = 3;
+    string exchange = 4;
+    string primaryExchange =5;
+//    pick an actual (ie non-aggregate) exchange that the contract trades on.
+//    DO NOT SET TO SMART.
+    string currency = 6;
+    string lastTradeDateOrContractMonth = 7;
+    float strike = 8;
+    string right = 9;
+    string multiplier = 10;
+    string localSymbol = 11;
+    string tradingClass = 12;
+    bool includeExpired = 13;
+    string secIdType = 14;	  // CUSIP;SEDOL;ISIN;RIC
+    string secId = 15;
+
+    //combos
+    string comboLegsDescrip = 16;
+//    type: str; received in open order 14 and up for all combos
+    string comboLegs = 17;     // type: list<ComboLeg>
+    string deltaNeutralContract = 18; // = None
+    string derivativeSecTypes = 19;
+}
 message ContractDetails {
         int32 contractId = 1;
         string marketName = 2;
