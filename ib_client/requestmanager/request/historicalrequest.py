@@ -59,6 +59,7 @@ class HistoricalRequest(Request):
             start = args[0]
             end = args[1]
             self.finished = True
+            self.close()
             self.response_manager.process_historical_data_end(self.request_id, self._request, start, end)
         finally:
             self.close()
@@ -66,6 +67,7 @@ class HistoricalRequest(Request):
     def process_error(self, error_code, error_string):
         try:
             self.finished = True
+            self.close()
             self.response_manager.process_historical_data_error(self.request_id, self._request, error_code, error_string)
         finally:
             self.close()

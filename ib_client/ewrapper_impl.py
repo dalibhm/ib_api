@@ -142,10 +142,14 @@ class EWrapperImpl(EWrapper):
         # specific to request type
 
         print(reqId, errorCode, errorString)
-        if errorCode in [err for err in range(501, 505)] or (1000 < errorCode < 2999):
-            print(reqId, errorCode, errorString[:50])
-        else:
+        # if errorCode in [err for err in range(501, 505)] or (1000 < errorCode < 2999):
+        #     print(reqId, errorCode, errorString[:50])
+        # else:
+        #     self.request_manager.process_error(reqId, errorCode, errorString)
+        try:
             self.request_manager.process_error(reqId, errorCode, errorString)
+        except:
+            pass
 
     # ! [error] self.reqId2nErr[reqId] += 1
 
