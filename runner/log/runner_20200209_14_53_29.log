@@ -1,0 +1,4 @@
+2020-02-09 14:53:29,569 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-09 14:53:29,577 INFO download_runner.impl.historical_runner:33 sending - historical data request : PAYC 2018-09-01 2019-01-12
+2020-02-09 14:53:30,671 INFO download_runner.impl.historical_runner:36 status PAYC - historical data request : 2018-09-01 2019-01-12 True
+2020-02-09 14:53:30,672 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True

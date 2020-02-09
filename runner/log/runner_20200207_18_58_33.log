@@ -1,0 +1,1421 @@
+2020-02-07 18:58:33,987 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:34,166 ERROR root:30 unhandled exception getting latest timestamp for AEE
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101914.166642000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101914.166640000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:34,168 INFO download_runner.impl.historical_runner:32 sending - historical data request : AEE 2019-01-01 2020-01-01
+2020-02-07 18:58:34,647 INFO download_runner.impl.historical_runner:35 sent - historical data request : AEE 2019-01-01 2020-01-01
+2020-02-07 18:58:34,647 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:34,647 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:34,647 INFO download_runner.impl.historical_runner:42 Historical data request sent : AEE 2019-01-01 2020-01-01
+2020-02-07 18:58:34,647 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:34,647 ERROR root:30 unhandled exception getting latest timestamp for ACIA
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101914.647575000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101914.166640000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:34,647 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACIA 2019-01-01 2020-01-01
+2020-02-07 18:58:34,864 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACIA 2019-01-01 2020-01-01
+2020-02-07 18:58:34,864 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:34,864 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:34,864 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACIA 2019-01-01 2020-01-01
+2020-02-07 18:58:34,864 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:34,865 ERROR root:30 unhandled exception getting latest timestamp for ACIO
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101914.865205000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101914.166640000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:34,865 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACIO 2019-01-01 2020-01-01
+2020-02-07 18:58:36,589 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACIO 2019-01-01 2020-01-01
+2020-02-07 18:58:36,589 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:36,589 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:36,589 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACIO 2019-01-01 2020-01-01
+2020-02-07 18:58:36,589 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:36,590 ERROR root:30 unhandled exception getting latest timestamp for ACIU
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101916.590060000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101916.590058000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:36,590 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACIU 2019-01-01 2020-01-01
+2020-02-07 18:58:37,397 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACIU 2019-01-01 2020-01-01
+2020-02-07 18:58:37,397 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:37,397 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:37,397 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACIU 2019-01-01 2020-01-01
+2020-02-07 18:58:37,397 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:37,398 ERROR root:30 unhandled exception getting latest timestamp for ACIW
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101917.398027000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101917.398026000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:37,398 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACIW 2019-01-01 2020-01-01
+2020-02-07 18:58:37,761 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACIW 2019-01-01 2020-01-01
+2020-02-07 18:58:37,761 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:37,761 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:37,761 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACIW 2019-01-01 2020-01-01
+2020-02-07 18:58:37,761 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:37,761 ERROR root:30 unhandled exception getting latest timestamp for ACLS
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101917.761884000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101917.398026000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:37,762 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACLS 2019-01-01 2020-01-01
+2020-02-07 18:58:38,981 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACLS 2019-01-01 2020-01-01
+2020-02-07 18:58:38,981 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:38,982 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:38,982 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACLS 2019-01-01 2020-01-01
+2020-02-07 18:58:38,982 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:38,983 ERROR root:30 unhandled exception getting latest timestamp for ACM
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101918.983322000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101917.398026000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:38,985 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACM 2019-01-01 2020-01-01
+2020-02-07 18:58:39,849 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACM 2019-01-01 2020-01-01
+2020-02-07 18:58:39,850 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:39,850 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:39,850 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACM 2019-01-01 2020-01-01
+2020-02-07 18:58:39,850 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:39,850 ERROR root:30 unhandled exception getting latest timestamp for ACMR
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101919.850666000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101919.850664000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:39,851 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACMR 2019-01-01 2020-01-01
+2020-02-07 18:58:41,031 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACMR 2019-01-01 2020-01-01
+2020-02-07 18:58:41,031 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:41,031 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:41,031 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACMR 2019-01-01 2020-01-01
+2020-02-07 18:58:41,031 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:41,032 ERROR root:30 unhandled exception getting latest timestamp for ACN
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101921.032144000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101919.850664000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:41,032 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACN 2019-01-01 2020-01-01
+2020-02-07 18:58:41,963 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACN 2019-01-01 2020-01-01
+2020-02-07 18:58:41,963 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:41,963 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:41,963 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACN 2019-01-01 2020-01-01
+2020-02-07 18:58:41,963 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:41,964 ERROR root:30 unhandled exception getting latest timestamp for ACNB
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101921.963987000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101919.850664000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:41,964 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACNB 2019-01-01 2020-01-01
+2020-02-07 18:58:42,888 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACNB 2019-01-01 2020-01-01
+2020-02-07 18:58:42,888 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:42,888 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:42,888 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACNB 2019-01-01 2020-01-01
+2020-02-07 18:58:42,888 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:42,889 ERROR root:30 unhandled exception getting latest timestamp for ACOR
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101922.889326000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101919.850664000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:42,889 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACOR 2019-01-01 2020-01-01
+2020-02-07 18:58:44,091 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACOR 2019-01-01 2020-01-01
+2020-02-07 18:58:44,091 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:44,091 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:44,091 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACOR 2019-01-01 2020-01-01
+2020-02-07 18:58:44,091 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:44,091 ERROR root:30 unhandled exception getting latest timestamp for ACP
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101924.091530000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101923.994048000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:44,091 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACP 2019-01-01 2020-01-01
+2020-02-07 18:58:45,219 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACP 2019-01-01 2020-01-01
+2020-02-07 18:58:45,220 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:45,220 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:45,220 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACP 2019-01-01 2020-01-01
+2020-02-07 18:58:45,220 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:45,220 ERROR root:30 unhandled exception getting latest timestamp for ACRE
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101925.220564000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101923.994048000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:45,220 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACRE 2019-01-01 2020-01-01
+2020-02-07 18:58:46,373 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACRE 2019-01-01 2020-01-01
+2020-02-07 18:58:46,373 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:46,373 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:46,373 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACRE 2019-01-01 2020-01-01
+2020-02-07 18:58:46,373 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:46,373 ERROR root:30 unhandled exception getting latest timestamp for ACRS
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101926.373734000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101923.994048000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:46,374 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACRS 2019-01-01 2020-01-01
+2020-02-07 18:58:48,578 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACRS 2019-01-01 2020-01-01
+2020-02-07 18:58:48,578 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:48,578 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:48,578 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACRS 2019-01-01 2020-01-01
+2020-02-07 18:58:48,578 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:48,578 ERROR root:30 unhandled exception getting latest timestamp for ACRX
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101928.578791000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101923.994048000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:48,579 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACRX 2019-01-01 2020-01-01
+2020-02-07 18:58:49,874 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACRX 2019-01-01 2020-01-01
+2020-02-07 18:58:49,874 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:49,874 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:49,874 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACRX 2019-01-01 2020-01-01
+2020-02-07 18:58:49,874 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:49,874 ERROR root:30 unhandled exception getting latest timestamp for ACSG
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101929.874556000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101928.997722000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:49,874 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACSG 2019-01-01 2020-01-01
+2020-02-07 18:58:50,627 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACSG 2019-01-01 2020-01-01
+2020-02-07 18:58:50,627 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:50,627 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:50,627 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACSG 2019-01-01 2020-01-01
+2020-02-07 18:58:50,628 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:50,628 ERROR root:30 unhandled exception getting latest timestamp for ACSI
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101930.628242000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101928.997722000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:50,628 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACSI 2019-01-01 2020-01-01
+2020-02-07 18:58:51,510 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACSI 2019-01-01 2020-01-01
+2020-02-07 18:58:51,510 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:51,511 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:51,511 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACSI 2019-01-01 2020-01-01
+2020-02-07 18:58:51,511 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:51,511 ERROR root:30 unhandled exception getting latest timestamp for ACST
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101931.511311000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101928.997722000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:51,511 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACST 2019-01-01 2020-01-01
+2020-02-07 18:58:52,191 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACST 2019-01-01 2020-01-01
+2020-02-07 18:58:52,191 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:52,191 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:52,191 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACST 2019-01-01 2020-01-01
+2020-02-07 18:58:52,191 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:52,191 ERROR root:30 unhandled exception getting latest timestamp for ACT
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101932.191526000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101928.997722000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:52,191 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACT 2019-01-01 2020-01-01
+2020-02-07 18:58:53,071 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACT 2019-01-01 2020-01-01
+2020-02-07 18:58:53,072 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:53,072 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:53,072 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACT 2019-01-01 2020-01-01
+2020-02-07 18:58:53,072 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:53,072 ERROR root:30 unhandled exception getting latest timestamp for ACTG
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101933.072482000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101928.997722000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:53,072 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACTG 2019-01-01 2020-01-01
+2020-02-07 18:58:55,793 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACTG 2019-01-01 2020-01-01
+2020-02-07 18:58:55,794 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:55,794 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:55,794 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACTG 2019-01-01 2020-01-01
+2020-02-07 18:58:55,794 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:55,794 ERROR root:30 unhandled exception getting latest timestamp for ACTT
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101935.794515000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101928.997722000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:55,801 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACTT 2019-01-01 2020-01-01
+2020-02-07 18:58:57,738 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACTT 2019-01-01 2020-01-01
+2020-02-07 18:58:57,739 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:57,739 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:57,739 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACTT 2019-01-01 2020-01-01
+2020-02-07 18:58:57,739 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:57,741 ERROR root:30 unhandled exception getting latest timestamp for ACTTU
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101937.740608000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101937.740594000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:57,741 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACTTU 2019-01-01 2020-01-01
+2020-02-07 18:58:57,944 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACTTU 2019-01-01 2020-01-01
+2020-02-07 18:58:57,944 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:57,944 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:57,944 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACTTU 2019-01-01 2020-01-01
+2020-02-07 18:58:57,944 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:57,945 ERROR root:30 unhandled exception getting latest timestamp for ACU
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101937.945086000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101937.740594000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:57,945 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACU 2019-01-01 2020-01-01
+2020-02-07 18:58:58,238 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACU 2019-01-01 2020-01-01
+2020-02-07 18:58:58,238 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:58:58,238 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:58:58,238 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACU 2019-01-01 2020-01-01
+2020-02-07 18:58:58,238 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:58:58,238 ERROR root:30 unhandled exception getting latest timestamp for ACV
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101938.238478000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101937.740594000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:58:58,238 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACV 2019-01-01 2020-01-01
+2020-02-07 18:59:01,919 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACV 2019-01-01 2020-01-01
+2020-02-07 18:59:01,919 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:01,919 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:01,919 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACV 2019-01-01 2020-01-01
+2020-02-07 18:59:01,919 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:01,920 ERROR root:30 unhandled exception getting latest timestamp for ACWF
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101941.920166000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101937.740594000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:01,920 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACWF 2019-01-01 2020-01-01
+2020-02-07 18:59:07,595 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACWF 2019-01-01 2020-01-01
+2020-02-07 18:59:07,595 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:07,595 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:07,595 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACWF 2019-01-01 2020-01-01
+2020-02-07 18:59:07,596 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:07,596 ERROR root:30 unhandled exception getting latest timestamp for ACWI
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101947.596447000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101937.740594000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:07,597 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACWI 2019-01-01 2020-01-01
+2020-02-07 18:59:13,251 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACWI 2019-01-01 2020-01-01
+2020-02-07 18:59:13,251 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:13,251 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:13,251 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACWI 2019-01-01 2020-01-01
+2020-02-07 18:59:13,251 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:13,252 ERROR root:30 unhandled exception getting latest timestamp for ACWV
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101953.252157000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101937.740594000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:13,252 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACWV 2019-01-01 2020-01-01
+2020-02-07 18:59:19,350 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACWV 2019-01-01 2020-01-01
+2020-02-07 18:59:19,350 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:19,350 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:19,350 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACWV 2019-01-01 2020-01-01
+2020-02-07 18:59:19,350 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:19,351 ERROR root:30 unhandled exception getting latest timestamp for ACWX
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101959.350963000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101959.009874000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:19,351 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACWX 2019-01-01 2020-01-01
+2020-02-07 18:59:31,365 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACWX 2019-01-01 2020-01-01
+2020-02-07 18:59:31,365 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:31,365 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:31,365 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACWX 2019-01-01 2020-01-01
+2020-02-07 18:59:31,365 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:31,366 ERROR root:30 unhandled exception getting latest timestamp for ACY
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101971.366115000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101959.009874000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:31,366 INFO download_runner.impl.historical_runner:32 sending - historical data request : ACY 2019-01-01 2020-01-01
+2020-02-07 18:59:49,482 INFO download_runner.impl.historical_runner:35 sent - historical data request : ACY 2019-01-01 2020-01-01
+2020-02-07 18:59:49,483 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:49,483 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:49,483 INFO download_runner.impl.historical_runner:42 Historical data request sent : ACY 2019-01-01 2020-01-01
+2020-02-07 18:59:49,483 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:49,483 ERROR root:30 unhandled exception getting latest timestamp for ADAP
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101989.483600000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:49,483 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADAP 2019-01-01 2020-01-01
+2020-02-07 18:59:50,226 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADAP 2019-01-01 2020-01-01
+2020-02-07 18:59:50,226 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:50,226 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:50,226 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADAP 2019-01-01 2020-01-01
+2020-02-07 18:59:50,226 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:50,226 ERROR root:30 unhandled exception getting latest timestamp for ADBE
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101990.226555000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:50,226 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADBE 2019-01-01 2020-01-01
+2020-02-07 18:59:51,030 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADBE 2019-01-01 2020-01-01
+2020-02-07 18:59:51,030 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:51,030 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:51,030 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADBE 2019-01-01 2020-01-01
+2020-02-07 18:59:51,030 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:51,031 ERROR root:30 unhandled exception getting latest timestamp for ADC
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101991.031136000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:51,031 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADC 2019-01-01 2020-01-01
+2020-02-07 18:59:51,521 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADC 2019-01-01 2020-01-01
+2020-02-07 18:59:51,521 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:51,521 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:51,521 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADC 2019-01-01 2020-01-01
+2020-02-07 18:59:51,521 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:51,522 ERROR root:30 unhandled exception getting latest timestamp for ADES
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101991.522070000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:51,522 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADES 2019-01-01 2020-01-01
+2020-02-07 18:59:52,790 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADES 2019-01-01 2020-01-01
+2020-02-07 18:59:52,790 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:52,790 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:52,790 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADES 2019-01-01 2020-01-01
+2020-02-07 18:59:52,790 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:52,791 ERROR root:30 unhandled exception getting latest timestamp for ADI
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101992.791120000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:52,791 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADI 2019-01-01 2020-01-01
+2020-02-07 18:59:53,955 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADI 2019-01-01 2020-01-01
+2020-02-07 18:59:53,956 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:53,956 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:53,956 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADI 2019-01-01 2020-01-01
+2020-02-07 18:59:53,956 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:53,956 ERROR root:30 unhandled exception getting latest timestamp for ADIL
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101993.956380000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:53,956 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADIL 2019-01-01 2020-01-01
+2020-02-07 18:59:54,586 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADIL 2019-01-01 2020-01-01
+2020-02-07 18:59:54,587 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:54,587 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:54,587 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADIL 2019-01-01 2020-01-01
+2020-02-07 18:59:54,587 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:54,587 ERROR root:30 unhandled exception getting latest timestamp for ADM
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101994.587431000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:54,587 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADM 2019-01-01 2020-01-01
+2020-02-07 18:59:54,782 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADM 2019-01-01 2020-01-01
+2020-02-07 18:59:54,782 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:54,782 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:54,782 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADM 2019-01-01 2020-01-01
+2020-02-07 18:59:54,782 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:54,782 ERROR root:30 unhandled exception getting latest timestamp for ADMA
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101994.782681000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:54,783 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADMA 2019-01-01 2020-01-01
+2020-02-07 18:59:56,187 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADMA 2019-01-01 2020-01-01
+2020-02-07 18:59:56,187 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:56,187 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:56,187 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADMA 2019-01-01 2020-01-01
+2020-02-07 18:59:56,187 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:56,187 ERROR root:30 unhandled exception getting latest timestamp for ADME
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101996.187709000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:56,188 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADME 2019-01-01 2020-01-01
+2020-02-07 18:59:57,432 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADME 2019-01-01 2020-01-01
+2020-02-07 18:59:57,432 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 18:59:57,432 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 18:59:57,432 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADME 2019-01-01 2020-01-01
+2020-02-07 18:59:57,432 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 18:59:57,432 ERROR root:30 unhandled exception getting latest timestamp for ADMP
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581101997.432471000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 18:59:57,432 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADMP 2019-01-01 2020-01-01
+2020-02-07 19:00:01,624 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADMP 2019-01-01 2020-01-01
+2020-02-07 19:00:01,624 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:01,624 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:01,624 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADMP 2019-01-01 2020-01-01
+2020-02-07 19:00:01,624 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:01,625 ERROR root:30 unhandled exception getting latest timestamp for ADMS
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102001.625079000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:01,625 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADMS 2019-01-01 2020-01-01
+2020-02-07 19:00:02,766 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADMS 2019-01-01 2020-01-01
+2020-02-07 19:00:02,766 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:02,766 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:02,766 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADMS 2019-01-01 2020-01-01
+2020-02-07 19:00:02,766 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:02,767 ERROR root:30 unhandled exception getting latest timestamp for ADNT
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102002.766983000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:02,767 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADNT 2019-01-01 2020-01-01
+2020-02-07 19:00:03,304 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADNT 2019-01-01 2020-01-01
+2020-02-07 19:00:03,305 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:03,305 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:03,305 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADNT 2019-01-01 2020-01-01
+2020-02-07 19:00:03,305 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:03,305 ERROR root:30 unhandled exception getting latest timestamp for ADP
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102003.305416000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:03,305 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADP 2019-01-01 2020-01-01
+2020-02-07 19:00:03,502 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADP 2019-01-01 2020-01-01
+2020-02-07 19:00:03,502 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:03,502 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:03,502 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADP 2019-01-01 2020-01-01
+2020-02-07 19:00:03,502 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:03,502 ERROR root:30 unhandled exception getting latest timestamp for ADPT
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102003.502920000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:03,503 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADPT 2019-01-01 2020-01-01
+2020-02-07 19:00:07,253 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADPT 2019-01-01 2020-01-01
+2020-02-07 19:00:07,253 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:07,253 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:07,253 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADPT 2019-01-01 2020-01-01
+2020-02-07 19:00:07,254 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:07,254 ERROR root:30 unhandled exception getting latest timestamp for ADRA
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102007.254222000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:07,254 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADRA 2019-01-01 2020-01-01
+2020-02-07 19:00:08,296 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADRA 2019-01-01 2020-01-01
+2020-02-07 19:00:08,296 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:08,296 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:08,296 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADRA 2019-01-01 2020-01-01
+2020-02-07 19:00:08,296 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:08,297 ERROR root:30 unhandled exception getting latest timestamp for ADRD
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102008.297127000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:08,297 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADRD 2019-01-01 2020-01-01
+2020-02-07 19:00:14,179 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADRD 2019-01-01 2020-01-01
+2020-02-07 19:00:14,179 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:14,179 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:14,179 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADRD 2019-01-01 2020-01-01
+2020-02-07 19:00:14,179 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:14,180 ERROR root:30 unhandled exception getting latest timestamp for ADRE
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102014.180156000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:14,180 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADRE 2019-01-01 2020-01-01
+2020-02-07 19:00:14,338 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADRE 2019-01-01 2020-01-01
+2020-02-07 19:00:14,338 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:14,338 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:14,338 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADRE 2019-01-01 2020-01-01
+2020-02-07 19:00:14,338 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:14,338 ERROR root:30 unhandled exception getting latest timestamp for ADRO
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102014.338429000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:14,338 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADRO 2019-01-01 2020-01-01
+2020-02-07 19:00:14,512 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADRO 2019-01-01 2020-01-01
+2020-02-07 19:00:14,512 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:14,512 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:14,512 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADRO 2019-01-01 2020-01-01
+2020-02-07 19:00:14,512 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:14,512 ERROR root:30 unhandled exception getting latest timestamp for ADRU
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102014.512578000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:14,512 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADRU 2019-01-01 2020-01-01
+2020-02-07 19:00:14,673 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADRU 2019-01-01 2020-01-01
+2020-02-07 19:00:14,673 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:14,673 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:14,673 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADRU 2019-01-01 2020-01-01
+2020-02-07 19:00:14,673 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:14,674 ERROR root:30 unhandled exception getting latest timestamp for ADS
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102014.674168000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:14,674 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADS 2019-01-01 2020-01-01
+2020-02-07 19:00:25,469 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADS 2019-01-01 2020-01-01
+2020-02-07 19:00:25,469 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:25,469 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:25,469 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADS 2019-01-01 2020-01-01
+2020-02-07 19:00:25,469 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:25,470 ERROR root:30 unhandled exception getting latest timestamp for ADSK
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102025.470141000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581101989.023045000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:25,470 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADSK 2019-01-01 2020-01-01
+2020-02-07 19:00:38,724 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADSK 2019-01-01 2020-01-01
+2020-02-07 19:00:38,724 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:38,724 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:38,724 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADSK 2019-01-01 2020-01-01
+2020-02-07 19:00:38,724 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:38,724 ERROR root:30 unhandled exception getting latest timestamp for ADSW
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102038.724780000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102034.041706000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:38,725 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADSW 2019-01-01 2020-01-01
+2020-02-07 19:00:51,374 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADSW 2019-01-01 2020-01-01
+2020-02-07 19:00:51,374 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:51,374 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:51,374 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADSW 2019-01-01 2020-01-01
+2020-02-07 19:00:51,374 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:51,374 ERROR root:30 unhandled exception getting latest timestamp for ADT
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102051.374586000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102034.041706000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:51,374 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADT 2019-01-01 2020-01-01
+2020-02-07 19:00:53,473 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADT 2019-01-01 2020-01-01
+2020-02-07 19:00:53,473 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:53,473 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:53,473 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADT 2019-01-01 2020-01-01
+2020-02-07 19:00:53,473 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:53,473 ERROR root:30 unhandled exception getting latest timestamp for ADTN
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102053.473888000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102034.041706000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:53,474 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADTN 2019-01-01 2020-01-01
+2020-02-07 19:00:55,865 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADTN 2019-01-01 2020-01-01
+2020-02-07 19:00:55,865 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:55,865 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:55,865 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADTN 2019-01-01 2020-01-01
+2020-02-07 19:00:55,865 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:55,866 ERROR root:30 unhandled exception getting latest timestamp for ADUS
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102055.865974000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102034.041706000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:55,866 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADUS 2019-01-01 2020-01-01
+2020-02-07 19:00:57,732 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADUS 2019-01-01 2020-01-01
+2020-02-07 19:00:57,732 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:00:57,733 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:00:57,733 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADUS 2019-01-01 2020-01-01
+2020-02-07 19:00:57,733 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:00:57,733 ERROR root:30 unhandled exception getting latest timestamp for ADVM
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102057.733407000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102034.041706000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:00:57,733 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADVM 2019-01-01 2020-01-01
+2020-02-07 19:01:01,556 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADVM 2019-01-01 2020-01-01
+2020-02-07 19:01:01,556 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:01,556 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:01,556 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADVM 2019-01-01 2020-01-01
+2020-02-07 19:01:01,556 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:01,556 ERROR root:30 unhandled exception getting latest timestamp for ADX
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102061.556601000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102034.041706000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:01,556 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADX 2019-01-01 2020-01-01
+2020-02-07 19:01:03,365 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADX 2019-01-01 2020-01-01
+2020-02-07 19:01:03,365 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:03,365 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:03,365 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADX 2019-01-01 2020-01-01
+2020-02-07 19:01:03,366 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:03,366 ERROR root:30 unhandled exception getting latest timestamp for ADXS
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102063.366213000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102034.041706000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:03,366 INFO download_runner.impl.historical_runner:32 sending - historical data request : ADXS 2019-01-01 2020-01-01
+2020-02-07 19:01:07,613 INFO download_runner.impl.historical_runner:35 sent - historical data request : ADXS 2019-01-01 2020-01-01
+2020-02-07 19:01:07,613 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:07,613 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:07,613 INFO download_runner.impl.historical_runner:42 Historical data request sent : ADXS 2019-01-01 2020-01-01
+2020-02-07 19:01:07,613 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:07,613 ERROR root:30 unhandled exception getting latest timestamp for AE
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102067.613732000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102034.041706000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:07,614 INFO download_runner.impl.historical_runner:32 sending - historical data request : AE 2019-01-01 2020-01-01
+2020-02-07 19:01:08,628 INFO download_runner.impl.historical_runner:35 sent - historical data request : AE 2019-01-01 2020-01-01
+2020-02-07 19:01:08,628 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:08,629 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:08,629 INFO download_runner.impl.historical_runner:42 Historical data request sent : AE 2019-01-01 2020-01-01
+2020-02-07 19:01:08,629 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:08,629 ERROR root:30 unhandled exception getting latest timestamp for AEB
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102068.629295000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102034.041706000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:08,629 INFO download_runner.impl.historical_runner:32 sending - historical data request : AEB 2019-01-01 2020-01-01
+2020-02-07 19:01:14,208 INFO download_runner.impl.historical_runner:35 sent - historical data request : AEB 2019-01-01 2020-01-01
+2020-02-07 19:01:14,208 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:14,208 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:14,208 INFO download_runner.impl.historical_runner:42 Historical data request sent : AEB 2019-01-01 2020-01-01
+2020-02-07 19:01:14,208 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:14,208 ERROR root:30 unhandled exception getting latest timestamp for AIQ
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102074.208567000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102034.041706000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:14,208 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIQ 2019-01-01 2020-01-01
+2020-02-07 19:01:25,660 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIQ 2019-01-01 2020-01-01
+2020-02-07 19:01:25,660 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:25,660 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:25,660 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIQ 2019-01-01 2020-01-01
+2020-02-07 19:01:25,660 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:25,660 ERROR root:30 unhandled exception getting latest timestamp for AIR
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102085.660624000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102034.041706000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:25,660 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIR 2019-01-01 2020-01-01
+2020-02-07 19:01:37,702 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIR 2019-01-01 2020-01-01
+2020-02-07 19:01:37,702 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:37,702 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:37,702 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIR 2019-01-01 2020-01-01
+2020-02-07 19:01:37,702 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:37,702 ERROR root:30 unhandled exception getting latest timestamp for AIRG
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102097.702800000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102034.041706000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:37,703 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIRG 2019-01-01 2020-01-01
+2020-02-07 19:01:50,194 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIRG 2019-01-01 2020-01-01
+2020-02-07 19:01:50,194 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:50,195 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:50,195 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIRG 2019-01-01 2020-01-01
+2020-02-07 19:01:50,195 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:50,195 ERROR root:30 unhandled exception getting latest timestamp for AIRI
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102110.195639000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:50,196 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIRI 2019-01-01 2020-01-01
+2020-02-07 19:01:51,471 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIRI 2019-01-01 2020-01-01
+2020-02-07 19:01:51,472 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:51,472 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:51,472 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIRI 2019-01-01 2020-01-01
+2020-02-07 19:01:51,472 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:51,472 ERROR root:30 unhandled exception getting latest timestamp for AIRR
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102111.472421000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:51,472 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIRR 2019-01-01 2020-01-01
+2020-02-07 19:01:52,632 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIRR 2019-01-01 2020-01-01
+2020-02-07 19:01:52,632 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:52,632 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:52,632 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIRR 2019-01-01 2020-01-01
+2020-02-07 19:01:52,632 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:52,633 ERROR root:30 unhandled exception getting latest timestamp for AIRT
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102112.633071000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:52,633 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIRT 2019-01-01 2020-01-01
+2020-02-07 19:01:53,446 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIRT 2019-01-01 2020-01-01
+2020-02-07 19:01:53,446 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:53,446 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:53,446 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIRT 2019-01-01 2020-01-01
+2020-02-07 19:01:53,446 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:53,446 ERROR root:30 unhandled exception getting latest timestamp for AIRTP
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102113.446616000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:53,446 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIRTP 2019-01-01 2020-01-01
+2020-02-07 19:01:54,125 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIRTP 2019-01-01 2020-01-01
+2020-02-07 19:01:54,125 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:54,125 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:54,125 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIRTP 2019-01-01 2020-01-01
+2020-02-07 19:01:54,125 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:54,125 ERROR root:30 unhandled exception getting latest timestamp for AIT
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102114.125853000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:54,126 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIT 2019-01-01 2020-01-01
+2020-02-07 19:01:55,108 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIT 2019-01-01 2020-01-01
+2020-02-07 19:01:55,108 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:55,108 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:55,108 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIT 2019-01-01 2020-01-01
+2020-02-07 19:01:55,108 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:55,108 ERROR root:30 unhandled exception getting latest timestamp for AIV
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102115.108574000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:55,108 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIV 2019-01-01 2020-01-01
+2020-02-07 19:01:57,035 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIV 2019-01-01 2020-01-01
+2020-02-07 19:01:57,035 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:57,035 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:57,035 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIV 2019-01-01 2020-01-01
+2020-02-07 19:01:57,035 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:57,036 ERROR root:30 unhandled exception getting latest timestamp for AIV PRA
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102117.036114000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:57,036 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIV PRA 2019-01-01 2020-01-01
+2020-02-07 19:01:58,087 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIV PRA 2019-01-01 2020-01-01
+2020-02-07 19:01:58,088 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:01:58,088 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:01:58,088 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIV PRA 2019-01-01 2020-01-01
+2020-02-07 19:01:58,088 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:01:58,088 ERROR root:30 unhandled exception getting latest timestamp for AIW
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102118.088459000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:01:58,088 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIW 2019-01-01 2020-01-01
+2020-02-07 19:02:02,071 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIW 2019-01-01 2020-01-01
+2020-02-07 19:02:02,072 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:02:02,072 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:02:02,072 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIW 2019-01-01 2020-01-01
+2020-02-07 19:02:02,072 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:02:02,072 ERROR root:30 unhandled exception getting latest timestamp for AIZ
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102122.072367000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:02:02,072 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIZ 2019-01-01 2020-01-01
+2020-02-07 19:02:03,103 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIZ 2019-01-01 2020-01-01
+2020-02-07 19:02:03,103 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:02:03,103 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:02:03,103 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIZ 2019-01-01 2020-01-01
+2020-02-07 19:02:03,104 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:02:03,104 ERROR root:30 unhandled exception getting latest timestamp for AIZP
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102123.104255000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:02:03,105 INFO download_runner.impl.historical_runner:32 sending - historical data request : AIZP 2019-01-01 2020-01-01
+2020-02-07 19:02:07,907 INFO download_runner.impl.historical_runner:35 sent - historical data request : AIZP 2019-01-01 2020-01-01
+2020-02-07 19:02:07,907 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:02:07,907 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:02:07,907 INFO download_runner.impl.historical_runner:42 Historical data request sent : AIZP 2019-01-01 2020-01-01
+2020-02-07 19:02:07,907 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:02:07,908 ERROR root:30 unhandled exception getting latest timestamp for AJG
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102127.908088000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:02:07,908 INFO download_runner.impl.historical_runner:32 sending - historical data request : AJG 2019-01-01 2020-01-01
+2020-02-07 19:02:13,315 INFO download_runner.impl.historical_runner:35 sent - historical data request : AJG 2019-01-01 2020-01-01
+2020-02-07 19:02:13,315 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:02:13,315 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:02:13,315 INFO download_runner.impl.historical_runner:42 Historical data request sent : AJG 2019-01-01 2020-01-01
+2020-02-07 19:02:13,315 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:02:13,315 ERROR root:30 unhandled exception getting latest timestamp for AJRD
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102133.315519000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:02:13,316 INFO download_runner.impl.historical_runner:32 sending - historical data request : AJRD 2019-01-01 2020-01-01
+2020-02-07 19:02:19,342 INFO download_runner.impl.historical_runner:35 sent - historical data request : AJRD 2019-01-01 2020-01-01
+2020-02-07 19:02:19,343 DEBUG download_runner.impl.historical_runner:36 request accounted for...
+2020-02-07 19:02:19,343 INFO download_runner.impl.historical_runner:37 status : True
+2020-02-07 19:02:19,344 INFO download_runner.impl.historical_runner:42 Historical data request sent : AJRD 2019-01-01 2020-01-01
+2020-02-07 19:02:19,344 DEBUG download_runner.impl.historical_end_reader:37 poll stock ? => True
+2020-02-07 19:02:19,345 ERROR root:30 unhandled exception getting latest timestamp for AJX
+Traceback (most recent call last):
+  File "/Users/dali/workspace/ib_python/runner/services/historical_data_service.py", line 24, in get_latest_timestamp
+    response = self.stub.GetLatestTimeStamp(request)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/Users/dali/workspace/ib_python/runner/venv/lib/python3.7/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1581102139.345579000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1581102104.073016000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
+2020-02-07 19:02:19,346 INFO download_runner.impl.historical_runner:32 sending - historical data request : AJX 2019-01-01 2020-01-01

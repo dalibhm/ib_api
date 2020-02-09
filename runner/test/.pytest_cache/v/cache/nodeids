@@ -1,0 +1,5 @@
+[
+  "test_historicalRequestTemplate.py::test_historicalDataTemplate",
+  "test_historicalRequestTemplate.py::test_historicalDataTemplate_one_day_hist",
+  "test_historicalRequestTemplate.py::test_validate_params"
+]
