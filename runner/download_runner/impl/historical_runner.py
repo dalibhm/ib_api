@@ -1,15 +1,16 @@
 import logging
-import time
 from datetime import datetime, timedelta
 
 from injector import inject
 
 from download_runner.historical_params import HistoricalParams
 from exceptions import RequestFailed, DataAlreadyInDB
-from request_scheduler import RequestScheduler
 from request_templates.params import HistoricalRequestTemplate
-from services.historical_data_service import HistoricalDataService
+
 from services.ib_client import IbClient
+
+from historical_data.adjust_request_dates import adjust_request_dates
+from historical_data import HistoricalDataService
 
 logger = logging.getLogger(__name__)
 
@@ -26,40 +27,31 @@ class HistoricalRunner:
 
     def run(self, contract) -> None:
         start_date = self.start_date
-        contract, arranged_params = self.validate_params(contract)
+        contract, arranged_params = self.adjust_params(contract)
         if arranged_params:
             logger.info('sending - historical data request : {} {} {}'
                         .format(contract['symbol'], start_date, self.end_date))
             status = self.ib_client.request_historical_data(contract, arranged_params)
-            logger.info('sent - historical data request : {} {} {}'
-                        .format(contract['symbol'], start_date, self.end_date))
-            logger.debug('request accounted for...')
-            logger.info('status : {}'.format(status))
-            if not status:
-                raise RequestFailed
-            else:
-                logger.info('Historical data request sent : {} {} {}'
-                            .format(contract['symbol'], start_date, self.end_date))
+            logger.info('status {} - historical data request : {} {} {}'
+                        .format(contract['symbol'], start_date, self.end_date, status))
         else:
             raise DataAlreadyInDB
 
-    def validate_params(self, contract):
+    def adjust_params(self, contract):
         symbol = contract['symbol']
         start_date = datetime.strptime(self.start_date, '%Y-%m-%d')
         end_date = datetime.strptime(self.end_date, '%Y-%m-%d')
+        start_db = self.historical_data_service.get_start_db(symbol, "%Y-%m-%d")
+        end_db = self.historical_data_service.get_end_db(symbol, "%Y-%m-%d")
 
-        latest_timestamp = self.historical_data_service.get_latest_timestamp(symbol, "%Y-%m-%d")
-        if latest_timestamp:
-            latest = datetime.strptime(latest_timestamp, '%Y-%m-%d')
-            if latest >= end_date - timedelta(days=1):
-                logger.info('latest data already ib database for {}'.format(symbol))
-                return contract, None
-            elif start_date >= end_date - timedelta(days=1):
-                start_date = latest
+        request_start, request_end = adjust_request_dates(start_date,
+                                                          end_date,
+                                                          datetime.strptime(start_db, '%Y-%m-%d'),
+                                                          datetime.strptime(end_db, '%Y-%m-%d'))
 
         params = {
-            "start_date": start_date.strftime('%Y%m%d'),  # "1999-01-01",
-            "end_date": end_date.strftime('%Y%m%d'),  # "2019-11-27",
+            "start_date": request_start.strftime('%Y%m%d'),  # "1999-01-01",
+            "end_date": request_end.strftime('%Y%m%d'),  # "2019-11-27",
             "bar_size": "1 day",
             "price_type": "TRADES"
         }

@@ -2,6 +2,7 @@ import datetime
 import logging
 from configparser import ConfigParser
 
+from ddtrace import tracer
 from ibapi.common import BarData, ListOfHistoricalTick, ListOfHistoricalTickBidAsk, TickerId, ListOfHistoricalTickLast, \
     OrderId, SetOfString, SetOfFloat
 from ibapi.contract import ContractDetails, Contract
@@ -45,6 +46,7 @@ class EWrapperImpl(EWrapper):
         # we can start now
         # self.start()
 
+    @tracer.wrap(name='connection closed', service='historical req')
     def connectionClosed(self):
         """This function is called when TWS closes the sockets
         connection with the ActiveX control, or when TWS is shut down."""
@@ -134,7 +136,10 @@ class EWrapperImpl(EWrapper):
     # ! [fundamentaldata]
 
     # ! [error]
+    @tracer.wrap(name='error from ewrapper', service='historical req')
     def error(self, reqId: TickerId, errorCode: int, errorString: str):
+        span = tracer.current_span()
+        span.set_tag('reqId', reqId)
         super().error(reqId, errorCode, errorString)
 
         # historical data error

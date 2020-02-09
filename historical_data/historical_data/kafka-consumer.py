@@ -9,7 +9,7 @@ from data import db_factory
 from data.repository import Repository
 
 config = ConfigParser()
-config.read(os.path.join('..', 'settings', 'development.ini'))
+config.read(os.path.join('../..', 'settings', 'development.ini'))
 
 kafka_config = {
     "api.version.request": True,

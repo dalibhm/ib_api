@@ -2,31 +2,24 @@ import threading
 from datetime import datetime
 from collections import defaultdict
 from queue import Queue
+from types import coroutine
 
+from ddtrace import tracer
 from injector import inject
 
 from Services.request_id_generator import RequestIdGenerator
 from connection_manager.connection_manager import ConnectionManager
 from api.ib_client import IbClient
 from requestmanager.cache import Cache
-from requestmanager.request.contractdetailsrequest import ContractDetailsRequest
-from requestmanager.request.fundamentalrequest import FundamentalRequest
-from requestmanager.request.security_definition_option import SecDefOptParamsRequest
+
 from requestmanager.request_scheduler import RequestScheduler
 from requestmanager.status import Status
 from responsemanager.response_manager import ResponseManager
-from requestmanager.request.historicalrequest import HistoricalRequest
+
 from enums.request_type import RequestType
 
 
-
-
-request_constructor_map = {
-    RequestType.Historical: HistoricalRequest,
-    RequestType.Fundamental: FundamentalRequest,
-    RequestType.ContractDetails: ContractDetailsRequest,
-    RequestType.SecDefOptParams: SecDefOptParamsRequest
-}
+from requestmanager.request_constructor_map import request_constructor_map
 
 
 class RequestManager:
@@ -62,22 +55,45 @@ class RequestManager:
         self._request_scheduler.start()
 
     # separate registering and running a request here
-    def add_request(self, request, request_type: RequestType) -> None:
+    # @tracer.wrap()
+    # @tracer.wrap(name='add request', service='historical req')
+    async def add_request(self, request, request_type: RequestType, context) -> None:
         # generate request id
         request_id = self.request_id_gen.get_id()
+
+        span = tracer.current_span()
+        if span:
+            span.set_tag('reqId', request_id)
 
         _request = request_constructor_map[request_type](request_id=request_id,
                                                          request=request,
                                                          ib_client=self._ib_client,
                                                          response_manager=self._response_manager,
-                                                         connection_manager=self._connection_manager)
+                                                         connection_manager=self._connection_manager,
+                                                         context=context)
 
         # add request to local dictionary
         self._cache.register_request(request_id, _request)
 
-        self._request_queue.put(_request)
+        # self._request_queue.put(_request)
         self._status.update_on_added(request_type)
 
+        status = await _request.run() # sends the request
+
+        # status = False
+        # with tracer.start_span(name='wait for response', child_of=span) as tr:
+        #     # tr.set_tag('reqId', request_id)
+        #     while not _request.finished:
+        #         continue
+        #     status = True
+        #     # while True:
+        #     #     try:
+        #     #         _request.coro.send(None)
+        #     #     except StopIteration as exc:
+        #     #         status = exc.value
+        #     #         break
+
+        return status
 
     def on_request_end(self, reqId, request_type, error=False):
         if not error:

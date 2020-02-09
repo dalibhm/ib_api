@@ -1,7 +1,9 @@
 import argparse
+import asyncio
 import logging
 import os
 # import sys
+import time
 from datetime import datetime
 from queue import Queue
 from threading import Thread
@@ -69,9 +71,9 @@ class Container:
         # data processors / response manager
         # binder.bind(FundamentalDataProcessor, to=ConsoleFundamentalDataProcessor, scope=singleton)
         binder.bind(FundamentalDataProcessor, to=GrpcFundamentalDataProcessor, scope=singleton)
-        # binder.bind(HistoricalDataProcessor, to=ConsoleHistoricalDataProcessor, scope=singleton)
-        # binder.bind(HistoricalDataProcessor, to=KafkaHistoricalDataProcessor, scope=singleton)
+        #binder.bind(HistoricalDataProcessor, to=ConsoleHistoricalDataProcessor, scope=singleton)
         binder.bind(HistoricalDataProcessor, to=KafkaHistoricalDataProcessor, scope=singleton)
+        # binder.bind(HistoricalDataProcessor, to=KafkaHistoricalDataProcessor, scope=singleton)
         # binder.bind(ContractDetailsProcessor, to=ContractDetailsProcessorImpl, scope=singleton)
         binder.bind(ContractDetailsProcessor, to=GrpcContractDetailsProcessor, scope=singleton)
         binder.bind(OptionParamsProcessor, to=GrpcOptionParamsProcessor, scope=singleton)
@@ -117,13 +119,19 @@ def main():
     wrapper.request_manager = request_manager
 
 
-    # run service
-    app_thread = Thread(target=ib_client.run)
-    app_thread.start()
+
 
     # starts connection manager
     # connect automatically
     conn_manager.start()
+
+    # run service
+    # this is run in the connection manager
+    # give this a look later
+    # await asyncio.sleep(2)
+    time.sleep(2)
+    # app_thread = Thread(target=ib_client.run)
+    # app_thread.start()
 
     grpc_server = injector.get(GrpcServer)
 

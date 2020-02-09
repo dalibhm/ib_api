@@ -1,3 +1,7 @@
+from ddtrace import patch, patch_all
+
+patch(futures=True)
+
 from concurrent import futures
 from queue import Queue
 from threading import Thread

@@ -17,7 +17,7 @@ url_exchange_listings = {
 
 
 def init_db():
-    environment = os.getenv('environment') or 'development'
+    environment = os.getenv('ENVIRONMENT') or 'development'
     config = ConfigParser()
     config.read(os.path.join('settings', environment + '.ini'))
 

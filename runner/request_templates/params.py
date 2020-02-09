@@ -26,13 +26,13 @@ class HistoricalRequestTemplate(RequestTemplate):
         period_length = relativedelta(end_date, start_date)
 
         if period_length.years > 0:
-            period_length = period_length.years
+            period_length = period_length.years + 1
             period_unit = 'Y'
         elif period_length.months > 0:
-            period_length = period_length.months
+            period_length = period_length.months + 1
             period_unit = 'M'
         else:
-            period_length = period_length.days
+            period_length = period_length.days + 1
             period_unit = 'D'
         historical_data_length = '{} {}'.format(period_length, period_unit)
 

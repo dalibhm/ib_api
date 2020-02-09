@@ -1,6 +1,10 @@
+import asyncio
 import threading
-from configparser import ConfigParser
 
+from configparser import ConfigParser
+from types import coroutine
+
+from ddtrace import tracer, Tracer
 from ibapi.contract import Contract
 from injector import inject
 
@@ -63,16 +67,19 @@ class RequestServicer(request_data_pb2_grpc.RequestDataServicer):
 
         return request_data_pb2.Status(message=True)
 
+    # @tracer.wrap(name='request entry', service='historical req')
+    # @coroutine
     def RequestHistoricalData(self, request, context):
         try:
-            self.request_manager.add_request(request, RequestType.Historical)
+            context = tracer.get_call_context()
+            coro = self.request_manager.add_request(request, RequestType.Historical, context)
+            status = asyncio.run(coro)
+
+            return request_data_pb2.Status(message=status)
         except Exception as e:
             return request_data_pb2.Status(message=False)
 
-        # maybe remove the response message
-        # think about a notification mechanism in case
-        # the request fails before going to ibapi
-        return request_data_pb2.Status(message=True)
+
 
     def RequestFundamentalData(self, request, context):
         try:

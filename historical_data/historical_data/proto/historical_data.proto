@@ -10,7 +10,8 @@ service HistoricalData {
   rpc GetManyHistoricalData(stream Request) returns (stream BarData) {}
   rpc AddHistoricalData(HistoricalDataToAdd) returns(Empty){}
   rpc GetHeadTimeStamp(Request) returns (Result) {}
-  rpc GetLatestTimeStamp(Request) returns (Result) {}
+  rpc GetStartDb(Request) returns (Result) {}
+  rpc GetEndDb(Request) returns (Result) {}
 }
 
 message BarData {

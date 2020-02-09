@@ -51,7 +51,7 @@ class Repository:
         return stocks
 
     @classmethod
-    def get_latest_date(cls, symbol, date_format):
+    def get_end_db(cls, symbol, date_format):
         session = cls.__session_factory()
         result = session.query(HistoricalData.date).filter(HistoricalData.symbol == symbol)\
             .order_by(HistoricalData.date.desc())\
@@ -63,6 +63,18 @@ class Repository:
 
         return datetime.strptime(result.date, "%Y%m%d").strftime(date_format)
 
+    @classmethod
+    def get_start_db(cls, symbol, date_format):
+        session = cls.__session_factory()
+        result = session.query(HistoricalData.date).filter(HistoricalData.symbol == symbol)\
+            .order_by(HistoricalData.date.asc())\
+            .first()
+        session.close()
+
+        if not result:
+            return None
+
+        return datetime.strptime(result.date, "%Y%m%d").strftime(date_format)
 
     @classmethod
     def get_head_timestamp(cls, symbol):

@@ -1,4 +1,7 @@
+import asyncio
 import threading
+import time
+from types import coroutine
 
 from api.ib_client import IbClient
 from ibapi.common import BarData
@@ -9,6 +12,8 @@ from proto.request_data_pb2 import HistoricalDataRequest
 from requestmanager.request.request import Request
 from enums.request_type import RequestType
 
+from ddtrace import tracer
+
 
 class HistoricalRequest(Request):
 
@@ -17,13 +22,36 @@ class HistoricalRequest(Request):
                  request: HistoricalDataRequest,
                  ib_client: IbClient,
                  response_manager: ResponseManager,
-                 connection_manager: ConnectionManager):
+                 connection_manager: ConnectionManager,
+                 context):
 
         super().__init__(request_id, request, ib_client, RequestType.Historical, connection_manager)
         self.lock = threading.Lock()
         self.response_manager = response_manager
+        self.coro = self.run()
+        self.context = context
+        self.finished_queue = asyncio.Queue
 
-    def run(self):
+    @property
+    def finished(self):
+        self.lock.acquire()
+        res = self._finished
+        self.lock.release()
+        return res
+
+    @finished.setter
+    def finished(self, value):
+        self.lock.acquire()
+        self._finished = value
+        self.lock.release()
+
+    # @coroutine
+    # @tracer.wrap(name='send request', service='historical req')
+    @tracer.wrap()
+    async def run(self):
+        # tracer.context_provider.activate(self.context)
+        # with tracer.trace('child of context: start run'):
+        #     time.sleep(1)
         super().run()
         request = self._request
         request_id = self.request_id
@@ -42,35 +70,59 @@ class HistoricalRequest(Request):
                                               int(request.keepUpToDate),
                                               []
                                               )
+            while not self.finished:
+                continue
+            return True
+
         except Exception as e:
-            self.finished = True
             self.logger.exception('Unable to request {} historical data for {}'.format(request_id,
                                                                                        contract)
                                   )
+            self.finished = True
             self.close()
-        while not self.finished:
-            continue
+            return False
 
+        # with tracer.start_span(name='wait for response', child_of=span) as tr:
+        #     tr.set_tag('reqId', request_id)
+        #     while not self.finished:
+        #         continue
+
+    # @tracer.wrap(name='process data', service='historical req')
+    @tracer.wrap()
     def process_data(self, bar_data: BarData):
-        self.response_manager.process_historical_data(self.request_id, self._request, bar_data)
+        tracer.context_provider.activate(self.context)
+        with tracer.trace('child of context: data') as span:
+            span.set_tag('reqId', self.request_id)
+            self.response_manager.process_historical_data(self.request_id, self._request, bar_data)
+        # span.finish()
 
+    # @tracer.wrap(name='process data end', service='historical req')
+    @tracer.wrap()
     def process_data_end(self, *args):
-        try:
-            start = args[0]
-            end = args[1]
-            self.finished = True
-            self.close()
-            self.response_manager.process_historical_data_end(self.request_id, self._request, start, end)
-        finally:
-            self.close()
+        tracer.context_provider.activate(self.context)
+        with tracer.trace('child of context: data end') as span:
+            # if span:
+            span.set_tag('reqId', self.request_id)
+            try:
+                start = args[0]
+                end = args[1]
+                self.response_manager.process_historical_data_end(self.request_id, self._request, start, end)
+            finally:
+                self.finished = True
+                self.close()
 
+    @tracer.wrap(name='process data error', service='historical req')
     def process_error(self, error_code, error_string):
-        try:
-            self.finished = True
-            self.close()
-            self.response_manager.process_historical_data_error(self.request_id, self._request, error_code, error_string)
-        finally:
-            self.close()
+        tracer.context_provider.activate(self.context)
+        with tracer.trace('child of context: data error') as span:
+            span.set_tag('reqId', self.request_id)
+            try:
+                self.response_manager.process_historical_data_error(self.request_id, self._request, error_code,
+                                                                    error_string)
+            finally:
+                self.finished = True
+                self.close()
+
 
     # def add_data(self, data):
     #     self._data.append(data)

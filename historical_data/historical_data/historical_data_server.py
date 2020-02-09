@@ -6,17 +6,15 @@ from configparser import ConfigParser
 
 import grpc
 
-# from data.db_factory import DbSessionFactory
 from data.repository import Repository
-from proto import historical_data_pb2
-from proto import historical_data_pb2_grpc
+from proto import historical_data_pb2, historical_data_pb2_grpc
 
-if not os.path.exists("log"):
-    os.makedirs("log")
+if not os.path.exists("../log"):
+    os.makedirs("../log")
 
 FORMAT = '%(asctime)-15s %(levelname)s %(name)-s %(message)s'
 
-logging.basicConfig(filename=time.strftime(os.path.join("log", "historical_data_%Y%m%d_%H_%M_%S.log")),
+logging.basicConfig(filename=time.strftime(os.path.join("../log", "historical_data_%Y%m%d_%H_%M_%S.log")),
                     filemode="w",
                     level=logging.DEBUG,
                     format=FORMAT)
@@ -48,12 +46,27 @@ class HistoricalData(historical_data_pb2_grpc.HistoricalDataServicer):
     def GetHeadTimeStamp(self, request, context):
         pass
 
-    def GetLatestTimeStamp(self, request, context):
+    def GetStartDb(self, request, context):
         try:
             stock = request.stock
             price_type = request.priceType
             date_format = request.dateFormat
-            date = Repository.get_latest_date(stock, date_format)
+            date = Repository.get_start_db(stock, date_format)
+            # result = historical_data_pb2.Timestamp(date)
+            if date:
+                return historical_data_pb2.Result(date=date)
+            else:
+                return historical_data_pb2.Empty()
+        except:
+            logger.exception('unhandled exception in GetLatestTimeStamp for {}'.format(stock))
+            return historical_data_pb2.Empty()
+
+    def GetEndDb(self, request, context):
+        try:
+            stock = request.stock
+            price_type = request.priceType
+            date_format = request.dateFormat
+            date = Repository.get_end_db(stock, date_format)
             # result = historical_data_pb2.Timestamp(date)
             if date:
                 return historical_data_pb2.Result(date=date)
@@ -78,7 +91,7 @@ def main():
     environment = os.getenv('environment') or 'development'
 
     config = ConfigParser()
-    config.read(os.path.join('settings', environment + '.ini'))
+    config.read(os.path.join('../settings', environment + '.ini'))
     endpoint = config.get('services', 'historical_data')
 
     # initialize database

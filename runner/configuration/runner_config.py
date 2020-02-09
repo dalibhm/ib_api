@@ -10,7 +10,7 @@ from input_manager.impl.listing_service_input import ListingServiceInput
 from input_manager.input_manager import InputManager
 from request_scheduler import RequestScheduler
 from scope import Scope
-from services.historical_data_service import HistoricalDataService
+from historical_data import HistoricalDataService
 from services.ib_client import IbClient
 from services.listing_service import ListingService
 
@@ -24,7 +24,7 @@ class RunnerModule(Module):
         binder.bind(Scope, to=self.scope, scope=singleton)
         binder.bind(IbClient, to=IbClient, scope=singleton)
         binder.bind(ListingService, to=ListingService, scope=singleton)
-        binder.bind(HistoricalDataService, to=HistoricalDataService, scope=singleton)
+        # binder.bind(HistoricalDataService, to=HistoricalDataService, scope=singleton)
         binder.bind(InputManager, to=ListingServiceInput, scope=singleton)
         binder.bind(RequestScheduler, to=RequestScheduler, scope=singleton)
         binder.bind(DownloadManager, to=DownloadManager, scope=singleton)
@@ -36,3 +36,10 @@ class RunnerModule(Module):
         config = ConfigParser()
         config.read(os.path.join('settings', environment + '.ini'))
         return config
+
+    @provider
+    @singleton
+    def historical_data(self, config: ConfigParser) -> HistoricalDataService:
+        url = config.get('services', 'historical_data')
+        historical_data_service = HistoricalDataService(server_url=url)
+        return historical_data_service

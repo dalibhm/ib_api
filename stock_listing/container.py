@@ -8,7 +8,7 @@ from data.repository import Repository
 
 class Container:
     def __init__(self):
-        environment = os.getenv('environment') or 'development'
+        environment = os.getenv('ENVIRONMENT') or 'development'
         self.config = ConfigParser()
         self.config.read(os.path.join('settings', environment + '.ini'))
         self.injector = Injector(self.configure, auto_bind=False)

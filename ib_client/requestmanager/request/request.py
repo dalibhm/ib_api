@@ -31,7 +31,7 @@ class Request(Actor):
         self.lock = threading.Lock()
         self.symbol = request.contract.symbol
         self.logger = logbook.Logger("App")
-        self.finished = False
+        self._finished = False
 
     def __repr__(self):
         return 'request {} {}'.format(self.request_type, self.contract)

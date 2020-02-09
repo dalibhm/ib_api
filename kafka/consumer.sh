@@ -1,4 +1,4 @@
-confluent local consume postgres-stocks -- --value-format avro --from-beginning
+confluent local consume historical_data -- --value-format avro --from-beginning
 confluent local list connectors
 
 confluent local destroy

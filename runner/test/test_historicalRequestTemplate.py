@@ -59,6 +59,6 @@ def test_validate_params(monkeypatch):
     contract = {'con_id': 8942, 'symbol': 'KSS', 'currency': 'USD', 'exchange': 'amex'}
     hist_runner = HistoricalRunner(historical_data_service= data_service,
                                    start_date='2000-01-01', end_date='2019-10-10')
-    contract, params = hist_runner.validate_params(contract)
+    contract, params = hist_runner.adjust_params(contract)
     assert params
     assert contract

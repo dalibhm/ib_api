@@ -1,5 +1,9 @@
+import logging
+
 from ibapi.client import EClient
 from ibapi.wrapper import EWrapper
+
+logger = logging.getLogger(__name__)
 
 
 class IbClient(EClient):
