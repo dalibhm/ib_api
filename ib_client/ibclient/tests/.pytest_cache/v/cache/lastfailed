@@ -1,0 +1,6 @@
+{
+  "test_injector.py::test_request_manager": true,
+  "test_injector.py::test_request_manager_add_request": true,
+  "test_request_manager.py::test_request_manager_add_fundamental_request": true,
+  "test_request_manager.py::test_request_manager_add_historical_request": true
+}

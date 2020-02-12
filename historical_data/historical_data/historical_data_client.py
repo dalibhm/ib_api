@@ -1,7 +1,7 @@
 import grpc
 import logging
 
-from historical_data.proto import historical_data_pb2, historical_data_pb2_grpc
+from .proto import historical_data_pb2, historical_data_pb2_grpc
 
 logger = logging.getLogger()
 

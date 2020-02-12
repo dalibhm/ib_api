@@ -3,24 +3,21 @@ from configparser import ConfigParser
 from datetime import datetime
 from threading import Thread
 
-from api.impl.ib_client_impl import IbClientImpl
-from app import init_logging
-from connection_manager.impl.connection_manager_impl import ConnectionManagerImpl
-from enums.request_type import RequestType
-from ewrapper_impl import EWrapperImpl
-from init_app import SetupLogger
-from responsemanager.contact_details_processor_impl.contract_details_processor import ContractDetailsProcessorImpl
-from responsemanager.contact_details_processor_impl.grpc_contract_details_processor import GrpcContractDetailsProcessor
-from responsemanager.contract_details_processor import ContractDetailsProcessor
-from responsemanager.fundamental_data_processor_impl.grpc_fundamental_processor import GrpcFundamentalDataProcessor
-from responsemanager.fundamental_processor import FundamentalDataProcessor
-from responsemanager.historical_processor import HistoricalDataProcessor
-from responsemanager.historical_processor_impl.console_historical_processor import ConsoleHistoricalDataProcessor
-from responsemanager.historical_processor_impl.kafka_historical_processor import KafkaHistoricalDataProcessor
-from responsemanager.option_param_processor_impl.grpc_option_params_processor import GrpcOptionParamsProcessor
-from responsemanager.option_params_processor import OptionParamsProcessor
-from responsemanager.response_manager import ResponseManager
-from tests import *
+from ibclient.api.impl.ib_client_impl import IbClientImpl
+from ibclient.connection_manager.impl.connection_manager_impl import ConnectionManagerImpl
+from ibclient.enums.request_type import RequestType
+from ibclient.ewrapper_impl import EWrapperImpl
+from ibclient.init_app import SetupLogger
+from ibclient.responsemanager import ContractDetailsProcessorImpl
+from ibclient.responsemanager import ContractDetailsProcessor
+from ibclient.responsemanager.fundamental_data_processor_impl.grpc_fundamental_processor import GrpcFundamentalDataProcessor
+from ibclient.responsemanager import FundamentalDataProcessor
+from ibclient.responsemanager import HistoricalDataProcessor
+from ibclient.responsemanager import ConsoleHistoricalDataProcessor
+from ibclient.responsemanager import GrpcOptionParamsProcessor
+from ibclient.responsemanager import OptionParamsProcessor
+from ibclient.responsemanager import ResponseManager
+from ibclient.tests import *
 
 
 def configure(binder):
@@ -44,7 +41,7 @@ def configure(binder):
 
 def read_stocks():
     stocks = []
-    with open('tests/stocks_amex.csv') as f:
+    with open('ibclient/tests/stocks_amex.csv') as f:
         reader = csv.DictReader(f)
         for row in reader:
             stocks.append(row)

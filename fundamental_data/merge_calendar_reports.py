@@ -3,8 +3,6 @@ import os
 import sys
 from xml.etree import ElementTree
 
-
-
 if __name__ == '__main__':
     pattern = os.path.join('.', 'data', '*_CalendarReport*.xml')
     files = glob.glob(pattern)

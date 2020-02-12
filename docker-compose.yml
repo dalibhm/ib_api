@@ -1,18 +1,66 @@
 version: '3'
 
 services:
-  postgres:
-    image: 'postgres:latest'
-  api:
+  stock-listing:
+#    image: 'stock-listing:latest'
+#  api:
     build:
       dockerfile: Dockerfile
-      context: ./data_api
+      context: ./stock_listing
     environment:
-      - PSUSER=postgres
-      - PHOST=postgres
-      - PSDATABASE=postgres
-      - PSPASSWORD=postgres_password
-      - PGPORT=5432
+      - ENVIRONMENT=development
+    volumes:
+      - "${SETTINGS_DIR}:/home/app/settings"
+      - "${LOG_DIR}:/home/app/log"
     ports:
-      - "4000:5000"
+      - "12499:12499"
 
+  contracts:
+#    image: 'contracts'
+#  api:
+    build:
+      dockerfile: Dockerfile
+      context: ./contracts
+    environment:
+      - ENVIRONMENT=development
+    volumes:
+      - "${SETTINGS_DIR}:/home/app/settings"
+      - "${LOG_DIR}:/home/app/log"
+    ports:
+      - "12422:12422"
+
+  fundamental-server:
+    build:
+      dockerfile: Dockerfile
+      context: ./fundamental_data
+    environment:
+      - ENVIRONMENT=development
+    volumes:
+      - "${SETTINGS_DIR}:/home/app/settings"
+      - "${LOG_DIR}:/home/app/log"
+    ports:
+      - "12399:12399"
+
+  historical-server:
+    build:
+      dockerfile: Dockerfile
+      context: ./historical_data
+    environment:
+      - ENVIRONMENT=development
+    volumes:
+      - "${SETTINGS_DIR}:/home/app/settings"
+      - "${LOG_DIR}:/home/app/log"
+    ports:
+      - "12599:12599"
+
+  ib-server:
+    build:
+      dockerfile: Dockerfile
+      context: ./ib_client
+    environment:
+      - ENVIRONMENT=development
+    volumes:
+      - "${SETTINGS_DIR}:/home/app/settings"
+      - "${LOG_DIR}:/home/app/log"
+    ports:
+      - "12299:12299"

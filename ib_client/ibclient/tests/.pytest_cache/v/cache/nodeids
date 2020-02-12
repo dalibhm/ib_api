@@ -1,0 +1,15 @@
+[
+  "test_app.py::test_app",
+  "test_injector.py::test_connectionmanager",
+  "test_injector.py::test_request_manager",
+  "test_option_params.py::test_option_params_process_data",
+  "test_req_fundamental_data.py::test_req_fundamental_data",
+  "test_request_manager.py::test_request_manager_add_request",
+  "test_request_manager.py::test_register_historical_request_started",
+  "test_request_manager.py::test_register_historical_request_succeeded",
+  "test_request_manager.py::test_register_historical_request_error",
+  "test_request_manager.py::test_add_historical_request",
+  "test_request_manager.py::test_request_manager_add_historical_request",
+  "test_request_manager.py::test_request_manager_add_fundamental_request",
+  "test_request_manager.py::test_request_manager_add_historical_response"
+]

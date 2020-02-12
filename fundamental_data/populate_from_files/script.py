@@ -7,8 +7,8 @@ from pathlib import Path
 # import sys
 # sys.path.insert(0, '..')
 
-from mongo_data.mongo_init import global_init
-from mongo_data.statement import Statement
+from fundamental_data.mongo_data.mongo_init import global_init
+from fundamental_data.mongo_data.statement import Statement
 
 
 def read_content(filename):

@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+
+option objc_class_prefix = "HD";
+
+package historical_data;
+
+service HistoricalData {
+  rpc GetOneHistoricalData(Request) returns (stream BarData) {}
+  rpc GetManyHistoricalData(stream Request) returns (stream BarData) {}
+  rpc AddHistoricalData(HistoricalDataToAdd) returns(Empty){}
+  rpc GetHeadTimeStamp(Request) returns (Result) {}
+  rpc GetStartDb(Request) returns (Result) {}
+  rpc GetEndDb(Request) returns (Result) {}
+}
+
+message BarData {
+    string date = 1;
+    double open = 2;
+    double high = 3;
+    double low = 4;
+    double close = 5;
+    int32 volume = 6;
+    int32 barCount = 7;
+    double average = 8 ;
+}
+
+message Request {
+    string stock = 1;
+    string startDate = 2;
+    string endDate = 3;
+    string priceType = 4;
+    string dateFormat = 5;
+}
+
+message HistoricalDataToAdd {
+}
+
+message Empty {}
+
+message Timestamp {
+    string date = 1;
+}
+
+message Result {
+    string date = 1;
+}

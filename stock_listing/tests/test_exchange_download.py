@@ -1,4 +1,4 @@
-from parsers.exchange_parser import ExchangeParser
+from stock_listing.parsers.exchange_parser import ExchangeParser
 
 base_url = 'https://www.interactivebrokers.co.uk/en/'
 
