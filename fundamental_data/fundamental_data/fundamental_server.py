@@ -15,14 +15,16 @@ class FundamentalData(fundamental_data_pb2_grpc.FundamentalDataServicer):
 
     def __init__(self, repository):
         self.repository = repository
+        self.logger = logging.Logger(__name__)
 
     def ProcessReport(self, request, context):
         try:
+            self.logger.log('processing {} {}'.format(request.stock, request.reportType))
             self.repository.process_report(symbol=request.stock,
                                            report_type=request.reportType,
                                            report_content=request.content)
         except Exception as e:
-            print(e)
+            self.logger.exception('Error processing {} {}'.format(request.stock, request.reportType))
         return fundamental_data_pb2.Empty()
 
     def GetAllReports(self, request, context):
@@ -61,7 +63,8 @@ class FundamentalData(fundamental_data_pb2_grpc.FundamentalDataServicer):
 def serve(end_point, repository):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=4))
     fundamental_data_pb2_grpc.add_FundamentalDataServicer_to_server(FundamentalData(repository), server)
-    server.add_insecure_port(end_point)
+    server.add_insecure_port('0.0.0.0:12399')
+    # server.add_insecure_port(end_point)
     server.start()
     print('[Fundamental data server started on {}]'.format(end_point))
     server.wait_for_termination()

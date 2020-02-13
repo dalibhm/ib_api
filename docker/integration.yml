@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile
       context: ../stock_listing
     environment:
-      - ENVIRONMENT=integration
+      - environment=integration
     volumes:
       - "${SETTINGS_DIR}:/home/app/settings"
       - "${LOG_DIR}:/home/app/log"
@@ -22,7 +22,7 @@ services:
       dockerfile: Dockerfile
       context: ../contracts
     environment:
-      - ENVIRONMENT=integration
+      - environment=integration
     volumes:
       - "${SETTINGS_DIR}:/home/app/settings"
       - "${LOG_DIR}:/home/app/log"
@@ -34,7 +34,7 @@ services:
       dockerfile: Dockerfile
       context: ../fundamental_data
     environment:
-      - ENVIRONMENT=integration
+      - environment=integration
     volumes:
       - "${SETTINGS_DIR}:/home/app/settings"
       - "${LOG_DIR}:/home/app/log"
@@ -46,7 +46,7 @@ services:
       dockerfile: Dockerfile
       context: ../historical_data
     environment:
-      - ENVIRONMENT=integration
+      - environment=integration
     volumes:
       - "${SETTINGS_DIR}:/home/app/settings"
       - "${LOG_DIR}:/home/app/log"
@@ -58,7 +58,7 @@ services:
       dockerfile: Dockerfile
       context: ../ib_client
     environment:
-      - ENVIRONMENT=integration
+      - environment=integration
     volumes:
       - "${SETTINGS_DIR}:/home/app/settings"
       - "${LOG_DIR}:/home/app/log"
