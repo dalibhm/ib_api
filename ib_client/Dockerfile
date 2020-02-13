@@ -1,9 +1,9 @@
-FROM python:3.7-alpine
+FROM python:3.7-stretch
 
 WORKDIR /home/app
 
-RUN apk update && apk add g++  musl-dev python3-dev
-RUN apk add librdkafka-dev
+RUN apt update && apt install g++  musl-dev python3-dev -y
+RUN apt install librdkafka-dev -y
 
 
 RUN pip3 install --upgrade pip
@@ -15,7 +15,7 @@ RUN pip3 install --no-cache-dir --upgrade -r requirements.txt
 COPY ./dependencies/ibapi ibapi
 RUN pip3 install ibapi
 
-RUN apk add linux-headers
+#RUN apt add linux-headers
 RUN pip3 install ddtrace
 
 COPY ibclient ./ibclient

@@ -1,13 +1,13 @@
-FROM python:3.7-alpine
+FROM python:3.7-stretch
 
 WORKDIR /home/app
 
-#RUN apk update
-RUN apk update && apk add g++  musl-dev python3-dev
-RUN apk add postgresql-dev
-#RUN apk update && apk add g++ linux-headers make
+#RUN apt update
+RUN apt update && apt install g++ musl-dev python3-dev -y
+#RUN apt install postgresql-dev -y
+#RUN apt update && apt add g++ linux-headers make
 
-#RUN apk update
+#RUN apt update
 
 RUN pip3 install --upgrade pip
 RUN pip install --upgrade wheel

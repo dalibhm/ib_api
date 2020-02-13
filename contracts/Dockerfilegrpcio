@@ -1,19 +1,15 @@
-FROM python:3.7-stretch
+FROM dalibh/python:3.7-grpcio
 
 WORKDIR /home/app
 
-#RUN apk update
-RUN apt update && apt install g++  musl-dev python3-dev -y
-#RUN apt install postgresql-dev -y
-#RUN apk update && apk add g++ linux-headers make
 
-#RUN apk update
+RUN apk add postgresql-dev
 
 RUN pip3 install --upgrade pip
 RUN pip install --upgrade wheel
 RUN pip install --upgrade setuptools
 
-COPY contract_service/requirements.txt requirements.txt
+COPY contract_service/requirements-docker.txt requirements.txt
 RUN pip3 install --no-cache-dir --upgrade -r requirements.txt
 
 COPY ./contract_service ./contract_service

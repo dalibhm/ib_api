@@ -1,9 +1,9 @@
-FROM python:3.7-alpine
+FROM python:3.7-stretch
 
 WORKDIR /home/app
 
-RUN apk update && apk add g++  musl-dev python3-dev
-RUN apk add postgresql-dev
+RUN apt update && apt install g++  musl-dev python3-dev -y
+#RUN apt install postgresql-dev
 
 RUN pip3 install --upgrade pip
 RUN pip install --upgrade wheel
