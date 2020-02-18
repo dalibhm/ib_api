@@ -1,6 +1,7 @@
 import datetime
 import logging
 from configparser import ConfigParser
+from typing import List
 
 from ddtrace import tracer
 from ibapi.common import BarData, ListOfHistoricalTick, ListOfHistoricalTickBidAsk, TickerId, ListOfHistoricalTickLast, \
@@ -12,20 +13,23 @@ from ibapi.wrapper import EWrapper
 from injector import inject
 
 from requestmanager.requestmanager import RequestManager
+from subject import Subject
 
 logger = logging.getLogger(__name__)
 
 
-class EWrapperImpl(EWrapper):
+class EWrapperImpl(EWrapper, Subject):
     @inject
     def __init__(self, config: ConfigParser):
         super().__init__()
+        Subject.__init__(self)
         self.asynchronous = False
 
         # if injected, the two classes below induce circular references as they depend on ib_client
         # which holds a reference to EWrapper
         self.connection_manager = None
         self.request_manager: RequestManager = None
+        # self.requests: List[Request] = []
 
     # ! [connectack]
     def connectAck(self):
@@ -52,8 +56,11 @@ class EWrapperImpl(EWrapper):
         connection with the ActiveX control, or when TWS is shut down."""
 
         super().connectionClosed()
+        # [request.connectionClosed() for request in self.observers]
         # as the connection is closed, reconnect
-        self.connection_manager.connection_closed = True
+
+        self.notify()
+
 
     # ! [currenttime]
     def currentTime(self, time: int):
@@ -72,6 +79,7 @@ class EWrapperImpl(EWrapper):
     def contractDetailsEnd(self, reqId: int):
         super().contractDetailsEnd(reqId)
         self.request_manager.process_data_end(reqId)
+        # [request.process_data_end() for request in self.requests]
 
     # ! [contractdetailsend]
 
@@ -130,8 +138,11 @@ class EWrapperImpl(EWrapper):
 
     # ! [fundamentaldata]
     def fundamentalData(self, reqId: TickerId, data: str):
-        # super().fundamentalData(reqId, data)
+        super().fundamentalData(reqId, '')
         self.request_manager.process_data(reqId, data)
+        # [request.process_data(data)
+        #     for request in self.requests
+        #     if request.request_id == reqId]
 
     # ! [fundamentaldata]
 
@@ -142,19 +153,14 @@ class EWrapperImpl(EWrapper):
         span.set_tag('reqId', reqId)
         super().error(reqId, errorCode, errorString)
 
-        # historical data error
-        # this needs to be treated in a generic way as the error codes may not be
-        # specific to request type
-
-        print(reqId, errorCode, errorString)
-        # if errorCode in [err for err in range(501, 505)] or (1000 < errorCode < 2999):
-        #     print(reqId, errorCode, errorString[:50])
-        # else:
-        #     self.request_manager.process_error(reqId, errorCode, errorString)
+        if reqId == -1:
+            # resets requests after errors
+            self.notify_requests()
         try:
             self.request_manager.process_error(reqId, errorCode, errorString)
-        except:
-            pass
+        except Exception as e:
+            print('exception processing error - ewrapper impl line 162')
+            print(e)
 
     # ! [error] self.reqId2nErr[reqId] += 1
 
@@ -215,5 +221,5 @@ class EWrapperImpl(EWrapper):
                                           strikes)
 
     def securityDefinitionOptionParameterEnd(self, reqId: int):
-        print(datetime.datetime.now(), reqId, 'securityDefinitionOptionParameterEnd')
+        super().securityDefinitionOptionParameter(reqId)
         self.request_manager.process_data_end(reqId)

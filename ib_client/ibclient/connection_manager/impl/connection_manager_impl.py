@@ -9,7 +9,7 @@ import logging
 from injector import inject
 
 from Services.LogService import LogService
-from api.ib_client import IbClient
+from ib_client.ib_client import IbClient
 from connection_manager.connection_manager import ConnectionManager
 
 logger = logging.getLogger(__name__)
@@ -77,9 +77,8 @@ class ConnectionManagerImpl(ConnectionManager):
 
         self.ib_client: EClient = ib_client
         self.hold_on_requests = False
-        # self.last_connection_trial_time = datetime.now()
-        # self.disconnect_time = None
         self.connection_closed = True
+
         # this is EClient that read the responses from the API
         # It needs to be running, so that the ACK is received, but it shuts down when connection is lost
         self.loop_active = False
@@ -88,6 +87,38 @@ class ConnectionManagerImpl(ConnectionManager):
         # self.loop_thread.start()
         self.logger = LogService.get_startup_log()
         self.logger.debug('Started connection manager.')
+        self.ib_client.wrapper.attach(self)
+        self._connect()
+
+    def update(self):
+        self.connection_closed = True
+        self.hold_on_requests = True
+        time.sleep(1.0)
+        self._connect()
+
+    def _connect(self):
+        self.logger.debug('ConnectionManager connecting to Gateway')
+        self.logger.debug('ConnectionManager blocked all requests')
+
+        if self.loop_thread and self.loop_thread.is_alive():
+            self.logger.debug('ConnectionManager ensuring that EClient.run loop is over')
+
+        try:
+            self.ib_client.connect(self.host, self.port, self.client_id)
+        except Exception as e:
+            logger.exception('error while reconnecting to IB API ')
+            self.logger.exception('error while reconnecting to IB API')
+
+        self.loop_thread = Thread(target=self.ib_client.run)
+        self.loop_thread.start()
+        self.logger.debug('started EClient.run')
+        # logger.debug('EClient.run() started')
+        self.hold_on_requests = False
+        self.connection_closed = False
+        self.logger.debug('accepting requests')
+        # self.last_connection_trial_time = datetime.now()
+
+
 
     def connect(self):
         # while (datetime.now() - self.last_connection_trial_time).total_seconds() < 5\
@@ -140,8 +171,8 @@ class ConnectionManagerImpl(ConnectionManager):
     def is_connected(self):
         return not self.connection_closed
 
-    def run(self) -> None:
-        while True:
-            if self.connection_closed:
-                print("[connection to api down]")
-                self.connect()
+    # def run(self) -> None:
+    #     while True:
+    #         if self.connection_closed:
+    #             print("[connection to api down]")
+    #             self.connect()

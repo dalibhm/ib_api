@@ -15,6 +15,15 @@ if __name__ == '__main__':
     url = '127.0.0.1:12399'
     client = Client(server_url=url)
 
+    report = client.get_latest_report('AMZN', 'ReportsFinStatements')
+    company_ids, issues, general_info, statement_info, notes, annual, interim = parse_financial_statements(report.content)
+
+    CAS = {r['statement_info']['statement_date']: r['statement'] for r in interim if r['type']=='CAS'}
+    cas = pd.DataFrame.from_dict(CAS)
+
+    CAS = {r['fiscal_period']['end_date']: r['statement'] for r in interim if r['type'] == 'CAS'}
+    cas = pd.DataFrame.from_dict(CAS)
+
     file = os.path.join('.', 'data', 'MSCI_CalendarReport_2019-10-31 03.33.23.086964.xml')
     with open(file, 'rt') as f:
         data = f.read()

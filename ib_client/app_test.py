@@ -3,7 +3,7 @@ from configparser import ConfigParser
 from datetime import datetime
 from threading import Thread
 
-from ibclient.api.impl.ib_client_impl import IbClientImpl
+from ibclient.ib_client.impl.ib_client_impl import IbClientImpl
 from ibclient.connection_manager.impl.connection_manager_impl import ConnectionManagerImpl
 from ibclient.enums.request_type import RequestType
 from ibclient.ewrapper_impl import EWrapperImpl

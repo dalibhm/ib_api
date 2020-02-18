@@ -12,7 +12,7 @@ sys.path.append(os.path.join(module_dir, '../ib_client/'))
 
 from ibclient.init_app import SetupLogger
 
-from ibclient.api import ib_client
+from ibclient.ib_client import ib_client
 
 
 @pytest.fixture(scope="module")

@@ -1,7 +1,7 @@
 import asyncio
 import threading
 
-from api.ib_client import IbClient
+from ib_client.ib_client import IbClient
 from ibapi.common import BarData
 
 from connection_manager.connection_manager import ConnectionManager
@@ -68,22 +68,11 @@ class HistoricalRequest(Request):
                                               int(request.keepUpToDate),
                                               []
                                               )
-            while not self.finished:
-                continue
+            self.stop_notification.wait()
             return True
-
-        except Exception as e:
-            self.logger.exception('Unable to request {} historical data for {}'.format(request_id,
-                                                                                       contract)
-                                  )
-            self.finished = True
-            self.close()
+        except:
+            self.logger.exception("{} for fundamental data : {} - request sent".format(request_id, contract))
             return False
-
-        # with tracer.start_span(name='wait for response', child_of=span) as tr:
-        #     tr.set_tag('reqId', request_id)
-        #     while not self.finished:
-        #         continue
 
     # @tracer.wrap(name='process data', service='historical req')
     @tracer.wrap()
@@ -92,11 +81,12 @@ class HistoricalRequest(Request):
         with tracer.trace('child of context: data') as span:
             span.set_tag('reqId', self.request_id)
             self.response_manager.process_historical_data(self.request_id, self._request, bar_data)
-        # span.finish()
+
 
     # @tracer.wrap(name='process data end', service='historical req')
     @tracer.wrap()
     def process_data_end(self, *args):
+        self.update()
         tracer.context_provider.activate(self.context)
         with tracer.trace('child of context: data end') as span:
             # if span:
@@ -111,6 +101,7 @@ class HistoricalRequest(Request):
 
     @tracer.wrap(name='process data error', service='historical req')
     def process_error(self, error_code, error_string):
+        self.update()
         tracer.context_provider.activate(self.context)
         with tracer.trace('child of context: data error') as span:
             span.set_tag('reqId', self.request_id)

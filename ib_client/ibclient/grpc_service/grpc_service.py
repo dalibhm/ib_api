@@ -47,6 +47,7 @@ class RequestServicer(request_data_pb2_grpc.RequestDataServicer):
         self.logger = LogService.get_startup_log()
         self.lock = threading.Lock()
 
+
     def RequestContractDetails(self, request, context):
         try:
             self.request_manager.add_request(request, RequestType.ContractDetails)
@@ -68,26 +69,36 @@ class RequestServicer(request_data_pb2_grpc.RequestDataServicer):
     def RequestHistoricalData(self, request, context):
         try:
             context = tracer.get_call_context()
-            coro = self.request_manager.add_request(request, RequestType.Historical, context)
-            status = asyncio.run(coro)
+            task = self.request_manager.add_request(request, RequestType.Historical, context)
+            status = asyncio.run(task)
 
-            return request_data_pb2.Status(message=status)
-        except Exception as e:
+        except asyncio.TimeoutError:
+            self.logger.notice('Timeout historical request: {} {}'.format(request.contract.symbol,
+                                                                          request.reportType))
             return request_data_pb2.Status(message=False)
+        except Exception as e:
+            self.logger.exception('Request: {} {}'.format(request.contract.symbol,
+                                                          request.reportType))
+            return request_data_pb2.Status(message=False)
+        return request_data_pb2.Status(message=status)
 
+    @tracer.wrap()
     def RequestFundamentalData(self, request, context):
         try:
             self.logger.notice('Starting fundamental request: {} {}'.format(request.contract.symbol,
                                                                             request.reportType))
             # self.request_manager.add_request(request, RequestType.Fundamental)
-            coro = self.request_manager.add_request(request, RequestType.Fundamental)
-            status = asyncio.run(coro)
+            status = self.request_manager.add_request(request, RequestType.Fundamental)
             self.logger.notice('Processed fundamental request: {} {}'.format(request.contract.symbol,
                                                                              request.reportType))
+        except asyncio.TimeoutError:
+            self.logger.notice('Timeout historical request: {} {}'.format(request.contract.symbol,
+                                                                          request.reportType))
+            status = False
         except Exception as e:
             self.logger.exception('Request: {} {}'.format(request.contract.symbol,
                                                           request.reportType))
-            print(e)
+            status = False
 
         return request_data_pb2.Status(message=status)
 

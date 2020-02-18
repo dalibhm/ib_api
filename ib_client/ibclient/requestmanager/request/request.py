@@ -4,40 +4,57 @@ from ibapi.contract import Contract
 import threading
 import logbook
 
-from api.ib_client import IbClient
+from ib_client.ib_client import IbClient
 from connection_manager.connection_manager import ConnectionManager
 from enums.request_type import RequestType
 from requestmanager.actor import Actor
 
+class Observer:
+    def __init__(self, subject):
+        self.state = None
+        self.subject = subject
 
-class Request(Actor):
+    def update(self):
+        self.state = self.subject.get_state()
+
+
+class Request(Observer):
     def __init__(self, request_id, request, ib_client: IbClient, request_type: RequestType,
                  connection_manager: ConnectionManager):
         """
 
         :type ib_client: object
         """
-        super().__init__()
+
         self._request = request  # this GRPC raw requests
-        self._connection_manager =connection_manager
+        self._connection_manager = connection_manager
         self.request_type = request_type
         self.request_time = datetime.now()
         self.response_time = None
         self.request_id = request_id
         self.contract = self.get_contract()
         self._ib_client = ib_client
+        super().__init__(subject=self._ib_client.wrapper)
         self.name = ''
         # self._data = None
         self.lock = threading.Lock()
         self.symbol = request.contract.symbol
         self.logger = logbook.Logger("App")
         self._finished = False
+        self.stop_notification = threading.Event()
+        self.subject.attach(self)
 
     def __repr__(self):
         return 'request {} {}'.format(self.request_type, self.contract)
+
     # @property
     # def data(self):
     #     return self._data
+
+    def __eq__(self, other):
+        if not isinstance(other, Request):
+            return False
+        return self.request_id == other.request_id
 
     @property
     def proto_request(self):
@@ -50,6 +67,9 @@ class Request(Actor):
         while self._connection_manager.hold_on_requests:
             continue
 
+    def update(self):
+        self.stop_notification.set()
+        self.subject.detach(self)
 
     def get_contract(self):
         proto_contract = self._request.contract

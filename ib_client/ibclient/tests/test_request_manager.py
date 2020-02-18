@@ -4,7 +4,7 @@ from unittest.mock import Mock, MagicMock
 
 import pytest
 
-from ibclient.api.impl.ib_client_impl import IbClientImpl
+from ibclient.ib_client.impl.ib_client_impl import IbClientImpl
 from ibclient.connection_manager.connection_manager import ConnectionManager
 from ibclient.enums.request_type import RequestType
 from ibclient.tests import read_stocks, historical_request, fundamental_request

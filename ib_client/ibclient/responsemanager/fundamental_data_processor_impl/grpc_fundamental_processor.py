@@ -34,4 +34,4 @@ class GrpcFundamentalDataProcessor(FundamentalDataProcessor):
         pass
 
     def process_error(self, request_id, request, error_code, error_string):
-        print(request_id, request, error_code, error_string)
+        print(request_id, request.contract.symbol, error_code, error_string)

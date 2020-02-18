@@ -1,6 +1,6 @@
 import logging
 
-from api.ib_client import IbClient
+from ib_client.ib_client import IbClient
 from connection_manager.connection_manager import ConnectionManager
 from enums.request_type import RequestType
 from proto.request_data_pb2 import ContractRequest
@@ -34,19 +34,19 @@ class SecDefOptParamsRequest(Request):
                                                futFopExchange="",
                                                underlyingSecType=contract.secType,
                                                underlyingConId=contract.conId)
-        except Exception as e:
-            self.finished = True
-            logger.exception('Unable to request {} options definition params for {}'.format(request_id,
-                                                                                            contract)
-                             )
+            self.stop_notification.wait()
+            return True
+        except:
+            self.logger.exception("{} for fundamental data : {} - request sent".format(request_id, contract))
+            return False
 
     def process_data(self, *args):
         self.response_manager.process_option_params(self.request_id, self._request, *args)
 
     def process_data_end(self):
-        self.finished = True
+        self.update()
         self.response_manager.process_contract_details_end(self.request_id, self._request)
 
     def process_error(self, error_code, error_string):
-        self.finished = True
+        self.update()
         self.response_manager.process_fundamental_data_error(self.request_id, self._request, error_code, error_string)

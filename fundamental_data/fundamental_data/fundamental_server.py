@@ -1,25 +1,26 @@
-import logging
-import os
-import time
 from concurrent import futures
 from configparser import ConfigParser
 
 import grpc
 
-# from calendar_reports.calendar_builder import CalendarBuilder
+
+from injector import Injector
+from logger.Logger import LogService
+
+from container import Container
 from mongo_data.mongo_repository import MongoRepository
 from proto import fundamental_data_pb2_grpc, fundamental_data_pb2
 
 
 class FundamentalData(fundamental_data_pb2_grpc.FundamentalDataServicer):
 
-    def __init__(self, repository):
+    def __init__(self, repository, logger):
         self.repository = repository
-        self.logger = logging.Logger(__name__)
+        self.logger = logger
 
     def ProcessReport(self, request, context):
         try:
-            self.logger.log('processing {} {}'.format(request.stock, request.reportType))
+            self.logger.info('processing {} {}'.format(request.stock, request.reportType))
             self.repository.process_report(symbol=request.stock,
                                            report_type=request.reportType,
                                            report_content=request.content)
@@ -29,24 +30,24 @@ class FundamentalData(fundamental_data_pb2_grpc.FundamentalDataServicer):
 
     def GetAllReports(self, request, context):
         try:
+            self.logger.info('processing {} {}'.format(request.stock, request.reportType))
             results = self.repository.get_all_reports(symbol=request.stock,
                                                       report_type=request.reportType)
             for result in results:
                 yield result.to_proto()
 
         except Exception as e:
-            # self.logger.log(e)
-            print(e)
+            self.logger.exception('Error processing {} {}'.format(request.stock, request.reportType))
 
     def GetLatestReport(self, request, context):
         try:
+            self.logger.info('processing {} {}'.format(request.stock, request.reportType))
             result = self.repository.get_latest_report(symbol=request.stock,
                                                        report_type=request.reportType)
             return result.to_proto()
 
         except Exception as e:
-            # self.logger.log(e)
-            print(e)
+            self.logger.exception('Error processing {} {}'.format(request.stock, request.reportType))
 
     # def GetLatestFinancialReportDate(self, request, context):
     #     insert_date = self.repository.get_latest_report_date(symbol=request.stock, report_type='ReportsFinStatements')
@@ -60,35 +61,26 @@ class FundamentalData(fundamental_data_pb2_grpc.FundamentalDataServicer):
     #     return response
 
 
-def serve(end_point, repository):
+def serve(end_point, repository, logger):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=4))
-    fundamental_data_pb2_grpc.add_FundamentalDataServicer_to_server(FundamentalData(repository), server)
+    fundamental_data_pb2_grpc.add_FundamentalDataServicer_to_server(FundamentalData(repository, logger), server)
     server.add_insecure_port('0.0.0.0:12399')
     # server.add_insecure_port(end_point)
     server.start()
-    print('[Fundamental data server started on {}]'.format(end_point))
+    logger.info('[Fundamental data server started on {}]'.format(end_point))
     server.wait_for_termination()
 
 
 if __name__ == '__main__':
-    environment = os.getenv('environment') or 'development'
-    config = ConfigParser()
-    config.read(os.path.join('..', 'settings', environment + '.ini'))
-    end_point = config.get('services', 'fundamental_data')
+    injector = Injector([Container])
+    config = injector.get(ConfigParser)
+    endpoint = config.get('services', 'fundamental_data')
+    logger = injector.get(LogService).Logger(__name__)
 
-    # configure logging
-    if not os.path.exists("log"):
-        os.makedirs("log")
-
-    FORMAT = '%(asctime)-15s %(levelname)s %(name)-s %(message)s'
-    logging.basicConfig(filename=time.strftime(os.path.join("log", "fundamental_%Y%m%d_%H_%M_%S.log")),
-                        filemode="w",
-                        level=logging.DEBUG,
-                        format=FORMAT)
 
     # FileManager.init_directory(os.path.join('.', 'data'))
     from mongo_data import mongo_init
 
     mongo_init.global_init(config)
     repository = MongoRepository
-    serve(end_point, repository)
+    serve(endpoint, repository, logger)

@@ -9,7 +9,7 @@ from injector import inject
 from ibclient.Services.request_id_generator import RequestIdGenerator
 from ibclient.connection_manager.connection_manager import ConnectionManager
 from ibapi.wrapper import EWrapper
-from ibclient.api.ib_client import IbClient
+from ibclient.ib_client.ib_client import IbClient
 
 from ibclient.proto.request_data_pb2 import HistoricalDataRequest, FundamentalDataRequest, \
     ContractRequest

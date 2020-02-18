@@ -2,14 +2,50 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="beaa812e-b524-4fdd-b724-b65c569f5809" name="Default Changelist" comment="removed historical_data from runner requirements.txt">
+      <change afterPath="$PROJECT_DIR$/../ib_client/ibclient/grpc_service/tasks.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ib_client/ibclient/ib_client/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ib_client/ibclient/ib_client/impl/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ib_client/ibclient/subject.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../logger/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../contracts/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../contracts/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../contracts/contract_service/contract_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/../contracts/contract_service/contract_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker/integration.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker/integration.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fundamental_data/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../fundamental_data/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fundamental_data/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../historical_data/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../historical_data/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ib_client/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fundamental_data/fundamental_data/fundamental_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/../fundamental_data/fundamental_data/fundamental_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fundamental_data/fundamental_data/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../fundamental_data/fundamental_data/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fundamental_data/parsers/test_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/../fundamental_data/parsers/test_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/app_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/app_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../fundamental_data/parsers/statement.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/api/ib_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/ib_client/ib_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/api/impl/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/container.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/api/impl/ib_client_impl.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/ib_client/impl/ib_client_impl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/api/impl/ib_client_mock.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/ib_client/impl/ib_client_mock.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/connection_manager/impl/connection_manager_impl.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/connection_manager/impl/connection_manager_impl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/ewrapper_impl.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/ewrapper_impl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/grpc_service/grpc_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/grpc_service/grpc_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/requestmanager/request/contractdetailsrequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/requestmanager/request/contractdetailsrequest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/requestmanager/request/fundamentalrequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/requestmanager/request/fundamentalrequest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/requestmanager/request/historicalrequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/requestmanager/request/historicalrequest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/requestmanager/request/request.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/requestmanager/request/request.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/requestmanager/request/security_definition_option.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/requestmanager/request/security_definition_option.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/requestmanager/requestmanager.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/requestmanager/requestmanager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/responsemanager/fundamental_data_processor_impl/grpc_fundamental_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/responsemanager/fundamental_data_processor_impl/grpc_fundamental_processor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/tests/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/tests/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/tests/test_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/tests/test_app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/tests/test_req_fundamental_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/tests/test_req_fundamental_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ib_client/ibclient/tests/test_request_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ib_client/ibclient/tests/test_request_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../logger/logger/Logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/../logger/logger/Logger.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runner/download_runner/impl/fundamental_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runner/download_runner/impl/fundamental_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../settings/docker-settings/development.ini" beforeDir="false" afterPath="$PROJECT_DIR$/../settings/docker-settings/development.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../settings/docker-settings/integration.ini" beforeDir="false" afterPath="$PROJECT_DIR$/../settings/docker-settings/integration.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../stock_listing/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../stock_listing/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stock_listing/stock_listing/container.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stock_listing/stock_listing/container.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stock_listing/stock_listing/logger.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stock_listing/stock_listing/stock_listing_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stock_listing/stock_listing/stock_listing_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stock_listing/stock_listing_server-200212" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +136,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/runner/runner.py" />
-      <option name="PARAMETERS" value="--type=fundamental  --stocks=PAYC --start-date=2018-10-01 --end-date=2019-01-1" />
+      <option name="PARAMETERS" value="--type=fundamental  --exchanges=nyse --start-date=2018-10-01 --end-date=2019-01-1" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -140,12 +176,7 @@
       <list>
         <serviceView>
           <treeState>
-            <expand>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="Docker" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </treeState>
         </serviceView>
@@ -218,6 +249,10 @@
       <workItem from="1581453513441" duration="2216000" />
       <workItem from="1581512453613" duration="5368000" />
       <workItem from="1581528486691" duration="3398000" />
+      <workItem from="1581600545175" duration="22156000" />
+      <workItem from="1581863637342" duration="1702000" />
+      <workItem from="1581935665040" duration="3536000" />
+      <workItem from="1581951888363" duration="2159000" />
     </task>
     <task id="LOCAL-00001" summary="new branch traced">
       <created>1581266032715</created>
@@ -272,10 +307,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="removed historical_data from runner requirements.txt" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="293" y="242" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581512499129">
+    <state x="293" y="242" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581856075650">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="293" y="242" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581512499129" />
+    <state x="293" y="242" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581856075650" />
     <state x="653" y="248" key="#com.intellij.ide.util.MemberChooser" timestamp="1580222053528">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -304,32 +339,32 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="583" y="352" key="EnvironmentVariablesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581072744886" />
-    <state width="1638" height="337" key="GridCell.Tab.0.bottom" timestamp="1581531805509">
+    <state width="1638" height="367" key="GridCell.Tab.0.bottom" timestamp="1581953985096">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="337" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1581531805509" />
-    <state width="1638" height="365" key="GridCell.Tab.0.bottom/0.23.1680.956@0.23.1680.956" timestamp="1580652472318" />
+    <state width="1638" height="367" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1581953985096" />
+    <state width="1638" height="367" key="GridCell.Tab.0.bottom/0.23.1680.956@0.23.1680.956" timestamp="1581898838541" />
     <state width="1638" height="347" key="GridCell.Tab.0.bottom/0.23.1680.960@0.23.1680.960" timestamp="1580567578378" />
     <state width="1638" height="347" key="GridCell.Tab.0.bottom/0.23.1680.963@0.23.1680.963" timestamp="1580597120795" />
-    <state width="1638" height="337" key="GridCell.Tab.0.center" timestamp="1581531805507">
+    <state width="1638" height="367" key="GridCell.Tab.0.center" timestamp="1581953985094">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="337" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1581531805507" />
-    <state width="1638" height="365" key="GridCell.Tab.0.center/0.23.1680.956@0.23.1680.956" timestamp="1580652472316" />
+    <state width="1638" height="367" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1581953985094" />
+    <state width="1638" height="367" key="GridCell.Tab.0.center/0.23.1680.956@0.23.1680.956" timestamp="1581898838541" />
     <state width="1638" height="347" key="GridCell.Tab.0.center/0.23.1680.960@0.23.1680.960" timestamp="1580567578377" />
     <state width="1638" height="347" key="GridCell.Tab.0.center/0.23.1680.963@0.23.1680.963" timestamp="1580597120793" />
-    <state width="1638" height="337" key="GridCell.Tab.0.left" timestamp="1581531805506">
+    <state width="1638" height="367" key="GridCell.Tab.0.left" timestamp="1581953985094">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="337" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1581531805506" />
-    <state width="1638" height="365" key="GridCell.Tab.0.left/0.23.1680.956@0.23.1680.956" timestamp="1580652472315" />
+    <state width="1638" height="367" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1581953985094" />
+    <state width="1638" height="367" key="GridCell.Tab.0.left/0.23.1680.956@0.23.1680.956" timestamp="1581898838540" />
     <state width="1638" height="347" key="GridCell.Tab.0.left/0.23.1680.960@0.23.1680.960" timestamp="1580567578376" />
     <state width="1638" height="347" key="GridCell.Tab.0.left/0.23.1680.963@0.23.1680.963" timestamp="1580597120792" />
-    <state width="1638" height="337" key="GridCell.Tab.0.right" timestamp="1581531805508">
+    <state width="1638" height="367" key="GridCell.Tab.0.right" timestamp="1581953985095">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="337" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1581531805508" />
-    <state width="1638" height="365" key="GridCell.Tab.0.right/0.23.1680.956@0.23.1680.956" timestamp="1580652472317" />
+    <state width="1638" height="367" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1581953985095" />
+    <state width="1638" height="367" key="GridCell.Tab.0.right/0.23.1680.956@0.23.1680.956" timestamp="1581898838541" />
     <state width="1638" height="347" key="GridCell.Tab.0.right/0.23.1680.960@0.23.1680.960" timestamp="1580567578377" />
     <state width="1638" height="347" key="GridCell.Tab.0.right/0.23.1680.963@0.23.1680.963" timestamp="1580597120794" />
     <state width="1638" height="458" key="GridCell.Tab.1.bottom" timestamp="1581266655775">
@@ -365,14 +400,14 @@
     </state>
     <state x="440" y="253" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1581267274030" />
     <state x="440" y="255" key="Vcs.Push.Dialog.v2/0.23.1680.961@0.23.1680.961" timestamp="1581266647502" />
-    <state x="517" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1581241348105">
+    <state x="517" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1581600548385">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="517" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581241348105" />
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1580408799186">
+    <state x="517" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581600548385" />
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1581601617488">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1580408799186" />
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1581601617488" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -469,7 +504,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/runner$kafka_runner.coverage" NAME="kafka-runner Coverage Results" MODIFIED="1574252854417" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/runner$runner.coverage" NAME="runner Coverage Results" MODIFIED="1581531805453" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/runner" />
+    <SUITE FILE_PATH="coverage/runner$runner.coverage" NAME="runner Coverage Results" MODIFIED="1581953985087" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/runner" />
     <SUITE FILE_PATH="coverage/runner$pytest_in_test.coverage" NAME="pytest in test Coverage Results" MODIFIED="1580154250979" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

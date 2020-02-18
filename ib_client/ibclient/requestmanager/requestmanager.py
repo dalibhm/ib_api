@@ -1,3 +1,4 @@
+import asyncio
 from queue import Queue
 
 from ddtrace import tracer
@@ -5,7 +6,7 @@ from injector import inject
 
 from Services.request_id_generator import RequestIdGenerator
 from connection_manager.connection_manager import ConnectionManager
-from api.ib_client import IbClient
+from ib_client.ib_client import IbClient
 from requestmanager.cache import Cache
 
 from requestmanager.request_scheduler import RequestScheduler
@@ -13,7 +14,6 @@ from requestmanager.status import Status
 from responsemanager.response_manager import ResponseManager
 
 from enums.request_type import RequestType
-
 
 from requestmanager.request_constructor_map import request_constructor_map
 
@@ -53,7 +53,7 @@ class RequestManager:
     # separate registering and running a request here
     # @tracer.wrap()
     # @tracer.wrap(name='add request', service='historical req')
-    async def add_request(self, request, request_type: RequestType, context=None) -> None:
+    def add_request(self, request, request_type: RequestType, context=None) -> None:
         # generate request id
         request_id = self.request_id_gen.get_id()
 
@@ -74,20 +74,7 @@ class RequestManager:
         # self._request_queue.put(_request)
         self._status.update_on_added(request_type)
 
-        status = await _request.run() # sends the request
-
-        # status = False
-        # with tracer.start_span(name='wait for response', child_of=span) as tr:
-        #     # tr.set_tag('reqId', request_id)
-        #     while not _request.finished:
-        #         continue
-        #     status = True
-        #     # while True:
-        #     #     try:
-        #     #         _request.coro.send(None)
-        #     #     except StopIteration as exc:
-        #     #         status = exc.value
-        #     #         break
+        status = _request.run()
 
         return status
 
