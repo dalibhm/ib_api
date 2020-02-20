@@ -40,16 +40,24 @@ class State:
 
 
 class Connected(State):
-    def open(self, connection: IbConnection):
+    def open(self, connection: ConnectionManager):
         pass
 
-    def close(self, connection: IbConnection):
-        connection.ibclient.DISCONNECTED
+    def close(self, connection: ConnectionManager):
+        connection.ib_client.disconnect()
+        connection.change_state(Disconnected())
+
+class Connecting(State):
+    def open(self, connection: ConnectionManager):
+        pass
+
+    def close(self, connection: ConnectionManager):
+        connection.change_state(Disconnected())
 
 
 # I mean by listening ; waiting for acknowledgment from IB server
 class Listening(State):
-    def open(self, connection: IbConnection):
+    def open(self, connection: ConnectionManager):
         if connection.ibclient.isConnected():
             connection.change_state(Connected())
 
@@ -57,10 +65,10 @@ class Listening(State):
         pass
 
 
-class Closed(State):
-    def open(self, connection: IbConnection):
+class Disconnected(State):
+    def open(self, connection: ConnectionManager):
+        connection.change_state(Connecting())
         connection.connect()
-        connection.change_state(Listening())
 
     def close(self):
         pass
@@ -70,7 +78,7 @@ class ConnectionManagerImpl(ConnectionManager):
     @inject
     def __init__(self, config: ConfigParser, ib_client: IbClient):
         super().__init__()
-        self._state = Closed()
+        self._state = Disconnected()
         self.host = config.get('ib client', 'host')
         self.port = config.getint('ib client', 'port')
         self.client_id = config.getint('ib client', 'client-id')
@@ -88,85 +96,111 @@ class ConnectionManagerImpl(ConnectionManager):
         self.logger = LogService.get_startup_log()
         self.logger.debug('Started connection manager.')
         self.ib_client.wrapper.attach(self)
-        self._connect()
 
-    def update(self):
-        self.connection_closed = True
-        self.hold_on_requests = True
-        time.sleep(1.0)
-        self._connect()
+    def change_state(self, state):
+        self._state = state
 
-    def _connect(self):
+
+    #def connect(self):
+    #    self._state.connect(self)
+
+    def open_connection(self):
+        while not isinstance(self._state, Connected):
+            print('trying to connect on {}:{}, state = {}'.format(self.host, self.port, self._state))
+            self._state.open(self)
+        print('Connected')
+        self.eclient_run()
+
+    def close(self):
+        self._state.close(self)
+
+    def connect(self):
         self.logger.debug('ConnectionManager connecting to Gateway')
         self.logger.debug('ConnectionManager blocked all requests')
 
-        if self.loop_thread and self.loop_thread.is_alive():
-            self.logger.debug('ConnectionManager ensuring that EClient.run loop is over')
-
         try:
             self.ib_client.connect(self.host, self.port, self.client_id)
+            if isinstance(self._state, Connecting):
+                self._state = Connected()
         except Exception as e:
             logger.exception('error while reconnecting to IB API ')
             self.logger.exception('error while reconnecting to IB API')
 
-        self.loop_thread = Thread(target=self.ib_client.run)
-        self.loop_thread.start()
-        self.logger.debug('started EClient.run')
-        # logger.debug('EClient.run() started')
-        self.hold_on_requests = False
-        self.connection_closed = False
-        self.logger.debug('accepting requests')
-        # self.last_connection_trial_time = datetime.now()
 
-
-
-    def connect(self):
-        # while (datetime.now() - self.last_connection_trial_time).total_seconds() < 5\
-        #         or (datetime.now() - self.disconnect_time).total_seconds() < 5:
-        # time.sleep(5)
-        # continue
-        self.logger.debug('ConnectionManager connecting to Gateway')
+    def update(self):
         self.hold_on_requests = True
-        self.logger.debug('ConnectionManager blocked all requests')
-        trial_number = 1
+        self._state = Disconnected()
 
+
+    def eclient_run(self):
         if self.loop_thread and self.loop_thread.is_alive():
+            self.logger.debug('EClient.run already running')
             return
-        self.logger.debug('ConnectionManager ensuring that EClient.run loop is over')
-        while not self.ib_client.isConnected():
-            # if self.ib_client.done and self.ib_client.msg_queue.empty() :
-            # this is using the internals if IB api and may change at any time
-            # moreover I am not sure what REDIRECT means
-            try:
-                # self.ib_client.disconnect()
-                logger.debug('ConnectionManager checking if connState == IbClient.CONNECTING')
-                if not self.ib_client.connState == IbClient.CONNECTING:
-                    # this makes sure we don't try to connect when another connection is trying to be established,
-                    # the result is a double axcknowledgemnt and the API is not working
-                    self.logger.debug('ConnectionManager about to connect to {}:{} with id {}'.format(
-                        self.host, self.port, self.client_id
-                    ))
-                    self.ib_client.connect(self.host, self.port, self.client_id)
-                    time.sleep(1)
-                    self.logger.debug('reconnecting to IB API {} trial(s)'.format(trial_number))
-                    logger.info('reconnecting to IB API {} trial(s)'.format(trial_number))
-                    if self.ib_client.isConnected():
-                        self.logger.debug('still connecting')
-                        self.connection_closed = False
-                    self.logger.debug('connection established')
-            except Exception as e:
-                logger.exception('error while reconnecting to IB API {} trial(s)'.format(trial_number))
-                self.logger.exception('error while reconnecting to IB API {} trial(s)'.format(trial_number))
 
-            trial_number += 1
-        # logger.debug('EClient.run() starting')
-        self.loop_thread = Thread(target=self.ib_client.run)
-        self.loop_thread.start()
-        self.logger.debug('started EClient.run')
-        # logger.debug('EClient.run() started')
-        self.hold_on_requests = False
-        self.logger.debug('accepting requests')
-        # self.last_connection_trial_time = datetime.now()
+        if isinstance(self._state, Connected):
+            self.loop_thread = Thread(target=self.ib_client.run)
+            self.loop_thread.start()
+            self.logger.debug('started EClient.run')
+            # logger.debug('EClient.run() started')
+            self.hold_on_requests = False
+            self.connection_closed = False
+            self.logger.debug('accepting requests')
+            # self.last_connection_trial_time = datetime.now()
+
+    def run(self):
+        while True:
+            if isinstance(self._state, Disconnected):
+                self.open_connection()
+
+
+
+    #def connect(self):
+    #    # while (datetime.now() - self.last_connection_trial_time).total_seconds() < 5\
+    #    #         or (datetime.now() - self.disconnect_time).total_seconds() < 5:
+    #    # time.sleep(5)
+    #    # continue
+    #    self.logger.debug('ConnectionManager connecting to Gateway')
+    #    self.hold_on_requests = True
+    #    self.logger.debug('ConnectionManager blocked all requests')
+    #    trial_number = 1
+
+    #    if self.loop_thread and self.loop_thread.is_alive():
+    #        return
+    #    self.logger.debug('ConnectionManager ensuring that EClient.run loop is over')
+    #    while not self.ib_client.isConnected():
+    #        # if self.ib_client.done and self.ib_client.msg_queue.empty() :
+    #        # this is using the internals if IB api and may change at any time
+    #        # moreover I am not sure what REDIRECT means
+    #        try:
+    #            # self.ib_client.disconnect()
+    #            logger.debug('ConnectionManager checking if connState == IbClient.CONNECTING')
+    #            if not self.ib_client.connState == IbClient.CONNECTING:
+    #                # this makes sure we don't try to connect when another connection is trying to be established,
+    #                # the result is a double axcknowledgemnt and the API is not working
+    #                self.logger.debug('ConnectionManager about to connect to {}:{} with id {}'.format(
+    #                    self.host, self.port, self.client_id
+    #                ))
+    #                self.ib_client.connect(self.host, self.port, self.client_id)
+    #                time.sleep(1)
+    #                self.logger.debug('reconnecting to IB API {} trial(s)'.format(trial_number))
+    #                logger.info('reconnecting to IB API {} trial(s)'.format(trial_number))
+    #                if self.ib_client.isConnected():
+    #                    self.logger.debug('still connecting')
+    #                    self.connection_closed = False
+    #                self.logger.debug('connection established')
+    #        except Exception as e:
+    #            logger.exception('error while reconnecting to IB API {} trial(s)'.format(trial_number))
+    #            self.logger.exception('error while reconnecting to IB API {} trial(s)'.format(trial_number))
+
+    #        trial_number += 1
+    #    # logger.debug('EClient.run() starting')
+    #    self.loop_thread = Thread(target=self.ib_client.run)
+    #    self.loop_thread.start()
+    #    self.logger.debug('started EClient.run')
+    #    # logger.debug('EClient.run() started')
+    #    self.hold_on_requests = False
+    #    self.logger.debug('accepting requests')
+    #    # self.last_connection_trial_time = datetime.now()
 
     def is_connected(self):
         return not self.connection_closed

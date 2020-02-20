@@ -153,11 +153,12 @@ class EWrapperImpl(EWrapper, Subject):
         span.set_tag('reqId', reqId)
         super().error(reqId, errorCode, errorString)
 
-        if reqId == -1:
-            # resets requests after errors
-            self.notify_requests()
         try:
-            self.request_manager.process_error(reqId, errorCode, errorString)
+            if reqId == -1:
+                # resets requests after errors
+                self.notify_requests()
+            else:
+                self.request_manager.process_error(reqId, errorCode, errorString)
         except Exception as e:
             print('exception processing error - ewrapper impl line 162')
             print(e)

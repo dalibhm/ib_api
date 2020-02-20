@@ -4,8 +4,9 @@ import time
 
 
 def SetupLogger():
-    if not os.path.exists("../log"):
-        os.makedirs("../log")
+    log_path = os.path.join("..", "log")
+    if not os.path.exists(log_path):
+        os.makedirs(log_path)
 
     recfmt = '(%(threadName)s) %(asctime)s.%(msecs)03d %(levelname)s %(filename)s:%(lineno)d %(message)s'
 

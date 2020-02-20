@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+from threading import Thread
 
 import time
 from datetime import datetime
@@ -65,7 +66,8 @@ def main():
     # starts connection manager
     # connect automatically
     logger.debug('Starting ConnectionManager')
-    # conn_manager.start()
+    task = Thread(target=conn_manager.run, args=())
+    task.start()
     logger.debug('Started ConnectionManager')
     time.sleep(2)
 

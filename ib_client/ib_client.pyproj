@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8045cc4c-f8f5-40f7-92d1-40d783cce2ee}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>ibclient\app.py</StartupFile>
+    <SearchPath>dependencies\ibapi\ibapi;dependencies\ibapi</SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="app_test.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\account_summary_tags.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\client.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\comm.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\commission_report.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\common.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\connection.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\contract.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\decoder.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\enum_implem.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\errors.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\execution.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\message.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\news.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\object_implem.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\order.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\orderdecoder.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\order_condition.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\order_state.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\reader.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\scanner.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\server_versions.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\softdollartier.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\tag_value.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\ticktype.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\utils.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\wrapper.py" />
+    <Compile Include="dependencies\ibapi\build\lib\ibapi\__init__.py" />
+    <Compile Include="dependencies\ibapi\ibapi\account_summary_tags.py" />
+    <Compile Include="dependencies\ibapi\ibapi\client.py" />
+    <Compile Include="dependencies\ibapi\ibapi\comm.py" />
+    <Compile Include="dependencies\ibapi\ibapi\commission_report.py" />
+    <Compile Include="dependencies\ibapi\ibapi\common.py" />
+    <Compile Include="dependencies\ibapi\ibapi\connection.py" />
+    <Compile Include="dependencies\ibapi\ibapi\contract.py" />
+    <Compile Include="dependencies\ibapi\ibapi\decoder.py" />
+    <Compile Include="dependencies\ibapi\ibapi\enum_implem.py" />
+    <Compile Include="dependencies\ibapi\ibapi\errors.py" />
+    <Compile Include="dependencies\ibapi\ibapi\execution.py" />
+    <Compile Include="dependencies\ibapi\ibapi\message.py" />
+    <Compile Include="dependencies\ibapi\ibapi\news.py" />
+    <Compile Include="dependencies\ibapi\ibapi\object_implem.py" />
+    <Compile Include="dependencies\ibapi\ibapi\order.py" />
+    <Compile Include="dependencies\ibapi\ibapi\orderdecoder.py" />
+    <Compile Include="dependencies\ibapi\ibapi\order_condition.py" />
+    <Compile Include="dependencies\ibapi\ibapi\order_state.py" />
+    <Compile Include="dependencies\ibapi\ibapi\reader.py" />
+    <Compile Include="dependencies\ibapi\ibapi\scanner.py" />
+    <Compile Include="dependencies\ibapi\ibapi\server_versions.py" />
+    <Compile Include="dependencies\ibapi\ibapi\softdollartier.py" />
+    <Compile Include="dependencies\ibapi\ibapi\tag_value.py" />
+    <Compile Include="dependencies\ibapi\ibapi\ticktype.py" />
+    <Compile Include="dependencies\ibapi\ibapi\utils.py" />
+    <Compile Include="dependencies\ibapi\ibapi\wrapper.py" />
+    <Compile Include="dependencies\ibapi\ibapi\__init__.py" />
+    <Compile Include="dependencies\ibapi\setup.py" />
+    <Compile Include="dependencies\ibapi\tests\manual.py" />
+    <Compile Include="dependencies\ibapi\tests\test_account_summary_tags.py" />
+    <Compile Include="dependencies\ibapi\tests\test_comm.py" />
+    <Compile Include="dependencies\ibapi\tests\test_enum_implem.py" />
+    <Compile Include="dependencies\ibapi\tests\test_order_conditions.py" />
+    <Compile Include="dependencies\ibapi\tests\test_utils.py" />
+    <Compile Include="ibclient\app.py" />
+    <Compile Include="ibclient\connection_manager\connection_manager.py" />
+    <Compile Include="ibclient\connection_manager\impl\connection_manager_impl.py" />
+    <Compile Include="ibclient\connection_manager\impl\__init__.py" />
+    <Compile Include="ibclient\connection_manager\__init__.py" />
+    <Compile Include="ibclient\container.py" />
+    <Compile Include="ibclient\enums\request_type.py" />
+    <Compile Include="ibclient\enums\__init__.py" />
+    <Compile Include="ibclient\ewrapper_impl.py" />
+    <Compile Include="ibclient\grpc_service\grpc_service.py" />
+    <Compile Include="ibclient\grpc_service\kafka_producer.py" />
+    <Compile Include="ibclient\grpc_service\tasks.py" />
+    <Compile Include="ibclient\grpc_service\__init__.py" />
+    <Compile Include="ibclient\ib_client\ib_client.py" />
+    <Compile Include="ibclient\ib_client\impl\ib_client_impl.py" />
+    <Compile Include="ibclient\ib_client\impl\ib_client_mock.py" />
+    <Compile Include="ibclient\ib_client\impl\__init__.py" />
+    <Compile Include="ibclient\ib_client\__init__.py" />
+    <Compile Include="ibclient\init_app.py" />
+    <Compile Include="ibclient\monitoring\monitoring_tool.py" />
+    <Compile Include="ibclient\monitoring\rpc_server.py" />
+    <Compile Include="ibclient\monitoring\__init__.py" />
+    <Compile Include="ibclient\proto\reponseSender.py" />
+    <Compile Include="ibclient\proto\request_data_pb2.py" />
+    <Compile Include="ibclient\proto\request_data_pb2_grpc.py" />
+    <Compile Include="ibclient\proto\response_data_pb2.py" />
+    <Compile Include="ibclient\proto\response_data_pb2_grpc.py" />
+    <Compile Include="ibclient\proto\__init__.py" />
+    <Compile Include="ibclient\requestmanager\actor.py" />
+    <Compile Include="ibclient\requestmanager\cache.py" />
+    <Compile Include="ibclient\requestmanager\dependencies.py" />
+    <Compile Include="ibclient\requestmanager\requestmanager.py" />
+    <Compile Include="ibclient\requestmanager\request\contractdetailsrequest.py" />
+    <Compile Include="ibclient\requestmanager\request\fundamentalrequest.py" />
+    <Compile Include="ibclient\requestmanager\request\historicalrequest.py" />
+    <Compile Include="ibclient\requestmanager\request\request.py" />
+    <Compile Include="ibclient\requestmanager\request\security_definition_option.py" />
+    <Compile Include="ibclient\requestmanager\request\__init__.py" />
+    <Compile Include="ibclient\requestmanager\request_constructor_map.py" />
+    <Compile Include="ibclient\requestmanager\request_scheduler.py" />
+    <Compile Include="ibclient\requestmanager\response\response.py" />
+    <Compile Include="ibclient\requestmanager\response\__init__.py" />
+    <Compile Include="ibclient\requestmanager\status.py" />
+    <Compile Include="ibclient\requestmanager\__init__.py" />
+    <Compile Include="ibclient\responsemanager\api_client.py" />
+    <Compile Include="ibclient\responsemanager\contact_details_processor_impl\contract_details_processor.py" />
+    <Compile Include="ibclient\responsemanager\contact_details_processor_impl\grpc_contract_details_processor.py" />
+    <Compile Include="ibclient\responsemanager\contact_details_processor_impl\__init__.py" />
+    <Compile Include="ibclient\responsemanager\contract_details_processor.py" />
+    <Compile Include="ibclient\responsemanager\fundamental_data_processor_impl\console_fundamental_processor.py" />
+    <Compile Include="ibclient\responsemanager\fundamental_data_processor_impl\grpc_fundamental_processor.py" />
+    <Compile Include="ibclient\responsemanager\fundamental_data_processor_impl\__init__.py" />
+    <Compile Include="ibclient\responsemanager\fundamental_processor.py" />
+    <Compile Include="ibclient\responsemanager\historical_processor.py" />
+    <Compile Include="ibclient\responsemanager\historical_processor_impl\console_historical_processor.py" />
+    <Compile Include="ibclient\responsemanager\historical_processor_impl\kafka_historical_processor.py" />
+    <Compile Include="ibclient\responsemanager\historical_processor_impl\kafka_producer.py" />
+    <Compile Include="ibclient\responsemanager\historical_processor_impl\pass_historical_processor.py" />
+    <Compile Include="ibclient\responsemanager\historical_processor_impl\schemas\historical_end_schema.py" />
+    <Compile Include="ibclient\responsemanager\historical_processor_impl\schemas\historical_error_schema.py" />
+    <Compile Include="ibclient\responsemanager\historical_processor_impl\schemas\historical_schema.py" />
+    <Compile Include="ibclient\responsemanager\historical_processor_impl\schemas\__init__.py" />
+    <Compile Include="ibclient\responsemanager\historical_processor_impl\__init__.py" />
+    <Compile Include="ibclient\responsemanager\option_params_processor.py" />
+    <Compile Include="ibclient\responsemanager\option_param_processor_impl\grpc_option_params_processor.py" />
+    <Compile Include="ibclient\responsemanager\option_param_processor_impl\__init__.py" />
+    <Compile Include="ibclient\responsemanager\response_manager.py" />
+    <Compile Include="ibclient\responsemanager\response_processor_factory.py" />
+    <Compile Include="ibclient\responsemanager\response_processor_mock.py" />
+    <Compile Include="ibclient\responsemanager\__init__.py" />
+    <Compile Include="ibclient\Services\Helper.py" />
+    <Compile Include="ibclient\Services\LogService.py" />
+    <Compile Include="ibclient\Services\LogService_old.py" />
+    <Compile Include="ibclient\Services\request_id_generator.py" />
+    <Compile Include="ibclient\Services\ServiceBase.py" />
+    <Compile Include="ibclient\Services\__init__.py" />
+    <Compile Include="ibclient\subject.py" />
+    <Compile Include="ibclient\tests\test_app.py" />
+    <Compile Include="ibclient\tests\test_injector.py" />
+    <Compile Include="ibclient\tests\test_option_params.py" />
+    <Compile Include="ibclient\tests\test_request_manager.py" />
+    <Compile Include="ibclient\tests\test_req_fundamental_data.py" />
+    <Compile Include="ibclient\tests\__init__.py" />
+    <Compile Include="ibclient\_external\contract_pb2.py" />
+    <Compile Include="ibclient\_external\contract_pb2_grpc.py" />
+    <Compile Include="ibclient\_external\fundamental_data_pb2.py" />
+    <Compile Include="ibclient\_external\fundamental_data_pb2_grpc.py" />
+    <Compile Include="ibclient\_external\option_params_pb2.py" />
+    <Compile Include="ibclient\_external\option_params_pb2_grpc.py" />
+    <Compile Include="ibclient\_external\__init__.py" />
+    <Compile Include="ibclient\__init__.py" />
+    <Compile Include="request_data_pb2_grpc.py" />
+    <Compile Include="_test_client.py" />
+    <Compile Include="_test_wrapper.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dependencies\ibapi\ibapi.egg-info\dependency_links.txt" />
+    <Content Include="dependencies\ibapi\ibapi.egg-info\SOURCES.txt" />
+    <Content Include="dependencies\ibapi\ibapi.egg-info\top_level.txt" />
+    <Content Include="dependencies\ibapi\tox.ini" />
+    <Content Include="html_report\api_ib_client_py.html" />
+    <Content Include="html_report\app_py.html" />
+    <Content Include="html_report\connection_manager_connection_manager_py.html" />
+    <Content Include="html_report\coverage_html.js" />
+    <Content Include="html_report\enums_request_type_py.html" />
+    <Content Include="html_report\enums___init___py.html" />
+    <Content Include="html_report\ewrapper_impl_py.html" />
+    <Content Include="html_report\grpc_service_grpc_service_py.html" />
+    <Content Include="html_report\grpc_service_kafka_producer_py.html" />
+    <Content Include="html_report\grpc_service___init___py.html" />
+    <Content Include="html_report\index.html" />
+    <Content Include="html_report\init_app_py.html" />
+    <Content Include="html_report\jquery.ba-throttle-debounce.min.js" />
+    <Content Include="html_report\jquery.hotkeys.js" />
+    <Content Include="html_report\jquery.isonscreen.js" />
+    <Content Include="html_report\jquery.min.js" />
+    <Content Include="html_report\jquery.tablesorter.min.js" />
+    <Content Include="html_report\keybd_closed.png" />
+    <Content Include="html_report\keybd_open.png" />
+    <Content Include="html_report\proto_request_data_pb2_py.html" />
+    <Content Include="html_report\requestmanager_requestmanager_py.html" />
+    <Content Include="html_report\requestmanager_request_contractdetailsrequest_py.html" />
+    <Content Include="html_report\requestmanager_request_fundamentalrequest_py.html" />
+    <Content Include="html_report\requestmanager_request_historicalrequest_py.html" />
+    <Content Include="html_report\requestmanager_request_request_py.html" />
+    <Content Include="html_report\responsemanager_api_client_py.html" />
+    <Content Include="html_report\responsemanager_contact_details_processor_impl_contract_details_processor_py.html" />
+    <Content Include="html_report\responsemanager_contract_details_processor_py.html" />
+    <Content Include="html_report\responsemanager_fundamental_data_processor_impl_grpc_fundamental_processor_py.html" />
+    <Content Include="html_report\responsemanager_fundamental_processor_py.html" />
+    <Content Include="html_report\responsemanager_historical_processor_impl_kafka_historical_processor_py.html" />
+    <Content Include="html_report\responsemanager_historical_processor_impl_kafka_producer_py.html" />
+    <Content Include="html_report\responsemanager_historical_processor_impl_schemas_historical_end_schema_py.html" />
+    <Content Include="html_report\responsemanager_historical_processor_impl_schemas_historical_error_schema_py.html" />
+    <Content Include="html_report\responsemanager_historical_processor_impl_schemas_historical_schema_py.html" />
+    <Content Include="html_report\responsemanager_historical_processor_impl_schemas___init___py.html" />
+    <Content Include="html_report\responsemanager_historical_processor_impl___init___py.html" />
+    <Content Include="html_report\responsemanager_historical_processor_py.html" />
+    <Content Include="html_report\responsemanager_response_manager_py.html" />
+    <Content Include="html_report\responsemanager_response_processor_factory_py.html" />
+    <Content Include="html_report\responsemanager_response_processor_mock_py.html" />
+    <Content Include="html_report\responsemanager___init___py.html" />
+    <Content Include="html_report\Services_request_id_generator_py.html" />
+    <Content Include="html_report\style.css" />
+    <Content Include="html_report\tests_test_app_py.html" />
+    <Content Include="html_report\tests_test_injector_py.html" />
+    <Content Include="html_report\tests_test_request_manager_py.html" />
+    <Content Include="html_report\tests_test_req_fundamental_data_py.html" />
+    <Content Include="html_report\tests_test_sample_py.html" />
+    <Content Include="html_report\tests___init___py.html" />
+    <Content Include="html_report\_external_fundamental_data_pb2_grpc_py.html" />
+    <Content Include="html_report\_external_fundamental_data_pb2_py.html" />
+    <Content Include="html_report\_test_client_py.html" />
+    <Content Include="html_report\_test_wrapper_py.html" />
+    <Content Include="ibclient\requirements.txt" />
+    <Content Include="requirements.txt" />
+    <Content Include="settings\development.ini" />
+    <Content Include="settings\production.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="dependencies\" />
+    <Folder Include="dependencies\ibapi" />
+    <Folder Include="dependencies\ibapi\build\" />
+    <Folder Include="dependencies\ibapi\build\lib\" />
+    <Folder Include="dependencies\ibapi\build\lib\ibapi" />
+    <Folder Include="dependencies\ibapi\ibapi" />
+    <Folder Include="dependencies\ibapi\ibapi.egg-info" />
+    <Folder Include="dependencies\ibapi\tests" />
+    <Folder Include="html_report" />
+    <Folder Include="ibclient" />
+    <Folder Include="ibclient\connection_manager" />
+    <Folder Include="ibclient\connection_manager\impl" />
+    <Folder Include="ibclient\enums" />
+    <Folder Include="ibclient\grpc_service" />
+    <Folder Include="ibclient\ib_client" />
+    <Folder Include="ibclient\ib_client\impl" />
+    <Folder Include="ibclient\monitoring" />
+    <Folder Include="ibclient\proto" />
+    <Folder Include="ibclient\requestmanager" />
+    <Folder Include="ibclient\requestmanager\request" />
+    <Folder Include="ibclient\requestmanager\response" />
+    <Folder Include="ibclient\responsemanager" />
+    <Folder Include="ibclient\responsemanager\contact_details_processor_impl" />
+    <Folder Include="ibclient\responsemanager\fundamental_data_processor_impl" />
+    <Folder Include="ibclient\responsemanager\historical_processor_impl" />
+    <Folder Include="ibclient\responsemanager\historical_processor_impl\schemas" />
+    <Folder Include="ibclient\responsemanager\option_param_processor_impl" />
+    <Folder Include="ibclient\Services" />
+    <Folder Include="ibclient\tests" />
+    <Folder Include="ibclient\_external" />
+    <Folder Include="settings" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="venv\">
+      <Id>venv</Id>
+      <Version>3.7</Version>
+      <Description>venv (Python 3.7 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>

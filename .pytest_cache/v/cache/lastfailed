@@ -1,5 +1,0 @@
-{
-  "data_api/tests/test_fundamental_data.py::test_post_financial_report": true,
-  "ib_client/tests/test_req_fundamental_data.py": true,
-  "stock_list/tests/test_client.py": true
-}
